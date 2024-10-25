@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="" />
+    <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/project_env/Include/a.txt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/Activate.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/activate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/deactivate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/pip.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/pip3.12.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/pip3.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/python.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/Scripts/pythonw.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/lib/site-packages/pip/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/lib/site-packages/pip/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/lib/site-packages/pip/__pip-runner__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/lib/site-packages/pip/a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/lib/site-packages/pip/py.typed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/pyvenv.cfg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +39,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Findoku"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Findoku/Tiger-Party.git",
@@ -61,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729835895866</updated>
-      <workItem from="1729835897060" duration="385000" />
+      <workItem from="1729835897060" duration="824000" />
     </task>
     <servers />
   </component>
