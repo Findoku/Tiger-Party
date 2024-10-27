@@ -36,7 +36,7 @@ def index():
 
     cur = conn.cursor()
 
-    cur.execute('SELECT nameFirst,nameLast FROM people WHERE nameFirst = \'babe\' ')
+    cur.execute('SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
     rows = cur.fetchall()
     conn.close()
 
@@ -46,5 +46,5 @@ def index():
 
     posts = rows
     print(posts)
-    return render_template('index.html', firstName=firstName, lastName=lastName,
+    return render_template('roster.html', firstName=firstName, lastName=lastName,
                             user = user, rows = rows)

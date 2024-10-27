@@ -1,23 +1,7 @@
-<!doctype html>
-<html>
-    <head>
-        {% if title %}
-        <title>{{ title }} - Microblog</title>
-        {% else %}
-        <title>Welcome to Microblog!</title>
-        {% endif %}
+{% extends "roster.html" %}
 
-
-    </head>
-    <body>
+{% block content %}
         {% for row in rows %}
         <div><p> {{ row[0] }} {{ row[1] }}  </b></p></div>
         {% endfor %}
-
-
-
-
-    </body>
-
-
-</html>
+{% endblock %}
