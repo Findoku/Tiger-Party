@@ -2,7 +2,7 @@ from app import app
 import mariadb
 import mysql.connector
 from flask import render_template
-
+from app.forms import LoginForm
 
 def connect():
     print("s")
@@ -28,15 +28,15 @@ def connect():
     #     print('Failed to connect to MariaDB')
 
 @app.route('/')
-@app.route('/index')
-def index():
+def roster():
 
     print("hi")
     conn = connect()
 
     cur = conn.cursor()
 
-    cur.execute('SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
+    cur.execute(
+        'SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
     rows = cur.fetchall()
     conn.close()
 
@@ -45,6 +45,32 @@ def index():
     user = {'username': firstName}
 
     posts = rows
-    print(posts)
+    # print(posts)
     return render_template('roster.html', firstName=firstName, lastName=lastName,
-                            user = user, rows = rows)
+                       user=user)
+
+
+@app.route('/index')
+def index():
+    conn = connect()
+
+    cur = conn.cursor()
+
+    cur.execute(
+        'SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
+    rows = cur.fetchall()
+    conn.close()
+
+    firstName = {'id': rows[0][0]}
+    lastName = {'id': rows[0][1]}
+    user = {'username': firstName}
+
+    posts = rows
+    return render_template('index.html', rows=rows )
+
+
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Sign In', form=form)
