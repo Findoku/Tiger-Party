@@ -1,6 +1,7 @@
 from app import app
 import mariadb
 import mysql.connector
+from flask import render_template
 
 
 def connect():
@@ -35,20 +36,15 @@ def index():
 
     cur = conn.cursor()
 
-    cur.execute('SELECT nameFirst,nameLast FROM people WHERE nameFirst = \'babe\' AND nameLast = \'ruth\'  LIMIT 10')
+    cur.execute('SELECT nameFirst,nameLast FROM people WHERE nameFirst = \'babe\' ')
     rows = cur.fetchall()
     conn.close()
 
     firstName = {'id': rows[0][0]}
     lastName = {'id': rows[0][1]}
+    user = {'username': firstName}
 
-    return '''
-<html>
-    <head>
-        <title>Home Page - Microblog</title>
-    </head>
-    <body>
-    <p> hi ''' + firstName['id']+'''  '''+ lastName['id']  + '''</p>
-    
-    </body>
-</html>'''
+    posts = rows
+    print(posts)
+    return render_template('index.html', firstName=firstName, lastName=lastName,
+                            user = user, rows = rows)
