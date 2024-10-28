@@ -1,8 +1,10 @@
 from app import app
 import mariadb
 import mysql.connector
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from app.forms import LoginForm
+from app import teams
+
 
 def connect():
     print("s")
@@ -31,46 +33,46 @@ def connect():
 def roster():
 
     print("hi")
+
+    return render_template('roster.html')
+
+
+def getRoster(teamName, yearID):
     conn = connect()
 
     cur = conn.cursor()
 
     cur.execute(
-        'SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
+        'SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \'' + teamName+'\' AND b.yearID = '+yearID+' ORDER BY p.playerId ASC')
     rows = cur.fetchall()
     conn.close()
+    return rows
 
-    firstName = {'id': rows[0][0]}
-    lastName = {'id': rows[0][1]}
-    user = {'username': firstName}
-
-    posts = rows
-    # print(posts)
-    return render_template('roster.html', firstName=firstName, lastName=lastName,
-                       user=user)
 
 
 @app.route('/index')
 def index():
-    conn = connect()
-
-    cur = conn.cursor()
-
-    cur.execute(
-        'SELECT nameFirst,nameLast FROM people p, batting b WHERE b.playerId = p.playerId AND b.teamID = \'det\' AND b.yearID = 2019 ORDER BY p.playerId ASC')
-    rows = cur.fetchall()
-    conn.close()
-
-    firstName = {'id': rows[0][0]}
-    lastName = {'id': rows[0][1]}
-    user = {'username': firstName}
-
-    posts = rows
+    team_name = request.args.get('teamName')
+    year_id = request.args.get('yearID')
+    print("we got this fart")
+    rows = getRoster(team_name, year_id)
+    print(rows)
     return render_template('index.html', rows=rows )
 
 
 
-@app.route('/login')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    choice = request.form.get('choiceDropdown')
     form = LoginForm()
-    return render_template('login.html', title='Sign In', form=form)
+    print(form)
+
+
+    if form.validate_on_submit():
+        print(choice)
+        print("here")
+        return redirect(url_for('index', teamName=choice, yearID=form.password.data))
+
+
+    return render_template('login.html', title='Sign In', form=form, choices=teams.teams)
