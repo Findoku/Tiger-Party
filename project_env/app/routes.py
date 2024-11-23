@@ -54,7 +54,7 @@ def getRoster(teamName, yearID):
 def index():
     team_name = request.args.get('teamName')
     year_id = request.args.get('yearID')
-    print("we got this fart")
+    print("we got this")
     rows = getRoster(team_name, year_id)
     print(rows)
     return render_template('index.html', rows=rows )
