@@ -62,7 +62,7 @@ def index():
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/showTeams', methods=['GET', 'POST'])
 def login():
     choice = request.form.get('choiceDropdown')
     form = LoginForm()

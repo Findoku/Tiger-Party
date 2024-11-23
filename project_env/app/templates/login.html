@@ -1,7 +1,13 @@
-{% extends "roster.html" %}
-
-{% block content %}
-    <h1>Sign In</h1>
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Microblog</title>
+        {% else %}
+        <title>Welcome to Microblog!</title>
+        {% endif %}
+    </head>
+<h1>Sign In</h1>
     <form method="post" action="{{ url_for('login') }}">
         {{ form.hidden_tag() }}
         <select id="choiceDropdown" name="choiceDropdown">
@@ -24,4 +30,8 @@
             {{ form.submit() }}
         </p>
     </form>
+
+</html>
+{% block content %}
+
 {% endblock %}

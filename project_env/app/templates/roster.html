@@ -1,18 +1,13 @@
+
 <!doctype html>
 <html>
     <head>
-        {% if title %}
-        <title>{{ title }} - Microblog</title>
-        {% else %}
-        <title>Welcome to Microblog!</title>
-        {% endif %}
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="Include/style.css">
     </head>
 
     <body>
-        <div>Microblog: <a href="/login">Display Roster</a></div>
-        <hr>
-
-        {% block content %}{% endblock %}
+        <button  class="stylish-button" onclick="location.href='/showTeams'"> Display Roster</button>
 
     </body>
 

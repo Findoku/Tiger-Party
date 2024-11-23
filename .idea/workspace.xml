@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/app/microblog.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project_env/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/app/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_env/app/templates/roster.html" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/templates/roster.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +73,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kbctr/OneDrive/Documents/GitHub/Tiger-Party&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kbctr/OneDrive/Documents/GitHub/Tiger-Party/project_env/app&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,10 +89,16 @@
   }
 }</component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env" />
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app" />
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\Include" />
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app" />
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env" />
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app\templates\static" />
+      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -117,6 +127,7 @@
       <workItem from="1729838115578" duration="2000" />
       <workItem from="1729879804449" duration="3000" />
       <workItem from="1729990751574" duration="23372000" />
+      <workItem from="1732394719078" duration="2299000" />
     </task>
     <servers />
   </component>
