@@ -5,6 +5,7 @@ from app import teams
 from app import sqlComs
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField
+from app import config
 
 # List of all historical MLB teams
 
@@ -19,12 +20,14 @@ submit = SubmitField('Submit')
 
 
 class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit', render_kw={'class': 'stylish-button'})
 
 
 class DisplayForm(FlaskForm):
-    password = StringField('Year', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
+
     rows = ["asdsa"]
     year_dropdown = SelectField('Select Year', choices=[], validators=[DataRequired()])
     team_dropdown = SelectField('Select team', choices=teams.teams, validators=[DataRequired()])

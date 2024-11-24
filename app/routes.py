@@ -1,3 +1,5 @@
+from sqlalchemy import false
+
 from app import app
 import mariadb
 import mysql.connector
@@ -6,6 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 from app.forms import LoginForm, DisplayForm
 from app import teams
 
+valid = 'false'
 
 def connect():
     print("s")
@@ -18,12 +21,27 @@ def connect():
     )
 
     return conn
-@app.route('/')
-def roster():
+@app.route('/', methods=['GET', 'POST'])
+def startPage():
 
     print("hi")
 
-    return render_template('roster.html')
+    form=LoginForm()
+
+    if form.validate_on_submit():
+        print("worked")
+
+        sql = ('SELECT username,password FROM users WHERE username = \'' + form.username.data + '\' '
+               + ' AND password = \'' + form.password.data + '\'')
+        rows = getRowFromSQL(sql)
+        print(rows)
+        if(rows != []):
+            global valid
+            valid = 'true'
+            return redirect('/showTeams')
+
+
+    return render_template('roster.html',form=form)
 
 
 def getRowFromSQL(sql):
@@ -73,6 +91,8 @@ def process_team_change():
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
 
+    if(valid == 'false'):
+        return redirect(url_for('startPage'))
 
     submit = request.form.get('submit', None)
 

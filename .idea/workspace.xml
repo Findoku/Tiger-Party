@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Tiger-Party.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/showTeams.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b413233a-beaa-459d-a12a-18c6be005fc8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b413233a-beaa-459d-a12a-18c6be005fc8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/teams.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/teams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/login.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/roster.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/roster.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +148,7 @@
       <workItem from="1732394719078" duration="2299000" />
       <workItem from="1732403055519" duration="2186000" />
       <workItem from="1732409955646" duration="3658000" />
-      <workItem from="1732413809089" duration="11533000" />
+      <workItem from="1732413809089" duration="16577000" />
     </task>
     <servers />
   </component>

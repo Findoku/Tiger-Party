@@ -5,11 +5,27 @@
         <title> Tiger Party</title>
         <link rel="stylesheet" href="../static/style.css">
     </head>
-
+    <h1>Sign In</h1>
     <body>
-        <button  class="stylish-button" onclick="location.href='/showTeams'"> Display Roster</button>
+        {% block content %}{% endblock %}
+
+
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </p>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p>{{ form.submit() }}</p>
+        </form>
 
     </body>
+
 
 
 </html>
