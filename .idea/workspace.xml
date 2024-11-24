@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Tiger-Party.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/showTeams.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b413233a-beaa-459d-a12a-18c6be005fc8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b413233a-beaa-459d-a12a-18c6be005fc8.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_env/app/microblog.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_env/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_env/app/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project_env/app/templates/roster.html" beforeDir="false" afterPath="$PROJECT_DIR$/project_env/app/templates/roster.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/teams.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/teams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/roster.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/roster.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,10 +78,11 @@
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.routes.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kbctr/OneDrive/Documents/GitHub/Tiger-Party/project_env/app&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Daniel/Documents/GitHub/Tiger-Party&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -94,11 +103,11 @@
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party\app\static" />
+      <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party" />
+      <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party\app" />
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\Include" />
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app" />
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env" />
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app\templates\static" />
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -106,11 +115,29 @@
       <command value="''' &lt;html&gt;     &lt;head&gt;         &lt;title&gt;Home Page - Microblog&lt;/title&gt;     &lt;/head&gt;     &lt;body&gt;         &lt;h1&gt;Hello, ''' + user['username'] + '''!&lt;/h1&gt;     &lt;/body&gt; &lt;/html&gt;'''" />
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Tiger-Party" type="Python.FlaskServer">
+      <module name="Tiger-Party" />
+      <option name="target" value="$PROJECT_DIR$/app/__init__.py" />
+      <option name="targetType" value="PATH" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
-        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
+        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
       </set>
     </attachedChunks>
   </component>
@@ -128,6 +155,9 @@
       <workItem from="1729879804449" duration="3000" />
       <workItem from="1729990751574" duration="23372000" />
       <workItem from="1732394719078" duration="2299000" />
+      <workItem from="1732403055519" duration="2186000" />
+      <workItem from="1732409955646" duration="3658000" />
+      <workItem from="1732413809089" duration="11533000" />
     </task>
     <servers />
   </component>

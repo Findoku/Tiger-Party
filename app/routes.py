@@ -1,8 +1,9 @@
 from app import app
 import mariadb
 import mysql.connector
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-from app.forms import LoginForm
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask_wtf.csrf import CSRFProtect
+from app.forms import LoginForm, DisplayForm
 from app import teams
 
 
@@ -11,24 +12,12 @@ def connect():
     conn = mariadb.connect(
         host='localhost',
         user='root',
-        password='bob',
+        password='a',
         port=3306,
         database='baseball'
     )
-    return conn
-    # if conn.is_connected():
-    #     print('Connected to MariaDB database')
-    #     cursor = conn.cursor()
-    #     cursor.execute("SELECT playerID FROM people LIMIT 10")
-    #
-    #     rows = cursor.fetchall()
-    #     print('Total number of rows in table:', cursor.rowcount)
-    #
-    #     for row in rows:
-    #         print(row)
-    # else:
-    #     print('Failed to connect to MariaDB')
 
+    return conn
 @app.route('/')
 def roster():
 
@@ -37,15 +26,24 @@ def roster():
     return render_template('roster.html')
 
 
-def getRoster(teamName, yearID):
+def getRowFromSQL(sql):
     conn = connect()
 
     cur = conn.cursor()
 
-    cur.execute(
-        'SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \'' + teamName+'\' AND b.yearID = '+yearID+' ORDER BY p.playerId ASC')
+    cur.execute(sql)
     rows = cur.fetchall()
     conn.close()
+    return rows
+
+
+def getRoster(teamName, yearID):
+
+    sql = ('SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t'+
+           ' WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \''
+           + str(teamName) + '\' AND b.yearID = ' + str(yearID) + ' ORDER BY p.playerId ASC')
+    rows = getRowFromSQL(sql)
+
     return rows
 
 
@@ -61,18 +59,45 @@ def index():
 
 
 
+@app.route('/process_team_change', methods=['POST'])
+def process_team_change():
+    team_name = request.form['teamName']
+    # Process the team change, e.g., fetch relevant data
+    response_data = team_name
+    print('DID IT')
+    return jsonify(response_data)
+
+
+
 
 @app.route('/showTeams', methods=['GET', 'POST'])
-def login():
-    choice = request.form.get('choiceDropdown')
-    form = LoginForm()
-    print(form)
+def showTeams():
 
 
-    if form.validate_on_submit():
-        print(choice)
+    submit = request.form.get('submit', None)
+
+    form = DisplayForm()
+
+
+    if form.team_dropdown.data is not None and form.year_dropdown is not None:
         print("here")
-        return redirect(url_for('index', teamName=choice, yearID=form.password.data))
+        return redirect(url_for('index', teamName=form.team_dropdown.data, yearID=form.year_dropdown.data))
+
+    if request.method == 'POST':
+        if 'teamName' in request.form:
+            selected_team = request.form.get('team_dropdown')
+            team_name = request.form.get('teamName', None)
+            print(team_name)
+            # Logic to determine years based on team selection
+            sql = "SELECT yearID FROM teams WHERE team_name = '{}'".format(team_name)
+            print(sql)
+            years = getRowFromSQL(sql)
+            print(years)
+            form.year_dropdown.choices = years
+            return jsonify(years=years)
 
 
-    return render_template('login.html', title='Sign In', form=form, choices=teams.teams)
+    print("follow")
+    print(form.team_dropdown.data)
+    print(form.year_dropdown.data)
+    return render_template('showTeams.html', title='Sign In', form=form, choices=teams.teams)

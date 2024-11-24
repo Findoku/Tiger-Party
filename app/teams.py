@@ -1,4 +1,4 @@
-teams = [
+teams = ["",
     "Boston Red Stockings", "Chicago White Stockings", "Cleveland Forest Citys",
     "Fort Wayne Kekiongas", "New York Mutuals", "Philadelphia Athletics",
     "Rockford Forest Citys", "Troy Haymakers", "Washington Olympics", "Baltimore Canaries",

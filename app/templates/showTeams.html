@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Microblog</title>
+        {% else %}
+        <title>Welcome to Microblog!</title>
+        {% endif %}
+    <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <button  class="stylish-button" onclick="location.href='/ImmaculateGridGuesser'"> Immaculate Grid Guesser</button>
+<h1>Sign In</h1>
+    <form action="{{ url_for('showTeams') }}" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.team_dropdown(id='team_dropdown') }}
+        {{ form.year_dropdown() }}
+        {{ form.submit() }}
+        <script>
+            document.getElementById('team_dropdown').onchange = function() {
+                var teamName = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/showTeams', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Handle your response here
+                        console.log(xhr.responseText);
+                        // Example: Update another dropdown
+                        updateYearDropdown(JSON.parse(xhr.responseText));
+                    } else {
+                        console.error('Error with the request');
+                    }
+                };
+
+                xhr.send('teamName=' + encodeURIComponent(teamName));
+            };
+
+            function updateYearDropdown(data) {
+                var yearDropdown = document.getElementById('year_dropdown');
+                yearDropdown.innerHTML = ''; // Clear existing options
+                data.years.forEach(function(year) {
+                    var option = new Option(year, year);
+                    yearDropdown.appendChild(option);
+                });
+            }
+        </script>
+
+
+    </form>
+
+</html>
+{% block content %}
+
+{% endblock %}
