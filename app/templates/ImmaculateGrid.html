@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="../static/style.css">
+        <!-- Include Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include Select2 JavaScript, after including jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    </head>
+
+    <body>
+        <form action="" class="card-container"  method="post">
+            <div class="card-container">
+                <div class="card">
+                    <h2>Card 1</h2>
+                    <p>This is the content of the first card.</p>
+                    {{ form1.team1(id="team1") }}
+                </div>
+                <div class="card">
+                    <h2>Card 2</h2>
+                    <p>This is the content of the second card.</p>
+                    {{ form1.hidden_tag() }}
+                    <p>{{ form1.submit() }}</p>
+
+                    {% for player in players %}
+                        <div><p> {{ player[0] }} {{ player[1] }}  </p></div>
+                    {% endfor %}
+                </div>
+                <div class= "card" >
+                    <h2>Card 3</h2>
+                    <p>This is the content of the third card.</p>
+                    {{ form1.team2(id="team2") }}
+                </div>
+            </div>
+
+             <script>
+                $(document).ready(function() {
+                    $('#team1').select2({
+                        placeholder: "Select a team",
+                        allowClear: true
+                    });
+                });
+            </script>
+            <script>
+                    $(document).ready(function() {
+                        $('#team2').select2({
+                            placeholder: "Select a team",
+                            allowClear: true
+                        });
+                    });
+                </script>
+
+        </form>
+    </body>
+
+
+
+</html>

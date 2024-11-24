@@ -1,11 +1,11 @@
-from sqlalchemy import false
+from cgi import print_form
 
 from app import app
 import mariadb
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_wtf.csrf import CSRFProtect
-from app.forms import LoginForm, DisplayForm
+from app.forms import LoginForm, DisplayForm, TeamForm
 from app import teams
 
 valid = 'false'
@@ -75,6 +75,28 @@ def index():
     print(rows)
     return render_template('index.html', rows=rows )
 
+
+
+@app.route('/ImmaculateGridGuesser',methods=['GET', 'POST'])
+def ImmacGrid():
+    form1 = TeamForm()
+    sql = 'SELECT DISTINCT teamID, team_name FROM teams'
+    teams = getRowFromSQL(sql)
+    form1.team1.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
+    form1.team2.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
+
+    if form1.validate_on_submit():
+        print('players kid')
+        sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
+               '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
+               + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
+        players = getRowFromSQL(sql)
+        print(sql)
+        return render_template('ImmaculateGrid.html',form1=form1, players=players)
+
+
+
+    return render_template('ImmaculateGrid.html', form1=form1, players=[])
 
 
 @app.route('/process_team_change', methods=['POST'])

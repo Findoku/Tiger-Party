@@ -19,3 +19,52 @@
 .stylish-button:active {
     transform: scale(0.95);
 }
+
+
+
+/* Basic styling for the body */
+body {
+    font-family: Arial, sans-serif; /* Sets the font for the page */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f4f4f4; /* Light grey background */
+}
+
+/* Styling for the card container */
+.card-container {
+    display: flex; /* Enables flexbox */
+    justify-content: space-between; /* Distributes space between cards */
+    width: 100%; /* Full width of the viewport */
+    height: 100%;
+    max-width: 2500px; /* Maximum width */
+    margin: 10px; /* Margin around the container */
+}
+
+/* Styling for individual cards */
+.card {
+    background-color: white; /* White background for the cards */
+    padding: 20px; /* Padding inside the cards */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow to the cards */
+    overflow-y: auto; /* Enables vertical scrollbar when needed */
+    width: 100%; /* Each card takes up 1/3 of the container width minus padding */
+    height: 100%;
+
+    margin: 10px; /* Adds margin around cards */
+}
+
+/* Adds styles for headings inside the cards */
+.card h2 {
+    color: #333; /* Dark grey color for text */
+    margin: 0 0 10px; /* Margin below the heading */
+}
+
+/* Adds styles for paragraphs inside the cards */
+.card p {
+    color: #666; /* Medium grey color for text */
+    line-height: 1.5; /* Spacing between lines */
+}
+

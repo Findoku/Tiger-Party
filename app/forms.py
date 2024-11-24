@@ -13,10 +13,9 @@ from app import config
 team_choices = [(f'option{i+1}', team) for i, team in enumerate(teams.teams)]
 
 class TeamForm(FlaskForm):
-    username = SelectField('Username', choices=team_choices)
-
-
-submit = SubmitField('Submit')
+    team1 = SelectField('Select Team', choices=[], validators=[DataRequired()])
+    team2 = SelectField('Select Team', choices=teams.teams, validators=[DataRequired()])
+    submit = SubmitField('Submit',render_kw={'class': 'stylish-button'})
 
 
 class LoginForm(FlaskForm):
@@ -32,5 +31,4 @@ class DisplayForm(FlaskForm):
     year_dropdown = SelectField('Select Year', choices=[], validators=[DataRequired()])
     team_dropdown = SelectField('Select team', choices=teams.teams, validators=[DataRequired()])
     submit = SubmitField('Submit', render_kw={'class': 'stylish-button'})
-
 
