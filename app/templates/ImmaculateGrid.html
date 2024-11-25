@@ -20,14 +20,14 @@
     </div>
 
     <body>
-        <form action="" class="card-container"  method="post">
-            <div class="card-container">
-                <div class="card">
+        <form action="" class="ImmacCard-container" method="post">
+            <div class="ImmacCard-container">
+                <div class="ImmacCard">
                     <h2>Card 1</h2>
                     <p>This is the content of the first card.</p>
                     {{ form1.team1(id="team1") }}
                 </div>
-                <div class="card">
+                <div class="ImmacCard">
                     <h2>Card 2</h2>
                     <p>This is the content of the second card.</p>
                     {{ form1.hidden_tag() }}
@@ -37,7 +37,7 @@
                         <div><p> {{ player[0] }} {{ player[1] }}  </p></div>
                     {% endfor %}
                 </div>
-                <div class= "card" >
+                <div class= "ImmacCard" >
                     <h2>Card 3</h2>
                     <p>This is the content of the third card.</p>
                     {{ form1.team2(id="team2") }}

@@ -116,14 +116,7 @@ body {
 }
 
 /* Styling for the card container */
-.card-container {
-    display: flex; /* Enables flexbox */
-    justify-content: space-between; /* Distributes space between cards */
-    width: 100%; /* Full width of the viewport */
-    height: 85%;
-    max-width: 2500px; /* Maximum width */
-    margin: 10px; /* Margin around the container */
-}
+
 .roster-container {
     display: flex; /* Enables flexbox */
     justify-content: space-between; /* Distributes space between cards */
@@ -140,7 +133,55 @@ body {
     overflow-y: auto; /* Enables vertical scrollbar when needed */
     margin: 10px; /* Adds margin around cards */
 }
-.card {
+
+.ImmacCard-container {
+    display: flex; /* Enables flexbox */
+    justify-content: space-between; /* Distributes space between cards */
+    width: 100%; /* Full width of the viewport */
+    height: 85%;
+    max-width: 2500px; /* Maximum width */
+    margin: 10px; /* Margin around the container */
+
+}
+
+/* Styling for the table container to enable scrolling */
+.table-container {
+    width: 80%;
+    margin:  auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Merge borders for a cleaner look */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Subtle shadow around the table */
+    font-family: Arial, sans-serif; /* Modern font */
+    font-size: 14px;
+
+}
+
+.table-container th, .table-container td {
+    padding: 12px 20px; /* Ample padding in cells */
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center; /* Align text to the left */
+    border-bottom: 2px solid #f0f0f0; /* Light grey border for separation */
+}
+
+.table-container th {
+    border: 2px solid black;
+    font-size: 14px;
+    background-color: #1898e1; /* Green background for headers */
+    color: white; /* White text color */
+}
+
+.table-container td {
+    border: 2px solid black;
+    font-size: 14px;
+    background-color: #FFFFFF; /* White background for cells */
+    color: #333; /* Dark grey text for readability */
+}
+
+
+
+
+
+.ImmacCard {
     background-color: white; /* White background for the cards */
     padding: 20px; /* Padding inside the cards */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow to the cards */
@@ -152,13 +193,13 @@ body {
 }
 
 /* Adds styles for headings inside the cards */
-.card h2 {
+.ImmacCard h2 {
     color: #333; /* Dark grey color for text */
     margin: 0 0 10px; /* Margin below the heading */
 }
 
 /* Adds styles for paragraphs inside the cards */
-.card p {
+.ImmacCard p {
     color: #666; /* Medium grey color for text */
     line-height: 1.5; /* Spacing between lines */
 }

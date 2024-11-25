@@ -36,9 +36,6 @@ def startPage():
 
 
 
-
-
-
 @app.route('/team/roster')
 def index():
     team_name = GlobalVals.teamName
@@ -50,18 +47,21 @@ def index():
 
 @app.route('/team/Batting-Stats')
 def battingStats():
-    team_name = teamName
-    year_id = yearID
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
     print("batting")
+    sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF'+
+           ' FROM batting NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
+           +'\'' +team_name + '\'  AND yearid = '+year_id+' Group By playerID,yearID;')
+    rows = sqlComs.getRowFromSQL(sql);
 
-    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/BattingStats.html', rows=rows)
 
 @app.route('/team/Pitching-Stats')
 def pitchingStats():
-    team_name = teamName
-    year_id = yearID
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
     print("pitching")
     rows = sqlComs.getRoster(team_name, year_id)
 
@@ -69,8 +69,8 @@ def pitchingStats():
 
 @app.route('/team/Positions')
 def Positions():
-    team_name = teamName
-    year_id = yearID
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
     print("positions")
     rows = sqlComs.getRoster(team_name, year_id)
 
@@ -78,8 +78,8 @@ def Positions():
 
 @app.route('/team/Depth-Chart')
 def DepthChart():
-    team_name = teamName
-    year_id = yearID
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
     print("depth")
     rows = sqlComs.getRoster(team_name, year_id)
 

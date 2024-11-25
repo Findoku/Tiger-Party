@@ -21,4 +21,51 @@
         </ul>
     </nav>
 
+    <table class="table-container">
+        <tr>
+            <th> Player</th>
+            <th> At Bats</th>
+            <th> Runs</th>
+            <th>Singles</th>
+            <th>Doubles</th>
+            <th>Triples</th>
+            <th>Home Runs</th>
+            <th>Caused Runs</th>
+            <th>Stolen Bases</th>
+            <th>Failed Steals</th>
+            <th>Walks</th>
+            <th>Strikeouts</th>
+            <th>Bunts</th>
+            <th> Sacrifice Flies</th>
+
+
+
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td> {{ row[0] }} {{ row[1] }}</td>
+            <td> {{ row[2] }}</td>
+            <td> {{ row[3] }}</td>
+            <td> {{ row[4] }}</td>
+            <td> {{ row[5] }}</td>
+            <td> {{ row[6] }}</td>
+            <td> {{ row[7] }}</td>
+            <td> {{ row[8] }}</td>
+            <td> {{ row[9] }}</td>
+            <td> {{ row[10] }}</td>
+            <td> {{ row[11] }}</td>
+            <td> {{ row[12] }}</td>
+            <td> {{ row[13] }}</td>
+            <td> {{ row[14] }}</td>
+
+
+
+        </tr>
+        {% endfor %}
+
+
+
+    </table>
+
+
 </html>
