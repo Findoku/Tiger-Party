@@ -128,12 +128,12 @@ def logout():
     global valid
     if data and data.get('action') == 'logout':
         print('logging out for real this time')
-        valid = 'false'
+        valid = 'true'
         return redirect( url_for('startPage'))
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
     global valid
-    if (valid == 'false'):
+    if (valid == 'none'):
         return redirect(url_for('startPage'))
 
     form = DisplayForm()
