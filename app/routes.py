@@ -2,9 +2,9 @@ from cgi import print_form
 
 from app import app
 import mariadb
-import mysql.connector
+
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_wtf.csrf import CSRFProtect
+
 from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm
 from app import teams
 
@@ -15,7 +15,7 @@ def connect():
     conn = mariadb.connect(
         host='localhost',
         user='root',
-        password='a',
+        password='bob',
         port=3306,
         database='baseball'
     )
@@ -38,6 +38,7 @@ def startPage():
         if(rows != []):
             global valid
             valid = 'true'
+            print()
             return redirect('/showTeams')
 
 
@@ -123,7 +124,7 @@ def register():
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
 
-    if(valid == 'true'):
+    if(valid == 'false'):
         return redirect(url_for('startPage'))
 
     form = DisplayForm()
