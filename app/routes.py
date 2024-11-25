@@ -5,19 +5,23 @@ import mariadb
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 
+from app.DatabaseConnection import mysql
 from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm
+
 from app import teams
+from app import DatabaseConnection
 
 valid = 'false'
 
 def connect():
     print("s")
+    maria = DatabaseConnection
     conn = mariadb.connect(
-        host='localhost',
-        user='root',
-        password='bob',
+        user=maria.mysql["user"],
+        password=maria.mysql["password"],
+        host=maria.mysql["location"],
         port=3306,
-        database='baseball'
+        database=maria.mysql["database"]
     )
 
     return conn
