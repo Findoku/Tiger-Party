@@ -54,7 +54,7 @@
     position: absolute;/* Removes default margin from the h1 */
     right: 0; /* Aligns the h1 to the far right */
     color: white;
-    margin-right: 10px; /* Ensures no margin on the right */
+    margin-right: 0px; /* Ensures no margin on the right */
 
 }
 .nav h2:hover {

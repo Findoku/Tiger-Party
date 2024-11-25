@@ -25,12 +25,13 @@ def connect():
     )
 
     return conn
+
+
 @app.route('/', methods=['GET', 'POST'])
 def startPage():
-
     print("hi")
 
-    form=LoginForm()
+    form = LoginForm()
 
     if form.validate_on_submit():
         print("worked")
@@ -39,12 +40,11 @@ def startPage():
                + ' AND password = \'' + form.password.data + '\'')
         rows = getRowFromSQL(sql)
         print(rows)
-        if(rows != []):
+        if (rows != []):
             global valid
             valid = 'true'
             print()
             return redirect('/showTeams')
-
 
     return render_template('index.html', form=form)
 
@@ -59,6 +59,7 @@ def getRowFromSQL(sql):
     conn.close()
     return rows
 
+
 def executeInsert(sql):
     conn = connect()
 
@@ -70,14 +71,12 @@ def executeInsert(sql):
 
 
 def getRoster(teamName, yearID):
-
-    sql = ('SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t'+
+    sql = ('SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t' +
            ' WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \''
            + str(teamName) + '\' AND b.yearID = ' + str(yearID) + ' ORDER BY p.playerId ASC')
     rows = getRowFromSQL(sql)
 
     return rows
-
 
 
 @app.route('/index')
@@ -90,8 +89,7 @@ def index():
     return render_template('rosterPage.html', rows=rows)
 
 
-
-@app.route('/ImmaculateGridGuesser',methods=['GET', 'POST'])
+@app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
     form1 = TeamForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
@@ -106,11 +104,10 @@ def ImmacGrid():
                + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
         players = getRowFromSQL(sql)
         print(sql)
-        return render_template('ImmaculateGrid.html',form1=form1, players=players)
-
-
+        return render_template('ImmaculateGrid.html', form1=form1, players=players)
 
     return render_template('ImmaculateGrid.html', form1=form1, players=[])
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -118,17 +115,25 @@ def register():
 
     if form.validate_on_submit():
         print('registering')
-        sql = """INSERT INTO users(username,password) values( \'""" + form.username.data + """\', \'"""+ form.password.data +"""\')"""
+        sql = """INSERT INTO users(username,password) values( \'""" + form.username.data + """\', \'""" + form.password.data + """\')"""
         print(sql)
         executeInsert(sql)
         return redirect(url_for('startPage'))
 
-    return render_template('register.html', form = form)
+    return render_template('register.html', form=form)
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    data = request.get_json()
+    global valid
+    if data and data.get('action') == 'logout':
+        print('logging out for real this time')
+        valid = 'false'
+        return redirect( url_for('startPage'))
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
-
-    if(valid == 'false'):
+    global valid
+    if (valid == 'false'):
         return redirect(url_for('startPage'))
 
     form = DisplayForm()
@@ -136,12 +141,14 @@ def showTeams():
     teams = getRowFromSQL(sql)
     form.team_dropdown.choices = [(team[1], team[1]) for team in teams]
 
-
     if form.team_dropdown.data is not None and form.year_dropdown is not None:
         print("here")
         return redirect(url_for('index', teamName=form.team_dropdown.data, yearID=form.year_dropdown.data))
 
+
+
     if request.method == 'POST':
+        print('post')
         if 'teamName' in request.form:
             selected_team = request.form.get('team_dropdown')
             team_name = request.form.get('teamName', None)
@@ -153,6 +160,9 @@ def showTeams():
             print(years)
             form.year_dropdown.choices = years
             return jsonify(years=years)
+
+    if request.method == 'GET':
+        print('get')
 
 
     print("follow")
