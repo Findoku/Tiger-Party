@@ -123,7 +123,7 @@ def register():
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
 
-    if(valid == 'false'):
+    if(valid == 'true'):
         return redirect(url_for('startPage'))
 
     form = DisplayForm()

@@ -20,21 +20,90 @@
     transform: scale(0.95);
 }
 
+.nav {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333333;
+    height: auto;
 
+
+}
+
+.nav h1{
+    display: flex;
+    margin:0px;
+    color: white;
+    cursor: pointer;
+    align-items: center;     /* Centers the h1 vertically */
+    justify-content: center; /* Centers the h1 horizontally if needed */
+    height: 100px;
+    background-color: hsl(0, 0%, 5%);   /* Sets the background color */
+
+
+}
+
+.nav h2 {
+    display: flex;           /* Makes the div a flex container */
+    align-items: center;     /* Centers the h1 vertically */
+    justify-content: center; /* Centers the h1 horizontally if needed */
+    height: 100px;            /* Ensures the div takes the full height of its parent */
+    cursor: pointer;         /* Shows a pointer cursor when hovering over the div */
+    background-color: #333333;     /* Sets the background color */
+    position: absolute;/* Removes default margin from the h1 */
+    right: 0; /* Aligns the h1 to the far right */
+    color: white;
+    margin-right: 10px; /* Ensures no margin on the right */
+
+}
+.nav h2:hover {
+
+    background-color: hsl(0, 0%, 5%);
+}
+
+
+
+.teamNavbar ul{
+    list-style-type: none;
+    background-color: hsl(0,0%,25%);
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+
+
+}
+
+.teamNavbar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+.teamNavbar a:hover {
+    background-color: hsl(0, 0%, 5%);
+}
+
+.teamNavbar li{
+    float: left;
+}
 
 /* Basic styling for the body */
 body {
+    margin: 0;
     font-family: Arial, sans-serif; /* Sets the font for the page */
     justify-content: center;
     height: 99vh; /* Full viewport height */
     background: linear-gradient(to bottom, blue, white)
 }
 .centered-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .side {
@@ -58,9 +127,7 @@ body {
 .roster-container {
     display: flex; /* Enables flexbox */
     justify-content: space-between; /* Distributes space between cards */
-
     height: 95%;
-
 
 }
 
@@ -68,6 +135,7 @@ body {
 .rosterCard {
     background-color: white; /* White background for the cards */
     padding: 20px; /* Padding inside the cards */
+    height: 550px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow to the cards */
     overflow-y: auto; /* Enables vertical scrollbar when needed */
     margin: 10px; /* Adds margin around cards */
