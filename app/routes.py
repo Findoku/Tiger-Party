@@ -6,27 +6,12 @@ import mariadb
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 
 from app.DatabaseConnection import mysql
+from app.GlobalVals import valid
 from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm
+from app import sqlComs
+from app import GlobalVals
 
-from app import teams
-from app import DatabaseConnection
 
-valid = 'false'
-teamName = 'houston astros'
-yearID = '2018'
-
-def connect():
-    print("s")
-    maria = DatabaseConnection
-    conn = mariadb.connect(
-        user=maria.mysql["user"],
-        password=maria.mysql["password"],
-        host=maria.mysql["location"],
-        port=3306,
-        database=maria.mysql["database"]
-    )
-
-    return conn
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -37,56 +22,29 @@ def startPage():
 
     if form.validate_on_submit():
         print("worked")
+        user = sqlComs.getUser(form.username.data,form.username.data)
 
-        sql = ('SELECT username,password FROM users WHERE username = \'' + form.username.data + '\' '
-               + ' AND password = \'' + form.password.data + '\'')
-        rows = getRowFromSQL(sql)
-        print(rows)
-        if (rows != []):
-            global valid
-            valid = 'true'
+        print(user)
+        if (user != []):
+
+            GlobalVals.valid = 'true'
             print()
             return redirect('/showTeams')
 
     return render_template('index.html', form=form)
 
 
-def getRowFromSQL(sql):
-    conn = connect()
-
-    cur = conn.cursor()
-
-    cur.execute(sql)
-    rows = cur.fetchall()
-    conn.close()
-    return rows
 
 
-def executeInsert(sql):
-    conn = connect()
 
-    cur = conn.cursor()
-
-    cur.execute(sql)
-    conn.commit()
-    conn.close()
-
-
-def getRoster(teamName, yearID):
-    sql = ('SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t' +
-           ' WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \''
-           + str(teamName) + '\' AND b.yearID = ' + str(yearID) + ' ORDER BY p.playerId ASC')
-    rows = getRowFromSQL(sql)
-
-    return rows
 
 
 @app.route('/team/roster')
 def index():
-    team_name = teamName
-    year_id = yearID
-    print("we got this")
-    rows = getRoster(team_name, year_id)
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    print("roster")
+    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/mainPage.html', rows=rows)
 
@@ -94,8 +52,9 @@ def index():
 def battingStats():
     team_name = teamName
     year_id = yearID
-    print("we got this")
-    rows = getRoster(team_name, year_id)
+    print("batting")
+
+    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/BattingStats.html', rows=rows)
 
@@ -103,8 +62,8 @@ def battingStats():
 def pitchingStats():
     team_name = teamName
     year_id = yearID
-    print("we got this")
-    rows = getRoster(team_name, year_id)
+    print("pitching")
+    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/PitchingStats.html', rows=rows)
 
@@ -112,8 +71,8 @@ def pitchingStats():
 def Positions():
     team_name = teamName
     year_id = yearID
-    print("we got this")
-    rows = getRoster(team_name, year_id)
+    print("positions")
+    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/Positions.html', rows=rows)
 
@@ -121,8 +80,8 @@ def Positions():
 def DepthChart():
     team_name = teamName
     year_id = yearID
-    print("we got this")
-    rows = getRoster(team_name, year_id)
+    print("depth")
+    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/DepthChart.html', rows=rows)
 
@@ -131,7 +90,7 @@ def DepthChart():
 def ImmacGrid():
     form1 = TeamForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
-    teams = getRowFromSQL(sql)
+    teams = sqlComs.getRowFromSQL(sql)
     form1.team1.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
     form1.team2.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
 
@@ -140,7 +99,7 @@ def ImmacGrid():
         sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
                '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
                + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
-        players = getRowFromSQL(sql)
+        players = sqlComs.getRowFromSQL(sql)
         print(sql)
         return render_template('ImmaculateGrid.html', form1=form1, players=players)
 
@@ -155,7 +114,7 @@ def register():
         print('registering')
         sql = """INSERT INTO users(username,password) values( \'""" + form.username.data + """\', \'""" + form.password.data + """\')"""
         print(sql)
-        executeInsert(sql)
+        sqlComs.executeInsert(sql)
         return redirect(url_for('startPage'))
 
     return render_template('register.html', form=form)
@@ -163,28 +122,28 @@ def register():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     data = request.get_json()
-    global valid
+
     if data and data.get('action') == 'logout':
         print('logging out for real this time')
-        valid = 'true'
+        GlobalVals.valid = 'true'
         return redirect( url_for('startPage'))
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
-    global valid
-    if (valid == 'none'):
+
+    if (GlobalVals.valid == 'none'):
         return redirect(url_for('startPage'))
 
     form = DisplayForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
-    teams = getRowFromSQL(sql)
+    teams = sqlComs.getRowFromSQL(sql)
     form.team_dropdown.choices = [(team[1], team[1]) for team in teams]
 
     if form.team_dropdown.data is not None and form.year_dropdown is not None:
         print("here")
-        global teamName
-        teamName = form.team_dropdown.data
-        global yearID
-        yearID =form.year_dropdown.data
+
+        GlobalVals.teamName = form.team_dropdown.data
+
+        GlobalVals.yearID =form.year_dropdown.data
         return redirect(url_for('index' ))
 
 
@@ -198,7 +157,7 @@ def showTeams():
             # Logic to determine years based on team selection
             sql = "SELECT yearID FROM teams WHERE team_name = '{}'".format(team_name)
             print(sql)
-            years = getRowFromSQL(sql)
+            years = sqlComs.getRowFromSQL(sql)
 
             form.year_dropdown.choices = years
             return jsonify(years=years)
