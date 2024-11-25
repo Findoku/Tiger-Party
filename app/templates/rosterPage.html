@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+
+    <body>
+        <button  class="stylish-button" onclick="location.href='/showTeams'"> back</button>
+        <button  class="stylish-button" onclick="location.href='/ImmaculateGridGuesser'"> Immaculate Grid Guesser</button>
+    </body>
+
+    <div class="roster-container">
+        <div class="rosterCard">
+            <h3 style="margin-top: 0">Roster:</h3>
+            {% for row in rows %}
+                <div><p> {{ row[0] }} {{ row[1] }}  </p></div>
+            {% endfor %}
+        </div>
+    </div>
+
+</html>

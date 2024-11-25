@@ -5,7 +5,7 @@ import mariadb
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_wtf.csrf import CSRFProtect
-from app.forms import LoginForm, DisplayForm, TeamForm
+from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm
 from app import teams
 
 valid = 'false'
@@ -41,7 +41,7 @@ def startPage():
             return redirect('/showTeams')
 
 
-    return render_template('roster.html',form=form)
+    return render_template('index.html', form=form)
 
 
 def getRowFromSQL(sql):
@@ -53,6 +53,15 @@ def getRowFromSQL(sql):
     rows = cur.fetchall()
     conn.close()
     return rows
+
+def executeInsert(sql):
+    conn = connect()
+
+    cur = conn.cursor()
+
+    cur.execute(sql)
+    conn.commit()
+    conn.close()
 
 
 def getRoster(teamName, yearID):
@@ -73,7 +82,7 @@ def index():
     print("we got this")
     rows = getRoster(team_name, year_id)
     print(rows)
-    return render_template('index.html', rows=rows )
+    return render_template('rosterPage.html', rows=rows)
 
 
 
@@ -98,17 +107,18 @@ def ImmacGrid():
 
     return render_template('ImmaculateGrid.html', form1=form1, players=[])
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
 
-@app.route('/process_team_change', methods=['POST'])
-def process_team_change():
-    team_name = request.form['teamName']
-    # Process the team change, e.g., fetch relevant data
-    response_data = team_name
-    print('DID IT')
-    return jsonify(response_data)
+    if form.validate_on_submit():
+        print('registering')
+        sql = """INSERT INTO users(username,password) values( \'""" + form.username.data + """\', \'"""+ form.password.data +"""\')"""
+        print(sql)
+        executeInsert(sql)
+        return redirect(url_for('startPage'))
 
-
-
+    return render_template('register.html', form = form)
 
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
@@ -116,9 +126,10 @@ def showTeams():
     if(valid == 'false'):
         return redirect(url_for('startPage'))
 
-    submit = request.form.get('submit', None)
-
     form = DisplayForm()
+    sql = 'SELECT DISTINCT teamID, team_name FROM teams'
+    teams = getRowFromSQL(sql)
+    form.team_dropdown.choices = [(team[1], team[1]) for team in teams]
 
 
     if form.team_dropdown.data is not None and form.year_dropdown is not None:
@@ -142,4 +153,4 @@ def showTeams():
     print("follow")
     print(form.team_dropdown.data)
     print(form.year_dropdown.data)
-    return render_template('showTeams.html', title='Sign In', form=form, choices=teams.teams)
+    return render_template('showTeams.html', title='Sign In', form=form, choices=teams)

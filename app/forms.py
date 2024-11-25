@@ -1,3 +1,5 @@
+from wsgiref.validate import check_input
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
@@ -17,6 +19,10 @@ class TeamForm(FlaskForm):
     team2 = SelectField('Select Team', choices=teams.teams, validators=[DataRequired()])
     submit = SubmitField('Submit',render_kw={'class': 'stylish-button'})
 
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Register', render_kw={'class': 'stylish-button'})
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

@@ -9,9 +9,7 @@
     <div class="centered-container">
         <h1  style="margin-top: 150px"></h1>
 
-        <h1  >Welcome to Tiger Party!</h1>
-
-        <h1  >Sign in</h1>
+        <h1 >Register</h1>
         <body >
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
@@ -23,11 +21,9 @@
                     {{ form.password.label }}<br>
                     {{ form.password(size=32) }}
                 </p>
-                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                 <p>{{ form.submit() }}</p>
 
             </form>
-            <div><a href="/register" style="color: black">Dont have an Account?</a></div>
         </body>
     </div>
 

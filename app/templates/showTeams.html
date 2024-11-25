@@ -6,10 +6,16 @@
         {% else %}
         <title>Welcome to Microblog!</title>
         {% endif %}
-    <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="../static/style.css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include Select2 JavaScript, after including jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     </head>
     <button  class="stylish-button" onclick="location.href='/ImmaculateGridGuesser'"> Immaculate Grid Guesser</button>
-<h1>Sign In</h1>
+        <h1>Select Team</h1>
     <form action="{{ url_for('showTeams') }}" method="post">
         {{ form.hidden_tag() }}
         {{ form.team_dropdown(id='team_dropdown') }}
@@ -44,6 +50,14 @@
                     yearDropdown.appendChild(option);
                 });
             }
+
+            $(document).ready(function() {
+                $('#team_dropdown').select2({
+                    placeholder: "Select a team",
+                    allowClear: true
+                });
+            });
+
         </script>
 
 
