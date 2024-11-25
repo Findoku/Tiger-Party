@@ -2,7 +2,7 @@
 <html>
     <head>
         <title> Tiger Party</title>
-        <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="../../static/style.css">
     </head>
     <div class="nav"  >
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
@@ -13,25 +13,13 @@
 
     <nav class="teamNavbar">
         <ul>
-            <li><a href="">Roster</a></li>
-            <li><a href="">Batting Stats</a></li>
-            <li><a href="">Pitching Stats</a></li>
-            <li><a href="">Positions</a></li>
-            <li><a href="">Depth Chart</a> </li>
+            <li><a onclick="location.href='/team/roster'">Roster</a></li>
+            <li><a onclick="location.href='/team/Batting-Stats'">Batting Stats</a></li>
+            <li><a onclick="location.href='/team/Pitching-Stats'">Pitching Stats</a></li>
+            <li><a onclick="location.href='/team/Positions'">Positions</a></li>
+            <li><a onclick="location.href='/team/Depth-Chart'">Depth Chart</a> </li>
         </ul>
     </nav>
 
-    <body>
 
-    </body>
-    <main>
-        <div class="roster-container">
-            <div class="rosterCard">
-                <h3 style="margin-top: 0">Roster:</h3>
-                {% for row in rows %}
-                    <div><p> {{ row[0] }} {{ row[1] }}  </p></div>
-                {% endfor %}
-            </div>
-        </div>
-    </main>
 </html>

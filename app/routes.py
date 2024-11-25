@@ -12,6 +12,8 @@ from app import teams
 from app import DatabaseConnection
 
 valid = 'false'
+teamName = 'houston astros'
+yearID = '2018'
 
 def connect():
     print("s")
@@ -79,14 +81,50 @@ def getRoster(teamName, yearID):
     return rows
 
 
-@app.route('/index')
+@app.route('/team/roster')
 def index():
-    team_name = request.args.get('teamName')
-    year_id = request.args.get('yearID')
+    team_name = teamName
+    year_id = yearID
     print("we got this")
     rows = getRoster(team_name, year_id)
-    print(rows)
-    return render_template('rosterPage.html', rows=rows)
+
+    return render_template('webPage/mainPage.html', rows=rows)
+
+@app.route('/team/Batting-Stats')
+def battingStats():
+    team_name = teamName
+    year_id = yearID
+    print("we got this")
+    rows = getRoster(team_name, year_id)
+
+    return render_template('webPage/BattingStats.html', rows=rows)
+
+@app.route('/team/Pitching-Stats')
+def pitchingStats():
+    team_name = teamName
+    year_id = yearID
+    print("we got this")
+    rows = getRoster(team_name, year_id)
+
+    return render_template('webPage/PitchingStats.html', rows=rows)
+
+@app.route('/team/Positions')
+def Positions():
+    team_name = teamName
+    year_id = yearID
+    print("we got this")
+    rows = getRoster(team_name, year_id)
+
+    return render_template('webPage/Positions.html', rows=rows)
+
+@app.route('/team/Depth-Chart')
+def DepthChart():
+    team_name = teamName
+    year_id = yearID
+    print("we got this")
+    rows = getRoster(team_name, year_id)
+
+    return render_template('webPage/DepthChart.html', rows=rows)
 
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
@@ -143,7 +181,11 @@ def showTeams():
 
     if form.team_dropdown.data is not None and form.year_dropdown is not None:
         print("here")
-        return redirect(url_for('index', teamName=form.team_dropdown.data, yearID=form.year_dropdown.data))
+        global teamName
+        teamName = form.team_dropdown.data
+        global yearID
+        yearID =form.year_dropdown.data
+        return redirect(url_for('index' ))
 
 
 
@@ -157,7 +199,7 @@ def showTeams():
             sql = "SELECT yearID FROM teams WHERE team_name = '{}'".format(team_name)
             print(sql)
             years = getRowFromSQL(sql)
-            print(years)
+
             form.year_dropdown.choices = years
             return jsonify(years=years)
 

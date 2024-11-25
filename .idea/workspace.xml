@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/webPage/BattingStats.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/webPage/DepthChart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/webPage/PitchingStats.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/webPage/Positions.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/webPage/roster.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/DatabaseConnection.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/DatabaseConnection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/showTeams.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/showTeams.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/rosterPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/mainPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -96,11 +100,11 @@
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party\app\templates\webPage" />
       <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party\app\static" />
       <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party" />
       <recent name="C:\Users\Daniel\Documents\GitHub\Tiger-Party\app" />
       <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\Include" />
-      <recent name="C:\Users\kbctr\OneDrive\Documents\GitHub\Tiger-Party\project_env\app" />
     </key>
   </component>
   <component name="RunAnythingCache">
