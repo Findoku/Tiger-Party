@@ -52,7 +52,7 @@
     cursor: pointer;         /* Shows a pointer cursor when hovering over the div */
     background-color: #333333;     /* Sets the background color */
     position: absolute;/* Removes default margin from the h1 */
-    right: 0; /* Aligns the h1 to the far right */
+     /* Aligns the h1 to the far right */
     color: white;
     margin-right: 0px; /* Ensures no margin on the right */
 

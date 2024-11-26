@@ -23,41 +23,41 @@
 
     <table class="table-container">
         <tr>
-            <th style="width:  75px"> Player</th>
-            <th onclick="toggleBox(this)" data-stat="b_AB" description = "Times At Bat"> AB</th>
+            <th style="width:  75px">Player</th>
 
-            <th onclick="toggleBox(this)" data-stat="b_R" description = "Totals Runs to Home"> R</th>
-            <th onclick="toggleBox(this)" data-stat="b_H" description = "Total First Bases at Least">H</th>
-            <th onclick="toggleBox(this)" data-stat="b_2B" description = "Total Doubles">2B</th>
-            <th onclick="toggleBox(this)" data-stat="b_3B" description = "Total Triples">3B</th>
-            <th onclick="toggleBox(this)" data-stat="b_HR" description = "Total Home Runs">HR</th>
-            <th onclick="toggleBox(this)" data-stat="b_RBI" description = "Caused Runs to Happen">RBI</th>
-            <th onclick="toggleBox(this)" data-stat="b_SB" description = "Total Stolen Bases">SB</th>
-            <th onclick="toggleBox(this)" data-stat="b_CS" description = "Caught Stealing">CS</th>
-            <th onclick="toggleBox(this)" data-stat="b_BB" description = "Total Walks">BB</th>
-            <th onclick="toggleBox(this)" data-stat="b_SO" description = "Strikeouts">SO</th>
-            <th onclick="toggleBox(this)" data-stat="b_SH" description = "Sacrifice Hits(Bunts)">SH</th>
-            <th onclick="toggleBox(this)" data-stat="b_SF" description = "Sacrifice Flies">SF</th>
+            <th  style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="f_G" description = "Games Played Fielding">G</th>
+            <th  style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="f_GS" description = "Games Started">GS</th>
+            <th style="width:  20px;padding-left: 7px;" onclick="toggleBox(this)" data-stat="f_InnOuts" description = "Total Outs Caused">InnOuts</th>
+            <th style="width:  25px" onclick="toggleBox(this)" data-stat="f_PO" description = "Putouts">PO</th>
+            <th style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="f_A" description = "Assists(throws to out)">A</th>
+            <th style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="f_E" description = "Errors(times an out should have occurred)">E</th>
+            <th style=" padding-left: 15px;"  onclick="toggleBox(this)" data-stat="f_DP" description = "Double Play Participation">DP</th>
+            <th style=" padding-left: 15px;"  onclick="toggleBox(this)" data-stat="f_PB" description = "Failed Catches for Catchers"> PB</th>
+            <th style=" padding-left: 12px; " onclick="toggleBox(this)" data-stat="f_SB" description = "Stolen Bases Allowed">SB</th>
+            <th style=" padding-left: 12px;"  onclick="toggleBox(this)" data-stat="f_CS" description = "Caught Stealing"> CS</th>
+            <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="f_ZR" description = "Zone rating(efficiency of covering ground)">ZR</th>
+
 
             <div id="box">
                 <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
                     &times;
                 </span>
 
-                    <p id="description" style="margin: 0px;">Games Started</p>
+                    <p id="description" style="margin: 0px">Games Started</p>
                     <div style="display: flex;">
                         <p style="margin-right: 10px; padding-top: 5px">Sort By: </p>
-                        <p class="boxP ASC" style="margin-right: 15px; ">ASC </p>
+                        <p class="boxP ASC" style="margin-right: 15px;">ASC </p>
                         <p class="boxP DESC" >DESC</p>
                     </div>
             </div>
-        </tr>
 
+        </tr>
         <tbody id="table-body">
             {% for row in rows %}
             <tr>
                 <td> {{ row[0] }} {{ row[1] }}</td>
-                <td> {{ row[2] }}</td>
+
+                <td > {{ row[2] }}</td>
                 <td> {{ row[3] }}</td>
                 <td> {{ row[4] }}</td>
                 <td> {{ row[5] }}</td>
@@ -68,13 +68,13 @@
                 <td> {{ row[10] }}</td>
                 <td> {{ row[11] }}</td>
                 <td> {{ row[12] }}</td>
-                <td> {{ row[13] }}</td>
-                <td> {{ row[14] }}</td>
+
+
             </tr>
             {% endfor %}
+
         </tbody>
     </table>
-
 
     <script>
         function toggleBox(element) {
@@ -91,8 +91,8 @@
             console.log(sortAsc)
             // Update the onclick functions to use the correct stat
 
-            sortAsc.onclick = function() { sort('batting', stat, 'ASC'); };
-            sortDesc.onclick = function() { sort('batting', stat, 'DESC'); };
+            sortAsc.onclick = function() { sort('fielding', stat, 'ASC'); };
+            sortDesc.onclick = function() { sort('fielding', stat, 'DESC'); };
             console.log('hi')
             var rect = element.getBoundingClientRect();
             // Positioning the box next to the button

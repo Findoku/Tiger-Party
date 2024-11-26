@@ -63,22 +63,26 @@ def battingStats():
 def pitchingStats():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
-           ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-           + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
+    sql = (
+                'SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
+                ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
+                + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
     rows = sqlComs.getRowFromSQL(sql)
     print("pitching")
 
     return render_template('webPage/PitchingStats.html', rows=rows)
 
-@app.route('/team/Positions')
+@app.route('/team/Fielding')
 def Positions():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("positions")
-    rows = sqlComs.getRoster(team_name, year_id)
+    sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR FROM Fielding NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
+           + '\'{}\'  AND yearid = {} Group By playerID,yearID;'.format(team_name, year_id))
+    print(sql)
+    rows = sqlComs.getRowFromSQL(sql)
+    print("fielding")
 
-    return render_template('webPage/Positions.html', rows=rows)
+    return render_template('webPage/Fielding.html', rows=rows)
 
 @app.route('/team/Depth-Chart')
 def DepthChart():
@@ -201,9 +205,12 @@ def sort():
             'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
     elif(baseballRole == 'batting'):
         sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF '
-            'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
-            'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
-
+               'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
+               'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+    elif (baseballRole == 'fielding'):
+        sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR '
+               'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
+               'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
 
     print(sql)
     rows = sqlComs.getRowFromSQL(sql)
