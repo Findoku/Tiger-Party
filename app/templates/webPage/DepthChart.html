@@ -4,14 +4,15 @@
         <title> Tiger Party</title>
         <link rel="stylesheet" href="../../static/style.css">
     </head>
-    <div class="nav"  >
+    <div class="nav"   >
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
         <h1 onclick="location.href='/showTeams'">Tiger Party</h1>
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
-        <h2  onclick="location.href='/ImmaculateGridGuesser'">Immaculate Grid Guesser</h2>
+        <h2 style="right: 0" onclick="location.href='/ImmaculateGridGuesser'">Immaculate Grid Guesser</h2>
     </div>
+    <body style="background: white"></body>
 
-    <nav class="teamNavbar">
+    <nav class="teamNavbar" >
         <ul>
             <li><a onclick="location.href='/team/roster'">Roster</a></li>
             <li><a onclick="location.href='/team/Batting-Stats'">Batting Stats</a></li>
@@ -20,6 +21,6 @@
             <li><a onclick="location.href='/team/Depth-Chart'">Depth Chart</a> </li>
         </ul>
     </nav>
-
+    <img  src="{{url_for('static', filename='field.png')}}" style="position: relative; left: 25%; top: 50%;" width="650" height="500"  alt=""/>
 
 </html>
