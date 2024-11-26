@@ -24,74 +24,148 @@
     <table class="table-container">
         <tr>
             <th style="width:  75px">Player</th>
-            <th onclick="toggleBox(this)">GS</th>
+
+            <th onclick="toggleBox(this)" data-stat="p_GS" description = "Games Started">GS</th>
+            <th onclick="toggleBox(this)" data-stat="p_CG" description = "Full Length Games">CG</th>
+            <th onclick="toggleBox(this)" data-stat="p_SHO" description = "Shutouts">SHO</th>
+            <th onclick="toggleBox(this)" data-stat="p_IPOuts" description = "Totals Outs">IPOuts</th>
+            <th onclick="toggleBox(this)" data-stat="p_H" description = "Hits by Batter">H</th>
+            <th onclick="toggleBox(this)" data-stat="p_ER" description = "Earned Runs">ER</th>
+            <th onclick="toggleBox(this)" data-stat="p_HR" description = "Home Runs Allowed">HR</th>
+            <th onclick="toggleBox(this)" data-stat="p_BB" description = "Walks allowed">BB</th>
+            <th onclick="toggleBox(this)" data-stat="p_SO" description = "Strikeouts"> SO</th>
+            <th onclick="toggleBox(this)" data-stat="p_BAOpp" description = "Batting Average Hits">BAOpp</th>
+            <th onclick="toggleBox(this)" data-stat="p_ERA" description = "Earned Run Average">ERA</th>
+            <th onclick="toggleBox(this)" data-stat="p_IBB" description = "Intentional Walks"> IBB</th>
+            <th onclick="toggleBox(this)" data-stat="p_HBP" description = "Players Hit by Pitch">HBP</th>
+            <th onclick="toggleBox(this)" data-stat="p_GF" description = "Games Finished">GF</th>
+
             <div id="box">
                 <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
                     &times;
                 </span>
 
-                    <p style="margin: 0">Games Started</p>
+                    <p id="description" style="margin: 0px">Games Started</p>
                     <div style="display: flex;">
-                        <p style="margin-right: 5px;">Sort By: </p>
-                        <p style="margin-right: 5px;border: 2px solid #000000">ASC </p>
-                        <p style="border: 2px solid #000000">DESC</p>
+                        <p style="margin-right: 10px">Sort By: </p>
+                        <p class="boxP ASC" style="margin-right: 15px;">ASC </p>
+                        <p class="boxP DESC" >DESC</p>
                     </div>
             </div>
 
-            <th>CG</th>
-            <th>SHO</th>
-            <th>IPOuts</th>
-            <th>H</th>
-            <th>ER</th>
-            <th>HR</th>
-            <th>BB</th>
-            <th>SO</th>
-            <th>BAOpp</th>
-            <th>ERA</th>
-            <th>IBB</th>
-            <th>HBP</th>
-            <th>GF</th>
-
         </tr>
-        {% for row in rows %}
-        <tr>
-            <td> {{ row[0] }} {{ row[1] }}</td>
+        <tbody id="table-body">
+            {% for row in rows %}
+            <tr>
+                <td> {{ row[0] }} {{ row[1] }}</td>
 
-            <td > {{ row[2] }}</td>
+                <td > {{ row[2] }}</td>
 
 
-            <td> {{ row[3] }}</td>
-            <td> {{ row[4] }}</td>
-            <td> {{ row[5] }}</td>
-            <td> {{ row[6] }}</td>
-            <td> {{ row[7] }}</td>
-            <td> {{ row[8] }}</td>
-            <td> {{ row[9] }}</td>
-            <td> {{ row[10] }}</td>
-            <td> {{ row[11] }}</td>
-            <td> {{ row[12] }}</td>
-            <td> {{ row[13] }}</td>
-            <td> {{ row[14] }}</td>
-            <td> {{ row[15] }}</td>
-        </tr>
-        {% endfor %}
+                <td> {{ row[3] }}</td>
+                <td> {{ row[4] }}</td>
+                <td> {{ row[5] }}</td>
+                <td> {{ row[6] }}</td>
+                <td> {{ row[7] }}</td>
+                <td> {{ row[8] }}</td>
+                <td> {{ row[9] }}</td>
+                <td> {{ row[10] }}</td>
+                <td> {{ row[11] }}</td>
+                <td> {{ row[12] }}</td>
+                <td> {{ row[13] }}</td>
+                <td> {{ row[14] }}</td>
+                <td> {{ row[15] }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
     </table>
 
     <script>
         function toggleBox(element) {
+            console.log('hi')
             var box = document.getElementById('box');
+            var stat = element.getAttribute('data-stat');  // Get the data attribute for stat
+            var description = element.getAttribute('description');
+            updateSortTitle(description);
+            console.log('hi');
+            // Update the sorting links dynamically
+
+            var sortAsc = box.querySelector('.boxP.ASC');
+            var sortDesc = box.querySelector('.boxP.DESC');
+            console.log(sortAsc)
+            // Update the onclick functions to use the correct stat
+
+            sortAsc.onclick = function() { sort('pitching', stat, 'ASC'); };
+            sortDesc.onclick = function() { sort('pitching', stat, 'DESC'); };
+            console.log('hi')
             var rect = element.getBoundingClientRect();
-
-            // Positioning the box to the right of the button by adding the width of the button
+            // Positioning the box next to the button
             box.style.left = (rect.left + rect.width) - 77 + 'px';
-            box.style.top = rect.top -100 + 'px'; // Aligns the top of the box with the top of the button
-
+            box.style.top = rect.top - 115 + 'px';
             // Toggle display
             box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+            console.log('hi')
         }
 
+        function updateSortTitle(newTitle) {
+            var titleElement = document.getElementById('description');
+            titleElement.textContent = newTitle;
+        }
         function hideBox() {
             document.getElementById("box").style.display = "none";
+        }
+
+        function sort(type,e,act) {
+            fetch('/sort', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ type:type, action: act, stat: e })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse JSON response
+                }
+                throw new Error('Network response was not ok.'); // Handle errors
+            })
+            .then(data => {
+                console.log('hi')
+                console.log(data.rows); // Log the rows data
+                updateRows(data)
+
+            })
+            .catch(error => console.error('Error:', error));  // Log any errors
+            {#.catch(error => console.error('Error:', error));#}
+        }
+
+        function updateRows(data) {
+            var tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            data.rows.forEach(function(row) {
+                var tr = document.createElement('tr'); // Create a new table row
+                var first = true;
+                // Assuming each 'row' is an array of values:
+                row.forEach(function(cellData) {
+                    if(first){
+                        var td = document.createElement('td');
+                        td.textContent = cellData + ' ' + row[1];
+
+                        tr.appendChild(td); // Append the cell to the row
+                        first = false
+                    }
+                    else if(!first && !(row[1] === cellData)){
+                        var td = document.createElement('td');
+                        td.textContent = cellData;
+                        tr.appendChild(td); // Append the cell to the row
+                    }
+
+                });
+
+                tableBody.appendChild(tr); // Append the new row to the table body
+            });
         }
     </script>
 

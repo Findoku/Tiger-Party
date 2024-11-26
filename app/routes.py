@@ -1,4 +1,5 @@
 from cgi import print_form
+from traceback import print_tb
 
 from app import app
 import mariadb
@@ -122,14 +123,7 @@ def register():
 
     return render_template('register.html', form=form)
 
-@app.route('/logout', methods=['GET', 'POST'])
-def logout():
-    data = request.get_json()
 
-    if data and data.get('action') == 'logout':
-        print('logging out for real this time')
-        GlobalVals.valid = 'true'
-        return redirect( url_for('startPage'))
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
 
@@ -154,7 +148,7 @@ def showTeams():
     if request.method == 'POST':
         print('post')
         if 'teamName' in request.form:
-            selected_team = request.form.get('team_dropdown')
+
             team_name = request.form.get('teamName', None)
             print(team_name)
             # Logic to determine years based on team selection
@@ -173,3 +167,39 @@ def showTeams():
     print(form.team_dropdown.data)
     print(form.year_dropdown.data)
     return render_template('showTeams.html', title='Sign In', form=form, choices=teams)
+
+
+
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    data = request.get_json()
+
+    if data and data.get('action') == 'logout':
+        print('logging out for real this time')
+        GlobalVals.valid = 'true'
+        return redirect( url_for('startPage'))
+
+
+@app.route('/sort', methods=['GET', 'POST'])
+def sort():
+    print('Sorting')
+    data = request.get_json()
+    baseballRole = data.get('type')
+    sorting = data.get('action')
+    stat = data.get('stat')
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    print(baseballRole)
+    print(sorting)
+    print(stat)
+
+    sql = ('SELECT nameFirst, nameLast, p_GS, p_CG, p_SHO, p_IPOuts, p_H, p_ER, p_HR, p_BB, p_SO, p_BAOpp, p_ERA, p_IBB, p_HBP, p_GF '
+        'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
+        'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole,team_name,year_id, stat, sorting))
+
+    print(sql)
+    rows = sqlComs.getRowFromSQL(sql)
+    print(rows)
+    return jsonify(rows=rows)
