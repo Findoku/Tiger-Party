@@ -21,5 +21,78 @@
         </ul>
     </nav>
 
+    <table class="table-container">
+        <tr>
+            <th style="width:  75px">Player</th>
+            <th onclick="toggleBox(this)">GS</th>
+            <div id="box">
+                <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
+                    &times;
+                </span>
+
+                    <p style="margin: 0">Games Started</p>
+                    <div style="display: flex;">
+                        <p style="margin-right: 5px;">Sort By: </p>
+                        <p style="margin-right: 5px;border: 2px solid #000000">ASC </p>
+                        <p style="border: 2px solid #000000">DESC</p>
+                    </div>
+            </div>
+
+            <th>CG</th>
+            <th>SHO</th>
+            <th>IPOuts</th>
+            <th>H</th>
+            <th>ER</th>
+            <th>HR</th>
+            <th>BB</th>
+            <th>SO</th>
+            <th>BAOpp</th>
+            <th>ERA</th>
+            <th>IBB</th>
+            <th>HBP</th>
+            <th>GF</th>
+
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td> {{ row[0] }} {{ row[1] }}</td>
+
+            <td > {{ row[2] }}</td>
+
+
+            <td> {{ row[3] }}</td>
+            <td> {{ row[4] }}</td>
+            <td> {{ row[5] }}</td>
+            <td> {{ row[6] }}</td>
+            <td> {{ row[7] }}</td>
+            <td> {{ row[8] }}</td>
+            <td> {{ row[9] }}</td>
+            <td> {{ row[10] }}</td>
+            <td> {{ row[11] }}</td>
+            <td> {{ row[12] }}</td>
+            <td> {{ row[13] }}</td>
+            <td> {{ row[14] }}</td>
+            <td> {{ row[15] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function toggleBox(element) {
+            var box = document.getElementById('box');
+            var rect = element.getBoundingClientRect();
+
+            // Positioning the box to the right of the button by adding the width of the button
+            box.style.left = (rect.left + rect.width) - 77 + 'px';
+            box.style.top = rect.top -100 + 'px'; // Aligns the top of the box with the top of the button
+
+            // Toggle display
+            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function hideBox() {
+            document.getElementById("box").style.display = "none";
+        }
+    </script>
 
 </html>

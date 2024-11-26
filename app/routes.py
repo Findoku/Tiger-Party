@@ -50,9 +50,9 @@ def battingStats():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     print("batting")
-    sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF'+
+    sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF' +
            ' FROM batting NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-           +'\'' +team_name + '\'  AND yearid = '+year_id+' Group By playerID,yearID;')
+           + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
     rows = sqlComs.getRowFromSQL(sql);
 
 
@@ -62,8 +62,11 @@ def battingStats():
 def pitchingStats():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
+    sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
+           ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
+           + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
+    rows = sqlComs.getRowFromSQL(sql)
     print("pitching")
-    rows = sqlComs.getRoster(team_name, year_id)
 
     return render_template('webPage/PitchingStats.html', rows=rows)
 

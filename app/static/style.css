@@ -146,33 +146,38 @@ body {
 
 /* Styling for the table container to enable scrolling */
 .table-container {
-    width: 80%;
     margin:  auto; /* Center the table horizontally */
     border-collapse: collapse; /* Merge borders for a cleaner look */
     box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Subtle shadow around the table */
     font-family: Arial, sans-serif; /* Modern font */
-    font-size: 14px;
-
+    font-size: 10px;
+    text-align: center;
+    width: 1200px;  /* Fixed width */
+    height: 300px; /* Fixed height */
+    table-layout: fixed; /* Forces columns to respect the table's width */
+    overflow: hidden; /* Hides any content that overflows the table's dimensions */
 }
 
 .table-container th, .table-container td {
     padding: 12px 20px; /* Ample padding in cells */
     border-collapse: collapse;
     border: 1px solid black;
-    text-align: center; /* Align text to the left */
-    border-bottom: 2px solid #f0f0f0; /* Light grey border for separation */
+    text-align: center;/* Align text to the left */
+    text-overflow: ellipsis; /* Adds an ellipsis if the text overflows the cell's content area */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+
 }
 
 .table-container th {
     border: 2px solid black;
-    font-size: 14px;
+
     background-color: #1898e1; /* Green background for headers */
     color: white; /* White text color */
 }
 
 .table-container td {
     border: 2px solid black;
-    font-size: 14px;
+
     background-color: #FFFFFF; /* White background for cells */
     color: #333; /* Dark grey text for readability */
 }
@@ -204,3 +209,28 @@ body {
     line-height: 1.5; /* Spacing between lines */
 }
 
+
+
+#box {
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    color: black;
+    position: absolute;
+    padding: 20px;
+    box-sizing: border-box;
+    display: none; /* Box is initially hidden */
+
+    z-index: 100;
+}
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+#container {
+    display: flex; /* Ensures the button and box are side by side */
+    align-items: center; /* Aligns items vertically */
+}
