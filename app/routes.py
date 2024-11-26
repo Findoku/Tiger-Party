@@ -195,9 +195,15 @@ def sort():
     print(sorting)
     print(stat)
 
-    sql = ('SELECT nameFirst, nameLast, p_GS, p_CG, p_SHO, p_IPOuts, p_H, p_ER, p_HR, p_BB, p_SO, p_BAOpp, p_ERA, p_IBB, p_HBP, p_GF '
-        'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
-        'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole,team_name,year_id, stat, sorting))
+    if(baseballRole == 'pitching'):
+        sql = ('SELECT nameFirst, nameLast, p_GS, p_CG, p_SHO, p_IPOuts, p_H, p_ER, p_HR, p_BB, p_SO, p_BAOpp, p_ERA, p_IBB, p_HBP, p_GF '
+            'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
+            'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+    elif(baseballRole == 'batting'):
+        sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF '
+            'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
+            'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+
 
     print(sql)
     rows = sqlComs.getRowFromSQL(sql)

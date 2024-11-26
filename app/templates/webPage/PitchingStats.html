@@ -25,20 +25,20 @@
         <tr>
             <th style="width:  75px">Player</th>
 
-            <th onclick="toggleBox(this)" data-stat="p_GS" description = "Games Started">GS</th>
-            <th onclick="toggleBox(this)" data-stat="p_CG" description = "Full Length Games">CG</th>
-            <th onclick="toggleBox(this)" data-stat="p_SHO" description = "Shutouts">SHO</th>
-            <th onclick="toggleBox(this)" data-stat="p_IPOuts" description = "Totals Outs">IPOuts</th>
+            <th  style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="p_GS" description = "Games Started">GS</th>
+            <th  style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="p_CG" description = "Full Length Games">CG</th>
+            <th style="width:  15px" onclick="toggleBox(this)" data-stat="p_SHO" description = "Shutouts">SHO</th>
+            <th style="width:  25px" onclick="toggleBox(this)" data-stat="p_IPOuts" description = "Totals Outs">IPOuts</th>
             <th onclick="toggleBox(this)" data-stat="p_H" description = "Hits by Batter">H</th>
-            <th onclick="toggleBox(this)" data-stat="p_ER" description = "Earned Runs">ER</th>
-            <th onclick="toggleBox(this)" data-stat="p_HR" description = "Home Runs Allowed">HR</th>
-            <th onclick="toggleBox(this)" data-stat="p_BB" description = "Walks allowed">BB</th>
-            <th onclick="toggleBox(this)" data-stat="p_SO" description = "Strikeouts"> SO</th>
-            <th onclick="toggleBox(this)" data-stat="p_BAOpp" description = "Batting Average Hits">BAOpp</th>
-            <th onclick="toggleBox(this)" data-stat="p_ERA" description = "Earned Run Average">ERA</th>
-            <th onclick="toggleBox(this)" data-stat="p_IBB" description = "Intentional Walks"> IBB</th>
-            <th onclick="toggleBox(this)" data-stat="p_HBP" description = "Players Hit by Pitch">HBP</th>
-            <th onclick="toggleBox(this)" data-stat="p_GF" description = "Games Finished">GF</th>
+            <th style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="p_ER" description = "Earned Runs">ER</th>
+            <th style=" padding-left: 15px;" onclick="toggleBox(this)" data-stat="p_HR" description = "Home Runs Allowed">HR</th>
+            <th style=" padding-left: 15px;"  onclick="toggleBox(this)" data-stat="p_BB" description = "Walks allowed">BB</th>
+            <th style=" padding-left: 15px;"  onclick="toggleBox(this)" data-stat="p_SO" description = "Strikeouts"> SO</th>
+            <th style="width:  25px" onclick="toggleBox(this)" data-stat="p_BAOpp" description = "Batting Average Hits">BAOpp</th>
+            <th style=" padding-left: 12px; " onclick="toggleBox(this)" data-stat="p_ERA" description = "Earned Run Average">ERA</th>
+            <th style=" padding-left: 12px;"  onclick="toggleBox(this)" data-stat="p_IBB" description = "Intentional Walks"> IBB</th>
+            <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="p_HBP" description = "Players Hit by Pitch">HBP</th>
+            <th  style=" padding-left: 15px; " onclick="toggleBox(this)" data-stat="p_GF" description = "Games Finished">GF</th>
 
             <div id="box">
                 <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
@@ -47,7 +47,7 @@
 
                     <p id="description" style="margin: 0px">Games Started</p>
                     <div style="display: flex;">
-                        <p style="margin-right: 10px">Sort By: </p>
+                        <p style="margin-right: 10px; padding-top: 5px">Sort By: </p>
                         <p class="boxP ASC" style="margin-right: 15px;">ASC </p>
                         <p class="boxP DESC" >DESC</p>
                     </div>

@@ -152,7 +152,7 @@ body {
     font-family: Arial, sans-serif; /* Modern font */
     font-size: 10px;
     text-align: center;
-    width: 1200px;  /* Fixed width */
+    width: 800px;  /* Fixed width */
     height: 300px; /* Fixed height */
     table-layout: fixed; /* Forces columns to respect the table's width */
     overflow: hidden; /* Hides any content that overflows the table's dimensions */
@@ -170,26 +170,21 @@ body {
 
 .table-container th {
     border: 2px solid black;
-
+    text-align: center;/* Align text to the left */
     background-color: #1898e1; /* Green background for headers */
     color: white; /* White text color */
 }
 .table-container th:hover {
-
-
     background-color: #03273a; /* Green background for headers */
 
 }
 
 .table-container td {
     border: 2px solid black;
-
+    text-align: center;/* Align text to the left */
     background-color: #FFFFFF; /* White background for cells */
     color: #333; /* Dark grey text for readability */
 }
-
-
-
 
 
 .ImmacCard {
@@ -220,6 +215,8 @@ body {
 
     text-align: center;
     border: 2px solid #000000;
+    border-radius: 25px;
+    padding-top: 3px;
     height: 25px;
     width: 50px;
 }
