@@ -23,6 +23,143 @@
     </nav>
 
     <main>
+        <div style="display: flex;color: white">
+            <h1>Average/Total <br>Team Pitching Stats: </h1>
+            <h1 style="margin-left: 100px">Average/Total <br>Team Batting Stats: </h1>
+            <h1 style="margin-left: 100px">Average/Total <br>Team Feilding Stats: </h1>
+        </div>
+
+
+        <div style="display: flex">
+
+            <Table id="vertical-1" width = 225" bgcolor="black">
+                <tr bgcolor="lightblue">
+                    <th  width = "100">Total Shutouts</th>
+
+                    <td bgcolor="lightgreen "  style="text-align: right;">{{ pitchingRows[0][2] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Outs Caused</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][3] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Hits by batter</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][4] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Strikeouts</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][5] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Average Batting hits</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][6] }}</td>
+
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Earned Run Average</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][7] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Intentional Walks</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][8] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Players Hit by Pitch</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ pitchingRows[0][9] }}</td>
+                </tr>
+            </Table>
+
+
+            <Table style="margin-left: 200px" id="vertical-1" width = 225" bgcolor="black">
+                <tr bgcolor="lightblue">
+                    <th  width = "100">Total Bats</th>
+
+                    <td bgcolor="lightgreen " style="text-align: right;"> {{ battingRows[0][2] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Runs</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][3] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Average Runs Per at Bat</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][4] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Hits to First Base</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][5] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Doubles </th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][6] }}</td>
+
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Triples</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][7] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Home Runs</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][8] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Average Home Runs Per at Bat</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][9] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Stolen Bases</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][10] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Walks</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][11] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Strikeouts</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][12] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Sacrifice Hits(Bunts)</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][13] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Sacrifice Flies</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ battingRows[0][13] }}</td>
+                </tr>
+
+            </Table>
+
+            <Table style="margin-left: 175px" id="vertical-1" width = 225" bgcolor="black">
+                <tr bgcolor="lightblue">
+                    <th  width = "100">Total Putouts</th>
+
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ fieldingRows[0][2] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "100">Total Assisted Throws to Outs</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ fieldingRows[0][3] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Errors</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ fieldingRows[0][4] }}</td>
+                </tr>
+                <tr bgcolor="lightblue">
+                    <th width = "125">Total Caught Steals</th>
+                    <td bgcolor="lightgreen " style="text-align: right;">{{ fieldingRows[0][5] }}</td>
+
+                </tr>
+            </Table>
+
+        </div>
+
+        <hr>
+        <h1>Other Accomplishments:</h1>
+
+        <div style="padding-left: 40px">
+            <h2>World Series Winnings:</h2>
+            {% for ws in WSs %}
+                <h4 style="padding-left: 20px"> {{  ws[3]}} </h4>
+            {% endfor %}
+        </div>
 
     </main>
 

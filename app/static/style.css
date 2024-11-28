@@ -143,20 +143,33 @@ body {
 
 /* Styling for the card container */
 .roster-container {
-    display: flex; /* Enables flexbox */
-    justify-content: space-between; /* Distributes space between cards */
-    height: 95%;
-
+    width: 100%; /* Adjust based on your layout needs */
 }
 
-/* Styling for individual cards */
 .rosterCard {
-    background-color: white; /* White background for the cards */
-    padding: 20px; /* Padding inside the cards */
-    height: 550px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow to the cards */
-    overflow-y: auto; /* Enables vertical scrollbar when needed */
-    margin: 10px; /* Adds margin around cards */
+    background-color: #f2f2f2; /* Example background color */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+}
+
+.roster-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjusts spacing between entries */
+}
+
+.roster-entry {
+    flex-basis: calc(33.333% - 10px); /* Each takes a third of the container width, minus some margin */
+    margin: 0px; /* Space between entries */
+    padding-top: 20px;
+    background-color: antiquewhite;
+    border: 2px solid black;
+    cursor: pointer;
+    text-align: center; /* Center text within each entry */
+}
+
+.roster-entry:hover {
+    background-color: lightblue;
 }
 
 .ImmacCard-container {

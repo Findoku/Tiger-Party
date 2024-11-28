@@ -40,7 +40,7 @@ def getRowFromSQL(sql):
     return rows
 
 def getRoster(teamName, yearID):
-    sql = ('SELECT DISTINCT nameFirst,nameLast FROM people p, batting b,teams t' +
+    sql = ('SELECT DISTINCT nameFirst,nameLast,p.playerid FROM people p, batting b,teams t' +
            ' WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \''
            + str(teamName) + '\' AND b.yearID = ' + str(yearID) + ' ORDER BY p.playerId ASC')
     rows = getRowFromSQL(sql)

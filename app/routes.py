@@ -66,10 +66,9 @@ def battingStats():
 def pitchingStats():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    sql = (
-                'SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
-                ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-                + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
+    sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
+            ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
+            + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
     rows = sqlComs.getRowFromSQL(sql)
     print("pitching")
 
@@ -121,9 +120,38 @@ def DepthChart():
 
 @app.route('/team/Team-Stats', methods = ['GET','POST'])
 def TeamStats():
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    sql = ('SELECT nameFirst, nameLast, sum(p_SHO),sum(p_IPOuts),sum(p_H),sum(p_SO),ROUND(sum(p_BAOpp)/count(playerid),3),ROUND(sum(p_ERA)/count(playerid),3),sum(p_IBB),sum(p_HBP)'
+           ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \''+team_name +'\' AND yearID = ' + year_id +' Group BY yearId')
+
+    pitchingRows = sqlComs.getRowFromSQL(sql)
+    print(sql)
 
 
-    return render_template('webPage/TeamStats.html',)
+    sql = ('SELECT nameFirst, nameLast,sum(b_AB),sum(b_R), round(sum(b_R)/sum(b_AB),3),sum(b_h),sum(b_2B),sum(b_3B),sum(b_HR),round(sum(b_HR)/sum(b_AB),3),sum(b_SB),sum(b_BB),sum(b_SO),sum(b_SH),sum(b_SF)'
+           ' FROM batting NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \''+team_name +'\' AND yearID = ' + year_id +' Group BY yearId')
+    print(sql)
+
+    battingRows = sqlComs.getRowFromSQL(sql)
+
+
+    sql = ('SELECT nameFirst, nameLast, sum(f_PO),sum(f_A), sum(f_E),sum(f_CS)'
+           ' FROM fielding NATURAL JOIN TEAMS NATURAL JOIN people  WHERE team_name = \''+team_name +'\' AND yearID = ' + year_id +' Group BY yearId')
+    fieldingRows = sqlComs.getRowFromSQL(sql)
+
+
+    sql = 'Select wins,round,team_name,yearid From seriespost NATURAL JOIN teams WHERE teams.teamid = teamIdwinner AND round = \'WS\' AND team_name = \'' +  team_name+ '\';'
+    WSs = sqlComs.getRowFromSQL(sql)
+
+
+
+    if not WSs:  # Set default if empty
+        WSs = [['a','b','c','Never Won a World Series']]
+
+    print(WSs[0][3])
+
+    return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs)
 
 
 
