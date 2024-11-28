@@ -96,7 +96,7 @@
 }
 
 .DepthCard {
-    background-color: lightcoral;
+    background-color: white;
     position: absolute;
     width: 10%;
     z-index: 40;
@@ -106,7 +106,7 @@
     margin: 0;
     height: 3%;
     text-align: center;
-    background-color: lightblue;
+    background-color: orange;
 
 }
 
@@ -120,8 +120,9 @@ body {
     margin: 0;
     font-family: Arial, sans-serif; /* Sets the font for the page */
     justify-content: center;
+    min-height: 100vh; /* Minimum height is set to 100% of the viewport height */
+    background: linear-gradient(to bottom, blue, white);
 
-    background: linear-gradient(to bottom, blue, white)
 }
 .centered-container {
     display: flex;
@@ -141,7 +142,6 @@ body {
 }
 
 /* Styling for the card container */
-
 .roster-container {
     display: flex; /* Enables flexbox */
     justify-content: space-between; /* Distributes space between cards */

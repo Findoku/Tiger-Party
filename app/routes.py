@@ -1,14 +1,16 @@
 from cgi import print_form
 from traceback import print_tb
 
+from sqlalchemy import false, true
+
 from app import app
 import mariadb
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-
+from app import teams
 from app.DatabaseConnection import mysql
 from app.GlobalVals import valid
-from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm
+from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm
 from app import sqlComs
 from app import GlobalVals
 
@@ -59,6 +61,7 @@ def battingStats():
 
     return render_template('webPage/BattingStats.html', rows=rows)
 
+
 @app.route('/team/Pitching-Stats')
 def pitchingStats():
     team_name = GlobalVals.teamName
@@ -73,7 +76,7 @@ def pitchingStats():
     return render_template('webPage/PitchingStats.html', rows=rows)
 
 @app.route('/team/Fielding')
-def Positions():
+def Fielding():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR FROM Fielding NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
@@ -84,23 +87,53 @@ def Positions():
 
     return render_template('webPage/Fielding.html', rows=rows)
 
-@app.route('/team/Depth-Chart')
+
+@app.route('/team/Depth-Chart', methods=['GET', 'POST'])
 def DepthChart():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     print("depth")
-    rows = sqlComs.getRoster(team_name, year_id)
+    form = DepthForm()
+    posting = 'false'
+    if request.method == 'POST':
+        print("depth OPTION KID")
+        if 'option' in request.form:
+            option = request.form.get('option', None)
+            GlobalVals.DepthChartOption = option
+            print("OPTION: " + option)
 
-    return render_template('webPage/DepthChart.html', rows=rows)
+    if not form.is_submitted():
+        form.depth_dropdown.data = GlobalVals.DepthChartOption
+
+    print(GlobalVals.DepthChartOption)
+    CFs = sqlComs.getCF(GlobalVals.DepthChartOption)
+    LFs = sqlComs.getLF(GlobalVals.DepthChartOption)
+    RFs = sqlComs.getRF(GlobalVals.DepthChartOption)
+    SSs = sqlComs.getSS(GlobalVals.DepthChartOption)
+    secBs = sqlComs.get2B(GlobalVals.DepthChartOption)
+    thirdBs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    firstBs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    Cs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    Ps = sqlComs.get3B(GlobalVals.DepthChartOption)
+
+    return render_template('webPage/DepthChart.html', CFs=CFs, LFs=LFs, RFs=RFs, SSs=SSs, secBs=secBs, thirdBs=thirdBs,
+                           firstBs=firstBs, Cs=Cs, Ps=Ps, form=form)
+
+@app.route('/team/Team-Stats', methods = ['GET','POST'])
+def TeamStats():
+
+
+    return render_template('webPage/TeamStats.html',)
+
 
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
     form1 = TeamForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
-    teams = sqlComs.getRowFromSQL(sql)
-    form1.team1.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
-    form1.team2.choices = [(team[1], team[1]) for team in teams]  # Assuming you're fetching from a database
+    #teams = sqlComs.getRowFromSQL(sql)
+    form1.team1.choices = teams.teams  # Assuming you're fetching from a database
+    form1.team2.choices = teams.teams  # Assuming you're fetching from a database
 
     if form1.validate_on_submit():
         print('players kid')
@@ -136,8 +169,8 @@ def showTeams():
 
     form = DisplayForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
-    teams = sqlComs.getRowFromSQL(sql)
-    form.team_dropdown.choices = [(team[1], team[1]) for team in teams]
+
+    form.team_dropdown.choices = teams.teams
 
     if form.team_dropdown.data is not None and form.year_dropdown is not None:
         print("here")
@@ -169,7 +202,6 @@ def showTeams():
 
     print("follow")
     print(form.team_dropdown.data)
-    print(form.year_dropdown.data)
     return render_template('showTeams.html', title='Sign In', form=form, choices=teams)
 
 
@@ -216,3 +248,18 @@ def sort():
     rows = sqlComs.getRowFromSQL(sql)
     print(rows)
     return jsonify(rows=rows)
+
+
+@app.route('/sort', methods=['GET', 'POST'])
+def switchDep():
+    CFs = sqlComs.getCF(GlobalVals.DepthChartOption)
+    LFs = sqlComs.getLF(GlobalVals.DepthChartOption)
+    RFs = sqlComs.getRF(GlobalVals.DepthChartOption)
+    SSs = sqlComs.getSS(GlobalVals.DepthChartOption)
+    secBs = sqlComs.get2B(GlobalVals.DepthChartOption)
+    thirdBs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    firstBs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    Cs = sqlComs.get3B(GlobalVals.DepthChartOption)
+    Ps = sqlComs.get3B(GlobalVals.DepthChartOption)
+    jsonify(CFs=CFs, LFs=LFs, RFs=RFs, SSs=SSs, secBs=secBs, thirdBs=thirdBs,
+            firstBs=firstBs, Cs=Cs, Ps=Ps)

@@ -3,6 +3,11 @@
     <head>
         <title> Tiger Party</title>
         <link rel="stylesheet" href="../../static/style.css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include Select2 JavaScript, after including jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     </head>
     <div class="nav"   >
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
@@ -19,41 +24,199 @@
             <li><a onclick="location.href='/team/Pitching-Stats'">Pitching Stats</a></li>
             <li><a onclick="location.href='/team/Fielding'">Fielding</a></li>
             <li><a onclick="location.href='/team/Depth-Chart'">Depth Chart</a> </li>
+            <li><a onclick="location.href='/team/Team-Stats'">Team Stats</a> </li>
         </ul>
     </nav>
+
+    <div style="margin-left: 50%">
+        <form method="POST" action="{{ url_for('DepthChart') }}">
+            {{ form.depth_dropdown(id='depth_dropdown') }}
+            {{ form.submit() }}
+        </form>
+    </div>
+
     <div>
+
+
         <div style="position: relative;">
             <div style="left: 37%; margin-top: 6%" class="DepthCard">
                 <p class="DepthCardPTitle">CF</p>
-                <div style="display: flex">
-                    <p style="left: 0">Jose Altuve</p>
-                    <p style="right: 0">10% </p>
-                </div>
+                <cbody id="CF">
+                     {% for f in CFs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </cbody>
             </div>
         </div>
 
 
         <div style="position: relative;">
-            <div style="left: 22%; margin-top: 14%" class="DepthCard">
+            <div style="left: 16%; margin-top: 10%" class="DepthCard">
                 <p class="DepthCardPTitle">LF</p>
-                <div style="display: flex">
-                    <p style="left: 0">Jose Altuve</p>
-                    <p style="right: 0">10% </p>
+                <div >
+                     {% for f in LFs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <div style="left: 58%; margin-top: 10%" class="DepthCard">
+                <p class="DepthCardPTitle">RF</p>
+                <div >
+                     {% for f in RFs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+         <div style="position: relative;">
+            <div style="left: 27%; margin-top: 24%" class="DepthCard">
+                <p class="DepthCardPTitle">SS</p>
+                <div >
+                     {% for f in SSs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div style="position: relative;">
+            <div style="left: 47%; margin-top: 24%" class="DepthCard">
+                <p class="DepthCardPTitle">2B</p>
+                <div >
+                     {% for f in secBs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div style="position: relative;">
+            <div style="left: 60%; margin-top: 36%" class="DepthCard">
+                <p class="DepthCardPTitle">1B</p>
+                <div >
+                     {% for f in firstBs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
                 </div>
             </div>
         </div>
 
         <div style="position: relative;">
-            <div style="left: 53%; margin-top: 14%" class="DepthCard">
-                <p class="DepthCardPTitle">RF</p>
-                <div style="display: flex">
-                    <p style="left: 0">Jose Altuve</p>
-                    <p style="right: 0">10% </p>
+            <div style="left: 17%; margin-top: 36%" class="DepthCard">
+                <p class="DepthCardPTitle">3B</p>
+                <div>
+                     {% for f in thirdBs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
                 </div>
             </div>
         </div>
+        <div style="position: relative;">
+            <div style="left: 37.3%; margin-top: 47%" class="DepthCard">
+                <p class="DepthCardPTitle">C</p>
+                <div>
+                     {% for f in Cs %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
 
         <img  src="{{url_for('static', filename='field.png')}}" style="position: relative; left: 10%; margin-top: 5%;" width="65%" height="50%"  alt=""/>
     </div>
 
+
+    <script>
+
+        document.getElementById('depth_dropdown').onchange = function() {
+            var teamName = this.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/team/Depth-Chart', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Handle your response here
+                    updateEveryone(response); // Assuming updateEveryone can handle the parsed object
+                } else {
+                    console.error('Error with the request:', xhr.statusText);
+                }
+            };
+
+            xhr.send('option=' + encodeURIComponent(teamName));
+        };
+        function switchDep(type,e,act) {
+            fetch('/switchDep', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ type:type, action: act, stat: e })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse JSON response
+                }
+                throw new Error('Network response was not ok.'); // Handle errors
+            })
+            .then(data => {
+                console.log('hi')
+                console.log(data.rows); // Log the rows data
+                updateRows(data)
+
+            })
+            .catch(error => console.error('Error:', error));  // Log any errors
+            {#.catch(error => console.error('Error:', error));#}
+        }
+        function updateEveryone(data) {
+            console.log(data.CFs)
+            var CFs = document.getElementById('CFs');
+            CFs.innerHTML = ''; // Clear existing options
+            data.CFs.forEach(function(f) {
+                var option = new Option(f, f);
+                CFs.appendChild(option);
+            });
+        }
+
+        $(document).ready(function() {
+            $('#team_dropdown').select2({
+                placeholder: "Select a team",
+                allowClear: true
+            });
+        });
+    </script>
 </html>

@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 from app import teams
+from app import GlobalVals
 from app import sqlComs
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField
@@ -28,6 +29,9 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit', render_kw={'class': 'stylish-button'})
 
+class DepthForm(FlaskForm):
+    depth_dropdown = SelectField('Select Type', choices=GlobalVals.DepthChartOptions,default="", validators=[DataRequired()])
+    submit = SubmitField('Submit',render_kw={'class': 'stylish-button'})
 
 class DisplayForm(FlaskForm):
 
