@@ -152,6 +152,20 @@
             </div>
         </div>
 
+        <div style="position: relative;">
+            <div style="left: 75%; margin-top: 10%" class="DepthCard">
+                <p class="DepthCardPTitle">P</p>
+                <div>
+                     {% for f in Ps %}
+                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
 
         <img  src="{{url_for('static', filename='field.png')}}" style="position: relative; left: 10%; margin-top: 5%;" width="65%" height="50%"  alt=""/>
     </div>

@@ -25,7 +25,17 @@
     <main>
         <div class="roster-container">
             <div class="rosterCard">
-                <h3 style="margin-top: 0">Roster:</h3>
+                <div >
+                    <h3 style="margin-top: 0">Roster:</h3>
+
+                    <form method="post" action="{{ url_for('index') }}">
+                        {{ form.hidden_tag() }}
+                        {{ form.rosterOptions() }}
+                        {{ form.submit() }}
+                    </form>
+                </div>
+
+
                 <div class="roster-row">
                     {% for row in rows %}
                         <div class="roster-entry" onclick="location.href='/player?player={{ row[2] }}' ">{{ row[0] }} {{ row[1] }}</div>

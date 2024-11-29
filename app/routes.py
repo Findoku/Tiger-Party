@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from app import teams
 from app.DatabaseConnection import mysql
 from app.GlobalVals import valid
-from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm
+from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm, rosterForm
 from app import sqlComs
 from app import GlobalVals
 
@@ -75,14 +75,24 @@ def player():
                            fieldingRows=fieldingRows,positions=positions,managerRows=managerRows,teamsManaged=teamsManaged,
                            halloffame=halloffame)
 
-@app.route('/team/roster')
+@app.route('/team/roster', methods=['GET', 'POST'],endpoint='index')
 def index():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("roster")
-    rows = sqlComs.getRoster(team_name, year_id)
+    type = 'All'
+    form = rosterForm()
 
-    return render_template('webPage/mainPage.html', rows=rows)
+
+
+    if(form.validate_on_submit()):
+        print("WHY HELLO THERE")
+        type = form.rosterOptions.data;
+
+
+    print("roster")
+    rows = sqlComs.getRoster(team_name, year_id,type)
+
+    return render_template('webPage/mainPage.html', rows=rows,form=form)
 
 @app.route('/team/Batting-Stats')
 def battingStats():
@@ -149,7 +159,7 @@ def DepthChart():
     thirdBs = sqlComs.get3B(GlobalVals.DepthChartOption)
     firstBs = sqlComs.get3B(GlobalVals.DepthChartOption)
     Cs = sqlComs.get3B(GlobalVals.DepthChartOption)
-    Ps = sqlComs.get3B(GlobalVals.DepthChartOption)
+    Ps = sqlComs.getP(GlobalVals.DepthChartOption)
 
     return render_template('webPage/DepthChart.html', CFs=CFs, LFs=LFs, RFs=RFs, SSs=SSs, secBs=secBs, thirdBs=thirdBs,
                            firstBs=firstBs, Cs=Cs, Ps=Ps, form=form)

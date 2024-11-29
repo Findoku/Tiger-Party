@@ -16,7 +16,11 @@ team_choices = [(f'option{i+1}', team) for i, team in enumerate(teams.teams)]
 class TeamForm(FlaskForm):
     team1 = SelectField('Select Team', choices=[], validators=[DataRequired()])
     team2 = SelectField('Select Team', choices=teams.teams, validators=[DataRequired()])
-    submit = SubmitField('Submit',render_kw={'class': 'stylish-button'})
+    submit = SubmitField('Submit', render_kw={'class': 'stylish-button'})
+
+class rosterForm(FlaskForm):
+    rosterOptions = SelectField('Select Type', choices=GlobalVals.playerTypes,default='All',validators=[DataRequired()])
+    submit = SubmitField('Submit', render_kw={'class': 'stylish-button'})
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
