@@ -71,9 +71,25 @@ def player():
     sql = 'Select inducted from hallofFame where inducted = \'Y\' AND playerid = \'' + player_id + '\''
     halloffame = sqlComs.getRowFromSQL(sql)
 
+
+    sql = ('SELECT yearID, team_name,b_G, b_AB, b_R,b_H, b_2B, b_3B,b_RBI, b_HR, b_SB, b_CS '
+           ', b_BB, b_SO, b_IBB, b_HBP, b_SH, b_SF FROM batting Natural Join teams'
+           ' WHERE playerid = \'') + player_id + '\' ORDER BY yearID ASC'
+    battingSeason = sqlComs.getRowFromSQL(sql)
+
+    sql = ('SELECT yearid, team_name, p_W, p_L, p_G, p_GS, p_CG, p_SHO, p_SV, p_H, p_HR, p_BB,p_SO,p_BAOpp '
+           ', p_ERA,p_IBB,p_WP,p_HBP, p_BK,p_R, p_SH,p_SF FROM pitching NATURAL JOIN TEAMS'
+           ' WHERE playerid = \'') + player_id + '\' order by yearid asc;'
+    pitchingSeason = sqlComs.getRowFromSQL(sql)
+
+    sql = (' SELECT yearid, team_name, position,f_G, f_GS, f_InnOuts, f_PO, f_A, f_E, f_DP, f_PB '
+           ', f_WP, f_SB, f_CS FROM fielding natural join teams  WHERE playerid = \'') + player_id + '\' ORDER BY yearID ASC'
+    fieldingSeason = sqlComs.getRowFromSQL(sql)
+
+
     return render_template('playerStats.html', rows=rows,battingRows=battingRows,pitchingRows=pitchingRows,
                            fieldingRows=fieldingRows,positions=positions,managerRows=managerRows,teamsManaged=teamsManaged,
-                           halloffame=halloffame)
+                           halloffame=halloffame,battingSeason=battingSeason,pitchingSeason=pitchingSeason,fieldingSeason=fieldingSeason)
 
 @app.route('/team/roster', methods=['GET', 'POST'],endpoint='index')
 def index():

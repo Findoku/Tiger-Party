@@ -128,7 +128,168 @@
             </div>
         {% endif %}
         </div>
+        <hr>
+
+        <h1>Seasons:</h1>
+
+        {% if battingRows[0][2] %}
+            <h3>Batting Season: </h3>
+            <table style="width: 90%" class="table-container">
+            <tr>
+                <th style="width:  50px"> Season </th>
+                <th style="width:  100px" > Team</th>
+
+                <th > G</th>
+                <th >AB</th>
+                <th >R</th>
+                <th >H</th>
+                <th >2B</th>
+                <th >3B</th>
+                <th >RBI</th>
+                <th >HR</th>
+                <th >SB</th>
+                <th >CS</th>
+                <th >BB</th>
+                <th >SO</th>
+                <th >IBB</th>
+                <th>HBP</th>
+                <th >SH</th>
+                <th >SF</th>
+
+
+            </tr>
+
+            <tbody id="table-body">
+                {% for sea in battingSeason %}
+                <tr>
+                    <td> {{ sea[0] }} </td>
+                    <td> {{ sea[1] }} </td>
+                    <td> {{ sea[2] }}</td>
+                    <td> {{ sea[3] }}</td>
+                    <td> {{ sea[4] }}</td>
+                    <td> {{ sea[5] }}</td>
+                    <td> {{ sea[6] }}</td>
+                    <td> {{ sea[7] }}</td>
+                    <td> {{ sea[8] }}</td>
+                    <td> {{ sea[9] }}</td>
+                    <td> {{ sea[10] }}</td>
+                    <td> {{ sea[11] }}</td>
+                    <td> {{ sea[12] }}</td>
+                    <td> {{ sea[13] }}</td>
+                    <td> {{ sea[14] }}</td>
+                    <td> {{ sea[15] }}</td>
+                    <td> {{ sea[16] }}</td>
+                    <td> {{ sea[17] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if pitchingRows[0][2] %}
+        <h3>Pitching Season: </h3>
+                <table style="width: 90%" class="table-container">
+                <tr>
+                    <th style="width:  50px"> Season </th>
+                    <th style="width:  100px" > Team</th>
+                    <th >W</th>
+                    <th >L</th>
+                    <th >G</th>
+                    <th >GS</th>
+                    <th>CG</th>
+                    <th >SHO</th>
+                    <th >SV</th>
+                    <th >HR</th>
+                    <th >BB</th>
+                    <th >SO</th>
+                    <th >BAOpp</th>
+                    <th >ERA</th>
+                    <th >IBB</th>
+                    <th >WP</th>
+                    <th >HBP</th>
+                    <th >BK</th>
+                    <th>R</th>
+                    <th >SH</th>
+                    <th >SF</th>
+
+
+                    {% for sea in pitchingSeason %}
+                    <tr>
+                        <td> {{ sea[0] }} </td>
+                        <td> {{ sea[1] }} </td>
+                        <td> {{ sea[2] }}</td>
+                        <td> {{ sea[3] }}</td>
+                        <td> {{ sea[4] }}</td>
+                        <td> {{ sea[5] }}</td>
+                        <td> {{ sea[6] }}</td>
+                        <td> {{ sea[7] }}</td>
+                        <td> {{ sea[8] }}</td>
+                        <td> {{ sea[9] }}</td>
+                        <td> {{ sea[10] }}</td>
+                        <td> {{ sea[11] }}</td>
+                        <td> {{ sea[12] }}</td>
+                        <td> {{ sea[13] }}</td>
+                        <td> {{ sea[14] }}</td>
+                        <td> {{ sea[15] }}</td>
+                        <td> {{ sea[16] }}</td>
+                        <td> {{ sea[17] }}</td>
+                        <td> {{ sea[18] }}</td>
+                        <td> {{ sea[19] }}</td>
+                        <td> {{ sea[20] }}</td>
+
+                    </tr>
+                    {% endfor %}
+            </table>
+    {% endif %}
+
+    {% if fieldingRows[0][0] %}
+        <h3>Fielding Season: </h3>
+                <table style="width: 90%" class="table-container">
+                <tr>
+                    <th style="width:  50px"> Season </th>
+                    <th style="width:  100px" > Team</th>
+                    <th style="width:  50px">Position</th>
+                    <th >G</th>
+                    <th >GS</th>
+                    <th >InnOuts</th>
+                    <th >PO</th>
+                    <th >A</th>
+                    <th >E</th>
+                    <th >DP</th>
+                    <th >PB</th>
+                    <th >WP</th>
+                    <th >SB</th>
+                    <th >CS</th>
+
+
+                    {% for sea in fieldingSeason %}
+                    <tr>
+                        <td> {{ sea[0] }} </td>
+                        <td> {{ sea[1] }} </td>
+                        <td> {{ sea[2] }}</td>
+                        <td> {{ sea[3] }}</td>
+                        <td> {{ sea[4] }}</td>
+                        <td> {{ sea[5] }}</td>
+                        <td> {{ sea[6] }}</td>
+                        <td> {{ sea[7] }}</td>
+                        <td> {{ sea[8] }}</td>
+                        <td> {{ sea[9] }}</td>
+                        <td> {{ sea[10] }}</td>
+                        <td> {{ sea[11] }}</td>
+                        <td> {{ sea[12] }}</td>
+                        <td> {{ sea[13] }}</td>
+
+                    </tr>
+                    {% endfor %}
+            </table>
+
+    {% endif %}
 
     </main>
+    <script>
+
+
+
+
+    </script>
 
 </html>
