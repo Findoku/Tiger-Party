@@ -289,3 +289,16 @@ body {
     display: flex; /* Ensures the button and box are side by side */
     align-items: center; /* Aligns items vertically */
 }
+
+.playerCard {
+    color: black;width: 275px;
+    border: 2px solid black;
+    margin-left: 10px;
+    background-color: antiquewhite;
+
+}
+
+.highlightStat {
+    font-weight: lighter;
+    color: red
+}

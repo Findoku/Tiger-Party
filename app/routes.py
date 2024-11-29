@@ -38,6 +38,42 @@ def startPage():
 
 
 
+@app.route('/player')
+def player():
+    player_id = request.args.get('player', 'No')
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    sql = 'Select * FROM people WHERE playerid = \'' + player_id + '\''
+
+    rows = sqlComs.getRowFromSQL(sql)
+
+    sql = ('Select sum(b_G),sum(b_AB),sum(b_R),sum(b_h),sum(b_2b),sum(b_3b),sum(b_HR),sum(b_SB)'
+           ' ,sum(b_SO),sum(b_IBB),sum(b_hbp),sum(b_SH),sum(b_SF), round(sum(b_H)*100/sum(b_ab)) '
+           ',round(sum(b_R)*100/sum(b_AB)), round(sum(b_hr)*100/sum(b_AB),0) from batting where playerid= \'' + player_id + '\'')
+    battingRows = sqlComs.getRowFromSQL(sql)
+    sql = ('SELECT SUM(p_W), SUM(p_L), SUM(p_G), SUM(p_GS), SUM(p_CG), SUM(p_SHO), SUM(p_SV), SUM(p_H), SUM(p_HR) '
+           ' ,SUM(p_BB), SUM(p_SO), round(AVG(p_BAOpp),2), round(AVG(p_ERA),2), SUM(p_IBB), SUM(p_WP), SUM(p_HBP), SUM(p_BK), MAX(p_BFP)'
+           ', SUM(p_R), SUM(p_SH), SUM(p_SF), CASE WHEN SUM(p_L) = 0 THEN NULL ELSE round(CAST(SUM(p_W) AS FLOAT) / SUM(p_L),2) END FROM pitching WHERE playerid = \'') + player_id + '\''
+    pitchingRows = sqlComs.getRowFromSQL(sql)
+    sql = 'SELECT SUM(f_G), SUM(f_GS), SUM(f_PO), SUM(f_A), SUM(f_E), SUM(f_DP), SUM(f_PB), SUM(f_SB), SUM(f_CS), AVG(f_ZR) FROM fielding WHERE playerid = \'' + player_id + '\''
+    fieldingRows = sqlComs.getRowFromSQL(sql)
+
+    sql = 'SELECT Distinct Position FROM fielding WHERE playerid = \'' + player_id + '\''
+    positions = sqlComs.getRowFromSQL(sql)
+
+
+    sql = 'Select sum(manager_G),sum(manager_W),sum(manager_L) FROM managers WHERE playerid = \'' + player_id + '\''
+    managerRows = sqlComs.getRowFromSQL(sql)
+
+    sql = 'Select Distinct team_name FROM managers join teams using(teamId) WHERE playerid = \'' + player_id + '\''
+    teamsManaged = sqlComs.getRowFromSQL(sql)
+
+    sql = 'Select inducted from hallofFame where inducted = \'Y\' AND playerid = \'' + player_id + '\''
+    halloffame = sqlComs.getRowFromSQL(sql)
+
+    return render_template('playerStats.html', rows=rows,battingRows=battingRows,pitchingRows=pitchingRows,
+                           fieldingRows=fieldingRows,positions=positions,managerRows=managerRows,teamsManaged=teamsManaged,
+                           halloffame=halloffame)
 
 @app.route('/team/roster')
 def index():
