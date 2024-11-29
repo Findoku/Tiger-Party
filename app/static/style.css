@@ -170,6 +170,7 @@ body {
 
 .roster-entry:hover {
     background-color: lightblue;
+    transform: scale(1.05);
 }
 
 .ImmacCard-container {
@@ -298,7 +299,72 @@ body {
 
 }
 
+
+
 .highlightStat {
     font-weight: lighter;
     color: red
+}
+
+.centered-container {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    line-height: 50%;
+    align-items: center; /* Center vertically */
+}
+
+.header-feats {
+    color: white;             /* Sets text color to white */
+    background-color: black;  /* Sets background color to black */
+    text-align: center;       /* Centers the text horizontally */
+    height: auto;             /* Lets the height grow as needed */
+    padding: 20px 20px;       /* Adds space around the text */
+    margin-top: 10px;                /* Removes default margin */
+    width: fit-content;       /* Adjust width to fit its content */
+    display: block;           /* Makes it a block-level element */
+    margin-left: auto;        /* Together with margin-right, centers the element horizontally */
+    margin-right: auto;
+    box-sizing: border-box;   /* Includes padding and border in the element's total width and height */
+    cursor: pointer;          /* Changes the mouse cursor to a pointer when hovered */
+}
+
+
+.featCard {
+    width: 95%;
+    height: 33%;
+    border: 2px solid black;
+    margin-left: 10px;
+
+    background-color: black;
+    color: white;
+
+
+}
+.featContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+
+}
+
+.featItem {
+    flex: 0 0 33.333%; /* Each item takes about one-third of the container's width */
+    box-sizing: border-box;
+
+    padding: 10px; /* Space inside each item */
+    border: 2px solid white; /* Border around each item */
+}
+
+.featItem h3, .featItem h4 {
+    margin: 0; /* Removes default margin */
+}
+.featItem h4 {
+    cursor: pointer;
+    font-weight: lighter;
+    color: red;
+    transition: color 0.3s ease;  /* Smooth transition for visual debugging */
+}
+
+.featItem h4:hover {
+    color: #2575fc;  /* Bright color for obvious change */
 }

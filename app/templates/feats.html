@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Microblog</title>
+        {% else %}
+        <title>Welcome to Microblog!</title>
+        {% endif %}
+        <link rel="stylesheet" href="../static/style.css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include Select2 JavaScript, after including jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    </head>
+
+    <div class="nav"  >
+        <h2  onclick="logout()" style="left: 0px">Logout</h2>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+        <h1 onclick="location.href='/showTeams'">Tiger Party</h1>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+        <h2 style="right: 0" onclick="location.href='/ImmaculateGridGuesser'">Immaculate Grid Guesser</h2>
+    </div>
+    <body style="background: black">
+
+
+    <div class="featCard">
+        <h1 style="padding-left: 10px">Batting Feats:</h1>
+        <br>
+        <div class="featContainer" style="display: flex; flex-wrap: wrap;">
+            {% for high in battingHigh %}
+                <div style="flex: 1 0 33%; box-sizing: border-box; padding: 10px;">
+                    <div style="border: 2px solid white;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>{{ high[3] }}:</h3>
+                            <h4 onclick=""><span style="font-weight: lighter; color: red">{{ high[4] }}</span></h4>
+                        </div>
+                        <div class="featItem" style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>Player:</h3>
+                            <h4 onclick="location.href='/player?player={{ high[0] }}' ">{{ high[1] }} {{ high[2] }} </h4>
+                        </div>
+                    </div>
+                </div>
+                {% if loop.index % 3 == 0 and not loop.last %}
+                    <div style="width: 100%; height: 0;"></div> <!-- Clears the row for the next set of items -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="featCard">
+        <h1 style="padding-left: 10px">Pitching Feats:</h1>
+        <br>
+        <div class="featContainer" style="display: flex; flex-wrap: wrap;">
+            {% for high in pitchingHigh %}
+                <div style="flex: 1 0 33%; box-sizing: border-box; padding: 10px;">
+                    <div style="border: 2px solid white;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>{{ high[3] }}:</h3>
+                            <h4 onclick=""><span style="font-weight: lighter; color: red">{{ high[4] }}</span></h4>
+                        </div>
+                        <div class="featItem" style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>Player:</h3>
+                            <h4 onclick="location.href='/player?player={{ high[0] }}' ">{{ high[1] }} {{ high[2] }} </h4>
+                        </div>
+                    </div>
+                </div>
+                {% if loop.index % 3 == 0 and not loop.last %}
+                    <div style="width: 100%; height: 0;"></div> <!-- Clears the row for the next set of items -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="featCard">
+        <h1 style="padding-left: 10px">Fielding Feats:</h1>
+        <br>
+        <div class="featContainer" style="display: flex; flex-wrap: wrap;">
+            {% for high in fieldingHigh %}
+                <div style="flex: 1 0 33%; box-sizing: border-box; padding: 10px;">
+                    <div style="border: 2px solid white;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>{{ high[3] }}:</h3>
+                            <h4 onclick=""><span style="font-weight: lighter; color: red">{{ high[4] }}</span></h4>
+                        </div>
+                        <div class="featItem" style="display: flex; justify-content: space-between; padding: 10px;">
+                            <h3>Player:</h3>
+                            <h4 onclick="location.href='/player?player={{ high[0] }}' ">{{ high[1] }} {{ high[2] }} </h4>
+                        </div>
+                    </div>
+                </div>
+                {% if loop.index % 3 == 0 and not loop.last %}
+                    <div style="width: 100%; height: 0;"></div> <!-- Clears the row for the next set of items -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    </body>
+
+    <script>
+
+        function logout() {
+            fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'logout' })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</html>

@@ -22,65 +22,68 @@
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
         <h2 style="right: 0" onclick="location.href='/ImmaculateGridGuesser'">Immaculate Grid Guesser</h2>
     </div>
-    <form action="{{ url_for('showTeams') }}" method="post">
-        {{ form.hidden_tag() }}
-        {{ form.team_dropdown(id='team_dropdown') }}
-        {{ form.year_dropdown() }}
-        {{ form.submit() }}
-        <script>
-            document.getElementById('team_dropdown').onchange = function() {
-                var teamName = this.value;
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/showTeams', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    <div class="centered-container">
+        <form action="{{ url_for('showTeams') }}" method="post">
+            <h2 style="color:  white">Select Team</h2>
+            {{ form.hidden_tag() }}
+            {{ form.team_dropdown(id='team_dropdown') }}
+            {{ form.year_dropdown() }}
+            {{ form.submit() }}
+        </form>
+        <h1 class="header-feats" onclick="location.href='/feats'">Biggest Feats in Baseball</h1>
+    </div>
 
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        // Handle your response here
-                        console.log(xhr.responseText);
-                        // Example: Update another dropdown
-                        updateYearDropdown(JSON.parse(xhr.responseText));
-                    } else {
-                        console.error('Error with the request');
-                    }
-                };
+    <script>
+        document.getElementById('team_dropdown').onchange = function() {
+            var teamName = this.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/showTeams', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                xhr.send('teamName=' + encodeURIComponent(teamName));
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Handle your response here
+                    console.log(xhr.responseText);
+                    // Example: Update another dropdown
+                    updateYearDropdown(JSON.parse(xhr.responseText));
+                } else {
+                    console.error('Error with the request');
+                }
             };
 
-            function updateYearDropdown(data) {
-                var yearDropdown = document.getElementById('year_dropdown');
-                yearDropdown.innerHTML = ''; // Clear existing options
-                data.years.forEach(function(year) {
-                    var option = new Option(year, year);
-                    yearDropdown.appendChild(option);
-                });
-            }
+            xhr.send('teamName=' + encodeURIComponent(teamName));
+        };
 
-            $(document).ready(function() {
-                $('#team_dropdown').select2({
-                    placeholder: "Select a team",
-                    allowClear: true
-                });
+        function updateYearDropdown(data) {
+            var yearDropdown = document.getElementById('year_dropdown');
+            yearDropdown.innerHTML = ''; // Clear existing options
+            data.years.forEach(function(year) {
+                var option = new Option(year, year);
+                yearDropdown.appendChild(option);
             });
-            function logout() {
-                fetch('/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ action: 'logout' })  // Send JSON data
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        </script>
+        }
 
-
-    </form>
+        $(document).ready(function() {
+            $('#team_dropdown').select2({
+                placeholder: "Select a team",
+                allowClear: true
+            });
+        });
+        function logout() {
+            fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'logout' })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 
 </html>

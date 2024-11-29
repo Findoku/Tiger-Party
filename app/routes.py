@@ -82,17 +82,37 @@ def index():
     type = 'All'
     form = rosterForm()
 
-
-
     if(form.validate_on_submit()):
-        print("WHY HELLO THERE")
-        type = form.rosterOptions.data;
-
+        type = form.rosterOptions.data
 
     print("roster")
     rows = sqlComs.getRoster(team_name, year_id,type)
 
     return render_template('webPage/mainPage.html', rows=rows,form=form)
+
+@app.route('/feats', methods=['GET', 'POST'],endpoint='feats')
+def feats():
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    type = 'All'
+    form = rosterForm()
+
+    if(form.validate_on_submit()):
+        type = form.rosterOptions.data
+
+    sql = 'select * from highestbattingstat'
+
+    battingHigh = sqlComs.getRowFromSQL(sql)
+
+    sql = 'SELECT * FROM highestpitchingstat'
+    pitchingHigh = sqlComs.getRowFromSQL(sql)
+
+    sql = 'SELECT * FROM highestfieldingstat'
+    fieldingHigh = sqlComs.getRowFromSQL(sql)
+
+    return render_template('feats.html', battingHigh=battingHigh,pitchingHigh=pitchingHigh,fieldingHigh=fieldingHigh,form=form)
+
+
 
 @app.route('/team/Batting-Stats')
 def battingStats():

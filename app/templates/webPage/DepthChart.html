@@ -29,7 +29,7 @@
     </nav>
 
     <div style="margin-left: 50%">
-        <form method="POST" action="{{ url_for('DepthChart') }}">
+        <form  method="POST" action="{{ url_for('DepthChart') }}">
             {{ form.depth_dropdown(id='depth_dropdown') }}
             {{ form.submit() }}
         </form>
