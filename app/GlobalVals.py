@@ -2,6 +2,7 @@ valid = 'false'
 teamName = 'houston astros'
 yearID = '2018'
 admin = 'false'
+currentID = 0
 playerTypes = ['All', 'Managers', 'Pitchers', 'Batters', 'Fielding Players']
 DepthChartOptions = ["Games Played", "Games Started", "Total Outs Caused"]
 

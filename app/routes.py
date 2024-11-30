@@ -1,10 +1,7 @@
-from cgi import print_form
-from traceback import print_tb
 
-from sqlalchemy import false, true
 
 from app import app
-import mariadb
+
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from app import teams
@@ -30,6 +27,7 @@ def startPage():
 
         if (user != []):
             GlobalVals.valid = 'true'
+            GlobalVals.currentID = user[0][0]
 
             return redirect('/showTeams')
 
@@ -337,6 +335,7 @@ def showTeams():
         GlobalVals.teamName = form.team_dropdown.data
 
         GlobalVals.yearID =form.year_dropdown.data
+        sqlComs.insertHistory(admin)
         return redirect(url_for('index' ))
 
 

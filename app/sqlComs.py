@@ -100,17 +100,15 @@ obj = SQLRows()
 def getUser(username, password):
     sql = ('SELECT id,username,password FROM users WHERE username = \'' + username + '\'')
 
-
-
     user = getRowFromSQL(sql)
-    id = user[0][0]
-    psswd = user[0][2]
+    print(user)
+    if user:
+        id = user[0][0]
+        psswd = user[0][2]
+        e = Caesar.caesar_cipher(password, id)
 
-    e = Caesar.caesar_cipher(password,id)
-
-
-    if(e == psswd):
-        return user
+        if (e == psswd):
+            return user
 
     return []
 
@@ -320,3 +318,16 @@ def registerAccount(username, password):
         return 'Error: username Already taken'
 
 
+def insertHistory(admin):
+
+    if(admin):
+        sql = ("""Insert into userHistory(id,username,teamSearched,yearid) values (""" + str(-9999) + """,'""" +
+               'greg' + """','""" + GlobalVals.teamName + """',""" + str(GlobalVals.yearID) + """) """)
+        executeInsert(sql)
+    else:
+        sql = 'Select username from users where id = ' + str(GlobalVals.currentID)
+        rows = getRowFromSQL(sql)
+
+        sql = """Insert into userHistory(id,username,teamSearched,yearid) values (""" + str(GlobalVals.currentID) + """,'""" + str(
+            rows[0][0]) + """','""" + GlobalVals.teamName + """',""" + str(GlobalVals.yearID) + """) """
+        executeInsert(sql)
