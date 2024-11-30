@@ -44,7 +44,7 @@ def adminLogin():
     if form.validate_on_submit():
 
         user = sqlComs.getAdminUser(form.username.data,form.password.data)
-        
+
 
         if (user != []):
             GlobalVals.valid = 'true'
@@ -336,8 +336,6 @@ def showTeams():
 
             form.year_dropdown.choices = years
             return jsonify(years=years)
-
-    if request.method == 'GET':
 
 
 
