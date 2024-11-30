@@ -22,6 +22,10 @@
                     {{ form.password(size=32) }}
                 </p>
                 <p>{{ form.submit() }}</p>
+                <div><a href="/" style="color: black">Already have an Account?</a></div>
+                {% if  val %}
+                	<h4 style="color: red"> {{ val }}</h4>
+                {% endif %}
 
             </form>
         </body>

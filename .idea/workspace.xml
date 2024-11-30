@@ -5,17 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Caesar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/AdminLogin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/AdminPage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerParty.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Dump/TigerParty.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/GlobalVals.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GlobalVals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/sqlComs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/AdminLogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/AdminLogin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/feats.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/feats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/playerStats.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/playerStats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/showTeams.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/showTeams.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/BattingStats.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/BattingStats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/DepthChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/DepthChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/Fielding.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/Fielding.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/PitchingStats.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/PitchingStats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/TeamStats.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/TeamStats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/webPage/mainPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/webPage/mainPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +126,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -160,7 +164,7 @@
       <workItem from="1732764583209" duration="13161000" />
       <workItem from="1732804130426" duration="9506000" />
       <workItem from="1732827617506" duration="29687000" />
-      <workItem from="1732897672035" duration="24399000" />
+      <workItem from="1732897672035" duration="28731000" />
     </task>
     <servers />
   </component>

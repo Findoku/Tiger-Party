@@ -10,6 +10,9 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     </head>
     <div class="nav"   >
+        {% if admin %}
+        	<h2  onclick="location.href='/admin'" style="left: 7%;background-color: red" >AdminPage</h2>
+        {% endif %}
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
         <h1 onclick="location.href='/showTeams'">Tiger Party</h1>
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
@@ -38,47 +41,64 @@
     <div>
 
 
-        <div style="position: relative;">
-            <div style="left: 37%; margin-top: 6%" class="DepthCard">
-                <p class="DepthCardPTitle">CF</p>
-                <cbody id="CF">
-                     {% for f in CFs %}
-                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
-                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
-                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
-                        </div>
-                     {% endfor %}
-                </cbody>
-            </div>
-        </div>
-
-
-        <div style="position: relative;">
-            <div style="left: 16%; margin-top: 10%" class="DepthCard">
-                <p class="DepthCardPTitle">LF</p>
-                <div >
-                     {% for f in LFs %}
-                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
-                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
-                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
-                        </div>
-                     {% endfor %}
+        {% if OFs[0] %}
+        	<div style="position: relative;">
+                <div style="left: 37%; margin-top: 6%" class="DepthCard">
+                    <p class="DepthCardPTitle">OF</p>
+                    <cbody id="CF">
+                         {% for f in OFs %}
+                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                            </div>
+                         {% endfor %}
+                    </cbody>
                 </div>
             </div>
-        </div>
-        <div style="position: relative;">
-            <div style="left: 58%; margin-top: 10%" class="DepthCard">
-                <p class="DepthCardPTitle">RF</p>
-                <div >
-                     {% for f in RFs %}
-                        <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
-                            <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
-                            <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
-                        </div>
-                     {% endfor %}
+
+        {% else %}
+            <div style="position: relative;">
+                <div style="left: 37%; margin-top: 6%" class="DepthCard">
+                    <p class="DepthCardPTitle">CF</p>
+                    <cbody id="CF">
+                         {% for f in CFs %}
+                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                            </div>
+                         {% endfor %}
+                    </cbody>
                 </div>
             </div>
-        </div>
+            <div style="position: relative;">
+                <div style="left: 16%; margin-top: 10%" class="DepthCard">
+                    <p class="DepthCardPTitle">LF</p>
+                    <div >
+                         {% for f in LFs %}
+                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                            </div>
+                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative;">
+                <div style="left: 58%; margin-top: 10%" class="DepthCard">
+                    <p class="DepthCardPTitle">RF</p>
+                    <div >
+                         {% for f in RFs %}
+                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                            </div>
+                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
 
 
          <div style="position: relative;">

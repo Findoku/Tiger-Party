@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+
         {% if title %}
         <title>{{ title }} - Microblog</title>
         {% else %}
@@ -16,6 +17,9 @@
     </head>
 
     <div class="nav"  >
+        {% if admin %}
+        	<h2  onclick="location.href='/admin'" style="left: 7%;background-color: red" >AdminPage</h2>
+        {% endif %}
         <h2  onclick="logout()" style="left: 0px">Logout</h2>
         <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
         <h1 onclick="location.href='/showTeams'">Tiger Party</h1>

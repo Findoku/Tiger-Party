@@ -138,14 +138,28 @@ def getType(type):
     return type
 
 
+def getOF(type):
+    team_name = GlobalVals.teamName
+    year_id = GlobalVals.yearID
+    position = 'OF'
+    type = getType(type)
+
+    sql = (
+                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
+                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type + ' > 0 ORDER BY ' + type + ' Desc')
+    CFs = getRowFromSQL(sql)
+
+    return CFs
+
 def getCF(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     position = 'CF'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-            + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = (
+                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
+                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type + ' > 0 ORDER BY ' + type + ' Desc')
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -285,19 +299,24 @@ def getP(type):
 
 
 def registerAccount(username, password):
-    sql = """INSERT INTO users(username,password) values( \'""" + username + """\', \'""" + password + """\')"""
 
-    executeInsert(sql)
-
-    sql = 'Select id, password from users where username = \'' + username + '\''
+    sql = 'select id from users where username = \'' +  username + '\''
     rows = getRowFromSQL(sql)
-    id = rows[0][0]
-    password = rows[0][1]
+    if(rows  == []):
+        sql = """INSERT INTO users(username,password) values( \'""" + username + """\', \'""" + password + """\')"""
 
+        executeInsert(sql)
 
+        sql = 'Select id, password from users where username = \'' + username + '\''
+        rows = getRowFromSQL(sql)
+        id = rows[0][0]
+        password = rows[0][1]
 
-    e = Caesar.caesar_cipher(password,id)
+        e = Caesar.caesar_cipher(password, id)
 
-    sql = """UPDATE users SET password = '""" + e+ """' WHERE id = """ + str(id)
-    executeUpdate(sql)
+        sql = """UPDATE users SET password = '""" + e + """' WHERE id = """ + str(id)
+        executeUpdate(sql)
+    else:
+        return 'Error: username Already taken'
+
 

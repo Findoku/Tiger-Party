@@ -57,7 +57,6 @@ def adminLogin():
 @app.route('/admin', methods=['GET', 'POST'])
 def adminPage():
 
-
     sql = 'Select * from users'
     users = sqlComs.getRowFromSQL(sql)
 
@@ -70,6 +69,9 @@ def adminPage():
 
 @app.route('/player')
 def player():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     player_id = request.args.get('player', 'No')
 
     sql = 'Select * FROM people WHERE playerid = \'' + player_id + '\''
@@ -118,10 +120,13 @@ def player():
 
     return render_template('playerStats.html', rows=rows,battingRows=battingRows,pitchingRows=pitchingRows,
                            fieldingRows=fieldingRows,positions=positions,managerRows=managerRows,teamsManaged=teamsManaged,
-                           halloffame=halloffame,battingSeason=battingSeason,pitchingSeason=pitchingSeason,fieldingSeason=fieldingSeason)
+                           halloffame=halloffame,battingSeason=battingSeason,pitchingSeason=pitchingSeason,fieldingSeason=fieldingSeason,admin=admin)
 
 @app.route('/team/roster', methods=['GET', 'POST'],endpoint='index')
 def index():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     type = 'All'
@@ -133,13 +138,13 @@ def index():
     print("roster")
     rows = sqlComs.getRoster(team_name, year_id,type)
 
-    return render_template('webPage/mainPage.html', rows=rows,form=form)
+    return render_template('webPage/mainPage.html', rows=rows,form=form,admin=admin)
 
 @app.route('/feats', methods=['GET', 'POST'],endpoint='feats')
 def feats():
-    team_name = GlobalVals.teamName
-    year_id = GlobalVals.yearID
-    type = 'All'
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     form = rosterForm()
 
     if(form.validate_on_submit()):
@@ -155,12 +160,15 @@ def feats():
     sql = 'SELECT * FROM highestfieldingstat'
     fieldingHigh = sqlComs.getRowFromSQL(sql)
 
-    return render_template('feats.html', battingHigh=battingHigh,pitchingHigh=pitchingHigh,fieldingHigh=fieldingHigh,form=form)
+    return render_template('feats.html', battingHigh=battingHigh,pitchingHigh=pitchingHigh,fieldingHigh=fieldingHigh,form=form,admin=admin)
 
 
 
 @app.route('/team/Batting-Stats')
 def battingStats():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
@@ -170,11 +178,14 @@ def battingStats():
     rows = sqlComs.getRowFromSQL(sql);
 
 
-    return render_template('webPage/BattingStats.html', rows=rows)
+    return render_template('webPage/BattingStats.html', rows=rows,admin=admin)
 
 
 @app.route('/team/Pitching-Stats')
 def pitchingStats():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
@@ -183,10 +194,13 @@ def pitchingStats():
     rows = sqlComs.getRowFromSQL(sql)
 
 
-    return render_template('webPage/PitchingStats.html', rows=rows)
+    return render_template('webPage/PitchingStats.html', rows=rows,admin=admin)
 
 @app.route('/team/Fielding')
 def Fielding():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR FROM Fielding NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
@@ -195,16 +209,15 @@ def Fielding():
     rows = sqlComs.getRowFromSQL(sql)
 
 
-    return render_template('webPage/Fielding.html', rows=rows)
+    return render_template('webPage/Fielding.html', rows=rows,admin=admin)
 
 
 @app.route('/team/Depth-Chart', methods=['GET', 'POST'])
 def DepthChart():
-    team_name = GlobalVals.teamName
-    year_id = GlobalVals.yearID
-
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     form = DepthForm()
-    posting = 'false'
     if request.method == 'POST':
 
         if 'option' in request.form:
@@ -215,7 +228,7 @@ def DepthChart():
     if not form.is_submitted():
         form.depth_dropdown.data = GlobalVals.DepthChartOption
 
-
+    OFs = sqlComs.getOF(GlobalVals.DepthChartOption)
     CFs = sqlComs.getCF(GlobalVals.DepthChartOption)
     LFs = sqlComs.getLF(GlobalVals.DepthChartOption)
     RFs = sqlComs.getRF(GlobalVals.DepthChartOption)
@@ -226,11 +239,14 @@ def DepthChart():
     Cs = sqlComs.get3B(GlobalVals.DepthChartOption)
     Ps = sqlComs.getP(GlobalVals.DepthChartOption)
 
-    return render_template('webPage/DepthChart.html', CFs=CFs, LFs=LFs, RFs=RFs, SSs=SSs, secBs=secBs, thirdBs=thirdBs,
-                           firstBs=firstBs, Cs=Cs, Ps=Ps, form=form)
+    return render_template('webPage/DepthChart.html',OFs=OFs, CFs=CFs, LFs=LFs, RFs=RFs, SSs=SSs, secBs=secBs, thirdBs=thirdBs,
+                           firstBs=firstBs, Cs=Cs, Ps=Ps, form=form,admin=admin)
 
 @app.route('/team/Team-Stats', methods = ['GET','POST'])
 def TeamStats():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, sum(p_SHO),sum(p_IPOuts),sum(p_H),sum(p_SO),ROUND(sum(p_BAOpp)/count(playerid),3),ROUND(sum(p_ERA)/count(playerid),3),sum(p_IBB),sum(p_HBP)'
@@ -259,12 +275,15 @@ def TeamStats():
 
     if not WSs:  # Set default if empty
         WSs = [['a','b','c','Never Won a World Series']]
-    return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs)
+    return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs,admin=admin)
 
 
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
     form1 = TeamForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
     #teams = sqlComs.getRowFromSQL(sql)
@@ -280,33 +299,32 @@ def ImmacGrid():
 
         return render_template('ImmaculateGrid.html', form1=form1, players=players)
 
-    return render_template('ImmaculateGrid.html', form1=form1, players=[])
+    return render_template('ImmaculateGrid.html', form1=form1, players=[],admin=admin)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
     form = RegisterForm()
-
-    word = 'Hello'
-    e = Caesar.caesar_cipher(word,-3)
-
-
-
+    val = None
     if form.validate_on_submit():
+        val = sqlComs.registerAccount(form.username.data, form.password.data)
+        if val is None:
+            return redirect(url_for('startPage'))
 
-        sqlComs.registerAccount(form.username.data,form.password.data)
-
-        return redirect(url_for('startPage'))
-
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form, val=val)
 
 
 @app.route('/showTeams', methods=['GET', 'POST'])
 def showTeams():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
 
     if (GlobalVals.valid == 'none'):
         return redirect(url_for('startPage'))
+
+
 
     form = DisplayForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
@@ -339,9 +357,7 @@ def showTeams():
 
 
 
-
-
-    return render_template('showTeams.html', title='Sign In', form=form, choices=teams)
+    return render_template('showTeams.html', title='Sign In', form=form, choices=teams,admin=admin)
 
 
 
