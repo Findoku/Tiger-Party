@@ -20,6 +20,53 @@
     transform: scale(0.95);
 }
 
+
+.admin-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-image: linear-gradient(to right, red 0%, #000000 100%);
+    border: none;
+    border-radius: 30px;
+    margin-left: 45%;
+    margin-top: 25px;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.admin-button:active {
+    transform: scale(0.95);
+}
+
+.DeleteButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    margin-top: 25px;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.DeleteButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.DeleteButton:active {
+    transform: scale(0.95);
+}
+
+
 .nav {
     position: sticky;
     top: 0px;

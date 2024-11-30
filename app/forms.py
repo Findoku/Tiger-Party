@@ -27,6 +27,12 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Register', render_kw={'class': 'stylish-button'})
 
+class AdminForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Enter', render_kw={'class': 'admin-button'})
+
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -38,7 +44,6 @@ class DepthForm(FlaskForm):
     submit = SubmitField('Submit',render_kw={'class': 'stylish-button'})
 
 class DisplayForm(FlaskForm):
-
     rows = ["asdsa"]
     year_dropdown = SelectField('Select Year', choices=[], validators=[DataRequired()])
     team_dropdown = SelectField('Select team', choices=teams.teams, validators=[DataRequired()])

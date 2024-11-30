@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html >
+    <head>
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+
+    <div class="nav"  >
+        <h2  onclick="logout()" style="left: 0px">Logout</h2>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+        <h1 onclick="location.href='/showTeams'">Tiger Party</h1>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+        <h2 style="right: 0" onclick="location.href='/ImmaculateGridGuesser'">Immaculate Grid Guesser</h2>
+    </div>
+        <body style="background: linear-gradient(red,black)">
+
+        {% for user in users %}
+        	<div style="margin-right: 0;color: white;border: 2px solid white;">
+                <h1>ID: {{ user[0] }}</h1>
+                <h1>Username: {{ user[1] }}</h1>
+                <h1>Password: {{ user[2] }}</h1>
+                <button onclick="Delete({{ user[0] }})" class="DeleteButton"> Delete</button>
+            </div>
+        {% endfor %}
+
+
+
+
+        </body>
+
+    <script>
+        function logout() {
+            fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'logout' })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function Delete(e) {
+            fetch('/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: e  })  // Send JSON data
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/admin';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+    </script>
+
+</html>

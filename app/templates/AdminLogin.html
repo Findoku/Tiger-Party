@@ -1,0 +1,37 @@
+
+<!doctype html>
+<html >
+    <head>
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+
+    <div class="centered-container">
+        <h1  style="margin-top: 150px"></h1>
+
+        <h1 >Admin Login</h1>
+        <p style="color: white">Username: greg</p>
+        <p style="color: white">password: speegle</p>
+
+        <body style="background: linear-gradient(red,black)">
+
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}
+                </p>
+                <div style="margin-right: 35%">
+                    {{ form.submit() }}
+                </div>
+            </form>
+
+        </body>
+    </div>
+
+
+</html>

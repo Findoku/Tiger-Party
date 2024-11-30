@@ -1,9 +1,11 @@
+from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
 from virtualenv.config.convert import get_type
 
 from app import app
 from app import DatabaseConnection
 import mariadb
 from app import GlobalVals
+from app import Caesar
 
 
 def connect():
@@ -27,11 +29,28 @@ def executeInsert(sql):
     conn.commit()
     conn.close()
 
+def executeUpdate(sql):
+    conn = connect()
+
+    cur = conn.cursor()
+
+    cur.execute(sql)
+    conn.commit()
+    conn.close()
+
+def executeDelete(sql):
+    conn = connect()
+
+    cur = conn.cursor()
+
+    cur.execute(sql)
+    conn.commit()
+    conn.close()
+
 
 
 def getRowFromSQL(sql):
     conn = connect()
-
     cur = conn.cursor()
 
     cur.execute(sql)
@@ -59,11 +78,6 @@ def getSQLRoster(teamName, yearID, type):
     return sql
 
 def getRoster(teamName, yearID,type):
-    sql = ('SELECT DISTINCT nameFirst,nameLast,p.playerid FROM people p, batting b,teams t,managers m' +
-           ' WHERE b.playerId = p.playerId AND b.teamID = t.teamID AND t.team_name = \''
-           + str(teamName) + '\' AND b.yearID = ' + str(yearID) + ' ORDER BY p.playerId ASC')
-
-
     sql = getSQLRoster(teamName, yearID,type)
 
     rows = getRowFromSQL(sql)
@@ -84,18 +98,38 @@ obj = SQLRows()
 
 
 def getUser(username, password):
-    sql = ('SELECT username,password FROM users WHERE username = \'' + username + '\' '
-           + ' AND password = \'' + password + '\'')
-    user = getRowFromSQL(sql)
-    return user
+    sql = ('SELECT id,username,password FROM users WHERE username = \'' + username + '\'')
 
+
+
+    user = getRowFromSQL(sql)
+    id = user[0][0]
+    psswd = user[0][2]
+
+    e = Caesar.caesar_cipher(password,id)
+
+
+    if(e == psswd):
+        return user
+
+    return []
+
+
+def getAdminUser(username, password):
+    sql = ('SELECT username,password FROM admin WHERE username = \'' + username + '\' '
+           + ' AND password = \'' + password + '\'')
+
+    user = getRowFromSQL(sql)
+
+
+
+    return user
 
 def getType(type):
     if (type == 'Games Played'):
-        print('HOLLOW')
+
         type = 'f_G'
     elif(type == 'Games Started'):
-        print('HO GS')
         type = 'f_GS'
     elif(type == 'Total Outs Caused'):
         type = 'f_InnOuts'
@@ -107,7 +141,6 @@ def getType(type):
 def getCF(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
     position = 'CF'
     type = getType(type)
 
@@ -121,7 +154,6 @@ def getCF(type):
 def getLF(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
     position = 'LF'
     type = getType(type)
 
@@ -137,7 +169,7 @@ def getLF(type):
 def getRF(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = 'RF'
     type = getType(type)
 
@@ -152,7 +184,7 @@ def getRF(type):
 def getSS(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = 'SS'
     type = getType(type)
 
@@ -167,7 +199,7 @@ def getSS(type):
 def get2B(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = '2B'
     type = getType(type)
 
@@ -182,7 +214,7 @@ def get2B(type):
 def get3B(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = '3B'
     type = getType(type)
 
@@ -197,7 +229,7 @@ def get3B(type):
 def get3B(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = '3B'
     type = getType(type)
 
@@ -211,7 +243,7 @@ def get3B(type):
 def get1B(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = '1B'
     type = getType(type)
 
@@ -225,7 +257,7 @@ def get1B(type):
 def getC(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = 'C'
     type = getType(type)
 
@@ -240,7 +272,7 @@ def getC(type):
 def getP(type):
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    print("depth")
+
     position = 'P'
     type = getType(type)
 
@@ -252,15 +284,20 @@ def getP(type):
 
 
 
-# def getPS(type):
-#     team_name = GlobalVals.teamName
-#     year_id = GlobalVals.yearID
-#     print("depth")
-#     position = 'P'
-#     type = getType(type)
-#
-#     sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-#                 + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + 'AND f_GS = 0 AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
-#     CFs = getRowFromSQL(sql)
-#
-#     return CFs
+def registerAccount(username, password):
+    sql = """INSERT INTO users(username,password) values( \'""" + username + """\', \'""" + password + """\')"""
+
+    executeInsert(sql)
+
+    sql = 'Select id, password from users where username = \'' + username + '\''
+    rows = getRowFromSQL(sql)
+    id = rows[0][0]
+    password = rows[0][1]
+
+
+
+    e = Caesar.caesar_cipher(password,id)
+
+    sql = """UPDATE users SET password = '""" + e+ """' WHERE id = """ + str(id)
+    executeUpdate(sql)
+
