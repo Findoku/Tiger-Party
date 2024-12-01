@@ -78,17 +78,20 @@ def player():
 
     sql = ('Select sum(b_G),sum(b_AB),sum(b_R),sum(b_h),sum(b_2b),sum(b_3b),sum(b_HR),sum(b_SB)'
            ' ,sum(b_SO),sum(b_IBB),sum(b_hbp),sum(b_SH),sum(b_SF), round(sum(b_H)*100/sum(b_ab)) '
-           ',round(sum(b_R)*100/sum(b_AB)), round(sum(b_hr)*100/sum(b_AB),0) from batting where playerid= \'' + player_id + '\'')
+           ',round(sum(b_R)*100/sum(b_AB)), round(sum(b_hr)*100/sum(b_AB),0), round(AVG(e.WAR),2) from batting LEFT JOIN extrastats e ON batting.playerid = e.playerid where batting.playerid= \'' + player_id + '\'')
     battingRows = sqlComs.getRowFromSQL(sql)
     sql = ('SELECT SUM(p_W), SUM(p_L), SUM(p_G), SUM(p_GS), SUM(p_CG), SUM(p_SHO), SUM(p_SV), SUM(p_H), SUM(p_HR) '
            ' ,SUM(p_BB), SUM(p_SO), round(AVG(p_BAOpp),2), round(AVG(p_ERA),2), SUM(p_IBB), SUM(p_WP), SUM(p_HBP), SUM(p_BK), MAX(p_BFP)'
-           ', SUM(p_R), SUM(p_SH), SUM(p_SF), CASE WHEN SUM(p_L) = 0 THEN NULL ELSE round(CAST(SUM(p_W) AS FLOAT) / SUM(p_L),2) END FROM pitching WHERE playerid = \'') + player_id + '\''
+           ', SUM(p_R), SUM(p_SH), SUM(p_SF), CASE WHEN SUM(p_L) = 0 THEN NULL ELSE round(CAST(SUM(p_W) AS FLOAT) / SUM(p_L),2) END '
+           ',round(AVG(e.WAR),2)  FROM pitching LEFT JOIN extrastats e ON pitching.playerid = e.playerid WHERE pitching.playerid = \'') + player_id + '\''
     pitchingRows = sqlComs.getRowFromSQL(sql)
-    sql = 'SELECT SUM(f_G), SUM(f_GS), SUM(f_PO), SUM(f_A), SUM(f_E), SUM(f_DP), SUM(f_PB), SUM(f_SB), SUM(f_CS), AVG(f_ZR) FROM fielding WHERE playerid = \'' + player_id + '\''
+    sql = ('SELECT SUM(f_G), SUM(f_GS), SUM(f_PO), SUM(f_A), SUM(f_E), SUM(f_DP), SUM(f_PB), SUM(f_SB), SUM(f_CS), AVG(f_ZR),round(AVG(e.WAR),2) '
+           ' FROM fielding LEFT JOIN extrastats e ON fielding.playerid = e.playerid WHERE fielding.playerid = \'') + player_id + '\''
     fieldingRows = sqlComs.getRowFromSQL(sql)
 
     sql = 'SELECT Distinct Position FROM fielding WHERE playerid = \'' + player_id + '\''
     positions = sqlComs.getRowFromSQL(sql)
+
 
 
     sql = 'Select sum(manager_G),sum(manager_W),sum(manager_L) FROM managers WHERE playerid = \'' + player_id + '\''
@@ -101,18 +104,20 @@ def player():
     halloffame = sqlComs.getRowFromSQL(sql)
 
 
-    sql = ('SELECT yearID, team_name,b_G, b_AB, b_R,b_H, b_2B, b_3B,b_RBI, b_HR, b_SB, b_CS '
-           ', b_BB, b_SO, b_IBB, b_HBP, b_SH, b_SF FROM batting Natural Join teams'
-           ' WHERE playerid = \'') + player_id + '\' ORDER BY yearID ASC'
+    sql = ('SELECT b.yearID, team_name,b_G, b_AB, b_R,b_H, b_2B, b_3B,b_RBI, b_HR, b_SB, b_CS '
+           ', b_BB, b_SO, b_IBB, b_HBP, b_SH, b_SF, round(e.WAR,2) FROM batting b Natural Join teams left join extrastats e on e.playerid = b.playerid AND e.yearid = b.yearid AND e.teamid = b.teamid'
+           ' WHERE b.playerid = \'' + player_id + '\' ORDER BY b.yearID ASC')
     battingSeason = sqlComs.getRowFromSQL(sql)
 
-    sql = ('SELECT yearid, team_name, p_W, p_L, p_G, p_GS, p_CG, p_SHO, p_SV, p_H, p_HR, p_BB,p_SO,p_BAOpp '
-           ', p_ERA,p_IBB,p_WP,p_HBP, p_BK,p_R, p_SH,p_SF FROM pitching NATURAL JOIN TEAMS'
-           ' WHERE playerid = \'') + player_id + '\' order by yearid asc;'
+    sql = ('SELECT p.yearid, team_name, p_W, p_L, p_G, p_GS, p_CG, p_SHO, p_SV, p_H, p_HR, p_BB,p_SO,p_BAOpp '
+           ', p_ERA,p_IBB,p_WP,p_HBP, p_BK,p_R, p_SH,p_SF,round(e.WAR,2) FROM pitching p NATURAL JOIN TEAMS left join extrastats e on e.playerid = p.playerid AND e.yearid = p.yearid AND e.teamid = p.teamid'
+           ' WHERE p.playerid = \'' + player_id + '\' order by p.yearid asc;')
     pitchingSeason = sqlComs.getRowFromSQL(sql)
 
-    sql = (' SELECT yearid, team_name, position,f_G, f_GS, f_InnOuts, f_PO, f_A, f_E, f_DP, f_PB '
-           ', f_WP, f_SB, f_CS FROM fielding natural join teams  WHERE playerid = \'') + player_id + '\' ORDER BY yearID ASC'
+    sql = (' SELECT f.yearid, team_name, position,f_G, f_GS, f_InnOuts, f_PO, f_A, f_E, f_DP, f_PB '
+           ', f_WP, f_SB, f_CS,round(e.WAR,2) FROM fielding f natural join teams left join extrastats e on e.playerid = f.playerid AND e.yearid = f.yearid AND e.teamid = f.teamid'
+           ' WHERE f.playerid = \'' + player_id + '\' ORDER BY f.yearID ASC')
+
     fieldingSeason = sqlComs.getRowFromSQL(sql)
 
 
@@ -170,9 +175,9 @@ def battingStats():
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
-    sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF' +
-           ' FROM batting NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-           + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
+    sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF,round(WAR,3)' +
+             ' FROM batting b NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = b.playerid AND e.yearid = b.yearid AND e.teamid = b.teamid WHERE team_name = '
+            + '\'' + team_name + '\'  AND b.yearid = ' + year_id + ' Group By b.playerID')
     rows = sqlComs.getRowFromSQL(sql);
 
 
@@ -186,9 +191,9 @@ def pitchingStats():
         admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF' +
-            ' FROM pitching NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-            + '\'' + team_name + '\'  AND yearid = ' + year_id + ' Group By playerID,yearID;')
+    sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF,round(WAR,3)' +
+             ' FROM pitching p NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = p.playerid AND e.yearid = p.yearid AND e.teamid = p.teamid WHERE team_name = '
+            + '\'' + team_name + '\'  AND p.yearid = ' + year_id + ' Group By p.playerID')
     rows = sqlComs.getRowFromSQL(sql)
 
 
@@ -201,8 +206,10 @@ def Fielding():
         admin = 1
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
-    sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR FROM Fielding NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = '
-           + '\'{}\'  AND yearid = {} Group By playerID,yearID;'.format(team_name, year_id))
+
+    sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR,round(WAR,3)' +
+             ' FROM fielding f NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = f.playerid AND e.yearid = f.yearid AND e.teamid = f.teamid WHERE team_name = '
+            + '\'' + team_name + '\'  AND f.yearid = ' + year_id + ' Group By f.playerID')
 
     rows = sqlComs.getRowFromSQL(sql)
 
@@ -396,17 +403,17 @@ def sort():
 
 
     if(baseballRole == 'pitching'):
-        sql = ('SELECT nameFirst, nameLast, p_GS, p_CG, p_SHO, p_IPOuts, p_H, p_ER, p_HR, p_BB, p_SO, p_BAOpp, p_ERA, p_IBB, p_HBP, p_GF '
-            'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
-            'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+        sql = ('SELECT nameFirst, nameLast, p_GS, p_CG, p_SHO, p_IPOuts, p_H, p_ER, p_HR, p_BB, p_SO, p_BAOpp, p_ERA, p_IBB, p_HBP, p_GF,round(WAR,3) '
+            'FROM pitching a NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = a.playerid AND a.yearid = e.yearid  AND e.teamid = a.teamid WHERE team_name = \'{}\' AND a.yearid = {} '
+            'GROUP BY a.playerID, a.yearID ORDER BY {} {}'.format( team_name, year_id, stat, sorting))
     elif(baseballRole == 'batting'):
-        sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF '
-               'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
-               'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+        sql = ('SELECT nameFirst, nameLast, b_ab,b_r,b_h,b_2b,b_3b,b_hr,b_RBI,b_SB,b_CS,b_BB,b_SO,b_sh,b_SF,round(WAR,3) '
+               'FROM {} a NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = a.playerid AND a.yearid = e.yearid AND e.teamid = a.teamid WHERE team_name = \'{}\' AND a.yearid = {} '
+               'GROUP BY a.playerID, a.yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
     elif (baseballRole == 'fielding'):
-        sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR '
-               'FROM {} NATURAL JOIN TEAMS NATURAL JOIN people WHERE team_name = \'{}\' AND yearid = {} '
-               'GROUP BY playerID, yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
+        sql = ('SELECT nameFirst, nameLast, f_G,f_GS,f_InnOuts,f_PO,f_A,f_E,f_DP,f_PB,f_SB,f_CS,f_ZR,round(WAR,3) '
+               'FROM {} a NATURAL JOIN TEAMS NATURAL JOIN people left join extrastats e on e.playerid = a.playerid AND a.yearid = e.yearid AND e.teamid = a.teamid WHERE team_name = \'{}\' AND a.yearid = {} '
+               'GROUP BY a.playerID, a.yearID ORDER BY {} {}'.format(baseballRole, team_name, year_id, stat, sorting))
 
 
     rows = sqlComs.getRowFromSQL(sql)

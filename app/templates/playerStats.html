@@ -67,6 +67,11 @@
                     <h3>Average Hit %:  <span style="font-weight: lighter; color: red">{{ battingRows[0][13] }}%</span></h3>
                     <h3>Average Runs per At Bat:  <span style="font-weight: lighter; color: red">{{ battingRows[0][14] }}%</span></h3>
                     <h3>Average Home Runs:  <span style="font-weight: lighter; color: red">{{ battingRows[0][15] }}%</span></h3>
+                     {% if battingRows[0][16] %}
+                     	<h3>Average WAR:  <span style="font-weight: lighter; color: red">{{ battingRows[0][16] }}</span></h3>
+                     {% endif %}
+
+
                 </div>
             {% endif %}
 
@@ -95,6 +100,9 @@
                 <h3>Total Sacrifice Hits Allowed: <span class="highlightStat">{{ pitchingRows[0][19] }}</span></h3>
                 <h3>Total Sacrifice Flies Allowed: <span class="highlightStat">{{ pitchingRows[0][20] }}</span></h3>
                 <h3>Win/Loss Ratio: <span class="highlightStat">{{ pitchingRows[0][21] }}</span></h3>
+                {% if pitchingRows[0][22] %}
+                    <h3>Average WAR:  <span style="font-weight: lighter; color: red">{{ pitchingRows[0][22] }}</span></h3>
+                {% endif %}
             </div>
         {% endif %}
 
@@ -111,6 +119,9 @@
                 <h3>Total Stolen Bases Allowed: <span class="highlightStat">{{ fieldingRows[0][7] }}</span></h3>
                 <h3>Total Caught Stealing: <span class="highlightStat">{{ fieldingRows[0][8] }}</span></h3>
                 <h3>Average Zone Rating: <span class="highlightStat">{{ fieldingRows[0][9] }}</span></h3>
+                {% if fieldingRows[0][10] %}
+                    <h3>Average WAR:  <span style="font-weight: lighter; color: red">{{ fieldingRows[0][10] }}</span></h3>
+                {% endif %}
                 <h2>Positions Played: </h2>
                 {% for pos in positions %}
                     <h3> <span class="highlightStat">{{ pos[0] }}</span></h3>
@@ -158,6 +169,7 @@
                 <th>HBP</th>
                 <th >SH</th>
                 <th >SF</th>
+                <th >WAR</th>
 
 
             </tr>
@@ -183,6 +195,13 @@
                     <td> {{ sea[15] }}</td>
                     <td> {{ sea[16] }}</td>
                     <td> {{ sea[17] }}</td>
+                    {% if sea[18] %}
+                        <td> {{ sea[18] }}</td>
+
+                    {% else %}
+                        <td> </td>
+                    {% endif %}
+
                 </tr>
                 {% endfor %}
             </tbody>
@@ -213,6 +232,7 @@
                     <th>R</th>
                     <th >SH</th>
                     <th >SF</th>
+                    <th>WAR</th>
 
 
                     {% for sea in pitchingSeason %}
@@ -238,6 +258,12 @@
                         <td> {{ sea[18] }}</td>
                         <td> {{ sea[19] }}</td>
                         <td> {{ sea[20] }}</td>
+                        {% if sea[21] %}
+                            <td> {{ sea[21] }}</td>
+
+                        {% else %}
+                            <td> </td>
+                        {% endif %}
 
                     </tr>
                     {% endfor %}
@@ -262,6 +288,7 @@
                     <th >WP</th>
                     <th >SB</th>
                     <th >CS</th>
+                    <th>WAR</th>
 
 
                     {% for sea in fieldingSeason %}
@@ -280,6 +307,11 @@
                         <td> {{ sea[11] }}</td>
                         <td> {{ sea[12] }}</td>
                         <td> {{ sea[13] }}</td>
+                        {% if sea[14] %}
+                        <td> {{ sea[14] }}</td>
+                        {% else %}
+                            <td> </td>
+                        {% endif %}
 
                     </tr>
                     {% endfor %}

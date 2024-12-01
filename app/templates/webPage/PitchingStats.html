@@ -43,6 +43,7 @@
             <th style=" padding-left: 12px;"  onclick="toggleBox(this)" data-stat="p_IBB" description = "Intentional Walks"> IBB</th>
             <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="p_HBP" description = "Players Hit by Pitch">HBP</th>
             <th  style=" padding-left: 15px; " onclick="toggleBox(this)" data-stat="p_GF" description = "Games Finished">GF</th>
+            <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="WAR" description = "Wins Above replacement">WAR</th>
 
             <div id="box">
                 <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
@@ -79,6 +80,12 @@
                 <td> {{ row[13] }}</td>
                 <td> {{ row[14] }}</td>
                 <td> {{ row[15] }}</td>
+                {% if row[16]  %}
+                	<td> {{ row[16] }}</td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+
             </tr>
             {% endfor %}
 

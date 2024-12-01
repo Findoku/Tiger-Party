@@ -40,6 +40,7 @@
             <th style=" padding-left: 12px; " onclick="toggleBox(this)" data-stat="f_SB" description = "Stolen Bases Allowed">SB</th>
             <th style=" padding-left: 12px;"  onclick="toggleBox(this)" data-stat="f_CS" description = "Caught Stealing"> CS</th>
             <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="f_ZR" description = "Zone rating(efficiency of covering ground)">ZR</th>
+            <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="WAR" description = "Wins Above replacement">WAR</th>
 
 
             <div id="box">
@@ -72,6 +73,14 @@
                 <td> {{ row[10] }}</td>
                 <td> {{ row[11] }}</td>
                 <td> {{ row[12] }}</td>
+                {% if row[13] %}
+                	<td> {{ row[13] }}</td>
+
+
+                {% else %}
+                    <td> </td>
+                {% endif %}
+
 
 
             </tr>

@@ -1,6 +1,3 @@
-from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
-from virtualenv.config.convert import get_type
-
 from app import app
 from app import DatabaseConnection
 import mariadb
@@ -131,9 +128,24 @@ def getType(type):
         type = 'f_GS'
     elif(type == 'Total Outs Caused'):
         type = 'f_InnOuts'
+    elif(type == 'wRC+'):
+        type = 'wRCPlus'
 
 
     return type
+
+def positionSQL(type,position,team_name,year_id):
+    if (type == "WAR" or type == "PA" or type=="wRCPlus"):
+        sql = ('Select distinct nameFirst,nameLast,round(' + type + ',2),position,e.yearId From fielding f Natural Join teams t natural join people join extrastats e using(playerid) '
+                ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND e.yearid = ' + year_id + ' AND t.teamid = e.teamid order by ' + type + ' desc')
+    else:
+        sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
+                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND '
+                + type + ' > 0 ORDER BY ' + type + ' Desc')
+
+    return sql;
+
+
 
 
 def getOF(type):
@@ -142,9 +154,7 @@ def getOF(type):
     position = 'OF'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type + ' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -155,9 +165,8 @@ def getCF(type):
     position = 'CF'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type + ' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
+
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -169,9 +178,7 @@ def getLF(type):
     position = 'LF'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -185,9 +192,7 @@ def getRF(type):
     position = 'RF'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -200,9 +205,7 @@ def getSS(type):
     position = 'SS'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -215,9 +218,7 @@ def get2B(type):
     position = '2B'
     type = getType(type)
 
-    sql = (
-                'Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -230,8 +231,7 @@ def get3B(type):
     position = '3B'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-            + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -245,8 +245,7 @@ def get3B(type):
     position = '3B'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -259,8 +258,8 @@ def get1B(type):
     position = '1B'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
+
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -273,8 +272,8 @@ def getC(type):
     position = 'C'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+    sql = positionSQL(type, position, team_name, year_id)
+
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -288,8 +287,9 @@ def getP(type):
     position = 'P'
     type = getType(type)
 
-    sql = ('Select distinct nameFirst,nameLast,' + type + ',position,yearId From fielding f Natural Join teams natural join people'
-                + ' where position = \'' + position + ' \' and team_name = \'' + team_name + '\' AND yearid = ' + year_id + ' AND ' + type +' > 0 ORDER BY ' + type + ' Desc')
+
+    sql = positionSQL(type,position,team_name,year_id)
+
     CFs = getRowFromSQL(sql)
 
     return CFs
@@ -320,7 +320,7 @@ def registerAccount(username, password):
 
 def insertHistory(admin):
 
-    if(admin):
+    if(admin is not None):
         sql = ("""Insert into userHistory(id,username,teamSearched,yearid) values (""" + str(-9999) + """,'""" +
                'greg' + """','""" + GlobalVals.teamName + """',""" + str(GlobalVals.yearID) + """) """)
         executeInsert(sql)

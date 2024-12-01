@@ -42,6 +42,8 @@
             <th onclick="toggleBox(this)" data-stat="b_SO" description = "Strikeouts">SO</th>
             <th onclick="toggleBox(this)" data-stat="b_SH" description = "Sacrifice Hits(Bunts)">SH</th>
             <th onclick="toggleBox(this)" data-stat="b_SF" description = "Sacrifice Flies">SF</th>
+            <th style=" padding-left: 12px;" onclick="toggleBox(this)" data-stat="WAR" description = "Wins Above replacement">WAR</th>
+
 
             <div id="box">
                 <span class="close-btn" style="cursor:pointer; position:absolute; top:0; right:5px;" onclick="hideBox()">
@@ -74,6 +76,12 @@
                 <td> {{ row[12] }}</td>
                 <td> {{ row[13] }}</td>
                 <td> {{ row[14] }}</td>
+                {% if row[15] %}
+                	<td> {{ row[15] }}</td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+
             </tr>
             {% endfor %}
         </tbody>

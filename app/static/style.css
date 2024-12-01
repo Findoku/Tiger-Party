@@ -238,7 +238,7 @@ body {
     font-family: Arial, sans-serif; /* Modern font */
     font-size: 10px;
     text-align: center;
-    width: 800px;  /* Fixed width */
+    width: 1000px;  /* Fixed width */
     height: 300px; /* Fixed height */
     table-layout: fixed; /* Forces columns to respect the table's width */
     overflow: hidden; /* Hides any content that overflows the table's dimensions */
