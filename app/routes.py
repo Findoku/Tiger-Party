@@ -78,15 +78,16 @@ def player():
 
     sql = ('Select sum(b_G),sum(b_AB),sum(b_R),sum(b_h),sum(b_2b),sum(b_3b),sum(b_HR),sum(b_SB)'
            ' ,sum(b_SO),sum(b_IBB),sum(b_hbp),sum(b_SH),sum(b_SF), round(sum(b_H)*100/sum(b_ab)) '
-           ',round(sum(b_R)*100/sum(b_AB)), round(sum(b_hr)*100/sum(b_AB),0), round(AVG(e.WAR),2) from batting LEFT JOIN extrastats e ON batting.playerid = e.playerid where batting.playerid= \'' + player_id + '\'')
+           ',round(sum(b_R)*100/sum(b_AB)), round(sum(b_hr)*100/sum(b_AB),0), round(AVG(e.WAR),2) from batting LEFT JOIN extrastats e ON e.playerid = batting.playerid and e.yearid = batting.yearid AND e.teamid = batting.teamid where batting.playerid= \'' + player_id + '\'')
     battingRows = sqlComs.getRowFromSQL(sql)
+
     sql = ('SELECT SUM(p_W), SUM(p_L), SUM(p_G), SUM(p_GS), SUM(p_CG), SUM(p_SHO), SUM(p_SV), SUM(p_H), SUM(p_HR) '
            ' ,SUM(p_BB), SUM(p_SO), round(AVG(p_BAOpp),2), round(AVG(p_ERA),2), SUM(p_IBB), SUM(p_WP), SUM(p_HBP), SUM(p_BK), MAX(p_BFP)'
            ', SUM(p_R), SUM(p_SH), SUM(p_SF), CASE WHEN SUM(p_L) = 0 THEN NULL ELSE round(CAST(SUM(p_W) AS FLOAT) / SUM(p_L),2) END '
-           ',round(AVG(e.WAR),2)  FROM pitching LEFT JOIN extrastats e ON pitching.playerid = e.playerid WHERE pitching.playerid = \'') + player_id + '\''
+           ',round(AVG(e.WAR),2)  FROM pitching LEFT JOIN extrastats e ON e.playerid = pitching.playerid and e.yearid = pitching.yearid AND e.teamid = pitching.teamid  WHERE pitching.playerid = \'') + player_id + '\''
     pitchingRows = sqlComs.getRowFromSQL(sql)
-    sql = ('SELECT SUM(f_G), SUM(f_GS), SUM(f_PO), SUM(f_A), SUM(f_E), SUM(f_DP), SUM(f_PB), SUM(f_SB), SUM(f_CS), AVG(f_ZR),round(AVG(e.WAR),2) '
-           ' FROM fielding LEFT JOIN extrastats e ON fielding.playerid = e.playerid WHERE fielding.playerid = \'') + player_id + '\''
+    sql = ('SELECT SUM(f_G), SUM(f_GS), SUM(f_PO), SUM(f_A), SUM(f_E), SUM(f_DP), SUM(f_PB), SUM(f_SB), SUM(f_CS), AVG(f_ZR),round(AVG(WAR),2) '
+           ' FROM fielding LEFT JOIN extrastats e ON e.playerid = fielding.playerid and e.yearid = fielding.yearid AND e.teamid = fielding.teamid  WHERE fielding.playerid = \'' + player_id + '\' ')
     fieldingRows = sqlComs.getRowFromSQL(sql)
 
     sql = 'SELECT Distinct Position FROM fielding WHERE playerid = \'' + player_id + '\''
