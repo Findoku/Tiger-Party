@@ -15,14 +15,22 @@
     </div>
         <body style="background: linear-gradient(red,black)">
 
-        {% for user in users %}
-        	<div style="margin-right: 0;color: white;border: 2px solid white;">
-                <h1>ID: {{ user[0] }}</h1>
-                <h1>Username: {{ user[1] }}</h1>
-                <h1>Password: {{ user[2] }}</h1>
-                <button onclick="Delete({{ user[0] }})" class="DeleteButton"> Delete</button>
-            </div>
-        {% endfor %}
+        <div id="usersContainer">
+            {% for user in users %}
+                <div style="margin-right: 0;color: white;border: 2px solid white;">
+                    <h1>ID: {{ user[0] }}</h1>
+                    <h1>Username: {{ user[1] }}</h1>
+                    <h1>Password: {{ user[2] }}</h1>
+                    <button onclick="Delete({{ user[0] }})" class="DeleteButton"> Delete</button>
+                    {% if user[3] == 'N' %}
+                        <button onclick="Ban({{ user[0] }})" class="DeleteButton"> Ban User</button>
+                    {% else %}
+                        <button onclick="Unban({{ user[0] }})" class="DeleteButton"> Unban User</button>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+        </div>
 
 
 
@@ -52,12 +60,67 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: e  })  // Send JSON data
+                body: JSON.stringify({ id: e })  // Send JSON data
             })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = '/admin';
-                }
+            .then(response => response.json())  // Parse JSON response
+            .then(data => {
+                console.log(data)
+                updateUsers(data);  // Update the DOM with the new users data
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function Ban(e) {
+            fetch('/ban', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: e })  // Send JSON data
+            })
+            .then(response => response.json())  // Parse JSON response
+            .then(data => {
+                console.log(data)
+                updateUsers(data);  // Update the DOM with the new users data
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateUsers(users) {
+            console.log('SUERS');
+            const usersContainer = document.querySelector('#usersContainer');  // Ensure you have a container with this ID in your HTML
+            usersContainer.innerHTML = '';  // Clear the current content
+            console.log('SUERS');
+            users.forEach(user => {
+
+                console.log(user)
+                const userDiv = document.createElement('div');
+                userDiv.style.color = 'white';
+                userDiv.style.border = '2px solid white';
+                userDiv.innerHTML = `
+                    <h1>ID: ${user.id}</h1>
+                    <h1>Username: ${user.username}</h1>
+                    <h1>Password: ${user.password}</h1>
+                    <button onclick="Delete(${user.id})" class="DeleteButton">Delete</button>
+                    <button onclick="${user.status === 'N' ? 'Ban' : 'Unban'}(${user.id})" class="DeleteButton">${user.status === 'N' ? 'Ban User' : 'Unban User'}</button>
+                `;
+                usersContainer.appendChild(userDiv);  // Append the new user div to the container
+            });
+        }
+
+
+        function Unban(e) {
+            fetch('/unban', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: e })  // Send JSON data
+            })
+            .then(response => response.json())  // Parse JSON response
+            .then(data => {
+                console.log(data)
+                updateUsers(data);  // Update the DOM with the new users data
             })
             .catch(error => console.error('Error:', error));
         }

@@ -390,8 +390,59 @@ def delete():
         sql = 'DELETE FROM users WHERE id = ' + str(id)
         sqlComs.executeDelete(sql)
 
+    sql = 'SELECT * FROM users'
+    updated_users = sqlComs.getRowFromSQL(sql)
 
-    return redirect( url_for('adminPage'))
+    return jsonify([{
+        'id': user[0],
+        'username': user[1],
+        'password': user[2],  # Consider security implications
+        'status': user[3]
+    } for user in updated_users])
+
+
+@app.route('/ban', methods=['POST'])
+def ban():
+    data = request.get_json()
+    # Logic to toggle the ban status
+    if data and data.get('id'):
+        id = data.get('id')
+        sql = 'Update users SET bannedStatus = \'Y\' WHERE id = ' + str(id)
+        sqlComs.executeUpdate(sql)
+
+    # Fetch updated users list
+    sql = 'SELECT * FROM users'
+    updated_users = sqlComs.getRowFromSQL(sql)
+
+    return jsonify([{
+        'id': user[0],
+        'username': user[1],
+        'password': user[2],  # Consider security implications
+        'status': user[3]
+    } for user in updated_users])
+
+
+@app.route('/unban', methods=['POST'])
+def unban():
+    data = request.get_json()
+    # Logic to toggle the ban status
+    if data and data.get('id'):
+        id = data.get('id')
+        sql = 'Update users SET bannedStatus = \'N\' WHERE id = ' + str(id)
+        sqlComs.executeUpdate(sql)
+
+    # Fetch updated users list
+    sql = 'SELECT * FROM users'
+    updated_users = sqlComs.getRowFromSQL(sql)
+
+    return jsonify([{
+        'id': user[0],
+        'username': user[1],
+        'password': user[2],  # Consider security implications
+        'status': user[3]
+    } for user in updated_users])
+
+
 @app.route('/sort', methods=['GET', 'POST'])
 def sort():
 
