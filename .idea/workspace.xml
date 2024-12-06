@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/templates/BannedPage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/GlobalVals.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/GlobalVals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/AdminPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/AdminPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/sqlComs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -174,7 +176,7 @@
       <workItem from="1732949301860" duration="51000" />
       <workItem from="1733006520186" duration="21283000" />
       <workItem from="1733439689818" duration="3268000" />
-      <workItem from="1733443137467" duration="347000" />
+      <workItem from="1733443137467" duration="2184000" />
     </task>
     <servers />
   </component>

@@ -5,5 +5,5 @@ admin = 'false'
 currentID = 0
 playerTypes = ['All', 'Managers', 'Pitchers', 'Batters', 'Fielding Players']
 DepthChartOptions = ["Games Played", "Games Started", "Total Outs Caused", "WAR", "PA", "wRC+"]
-
+bannedStatus = 'N'
 DepthChartOption = "Games Started"

@@ -23,11 +23,12 @@ def startPage():
 
     if form.validate_on_submit():
         user = sqlComs.getUser(form.username.data,form.password.data)
-
+        print(user)
 
         if (user != []):
             GlobalVals.valid = 'true'
             GlobalVals.currentID = user[0][0]
+            GlobalVals.bannedStatus = user[0][3]
 
             return redirect('/showTeams')
 
@@ -70,6 +71,8 @@ def player():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     player_id = request.args.get('player', 'No')
 
     sql = 'Select * FROM people WHERE playerid = \'' + player_id + '\''
@@ -131,6 +134,8 @@ def index():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     type = 'All'
@@ -149,6 +154,8 @@ def feats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     form = rosterForm()
 
     if(form.validate_on_submit()):
@@ -173,6 +180,8 @@ def battingStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
@@ -190,6 +199,8 @@ def pitchingStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF,round(WAR,3)' +
@@ -205,6 +216,8 @@ def Fielding():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
@@ -221,8 +234,12 @@ def Fielding():
 @app.route('/team/Depth-Chart', methods=['GET', 'POST'])
 def DepthChart():
     admin = None
+
     if GlobalVals.admin == 'true':
         admin = 1
+
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     form = DepthForm()
     if request.method == 'POST':
 
@@ -253,6 +270,9 @@ def TeamStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, sum(p_SHO),sum(p_IPOuts),sum(p_H),sum(p_SO),ROUND(sum(p_BAOpp)/count(playerid),3),ROUND(sum(p_ERA)/count(playerid),3),sum(p_IBB),sum(p_HBP)'
@@ -290,6 +310,10 @@ def ImmacGrid():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if GlobalVals.bannedStatus == 'Y':
+        return redirect(url_for('banned'))
+
+
     form1 = TeamForm()
     sql = 'SELECT DISTINCT teamID, team_name FROM teams'
     #teams = sqlComs.getRowFromSQL(sql)
@@ -330,6 +354,8 @@ def showTeams():
     if (GlobalVals.valid == 'none'):
         return redirect(url_for('startPage'))
 
+    if (GlobalVals.bannedStatus == 'Y'):
+        return redirect(url_for('banned'))
 
 
     form = DisplayForm()
@@ -362,12 +388,12 @@ def showTeams():
             form.year_dropdown.choices = years
             return jsonify(years=years)
 
+    return render_template('showTeams.html', title='Sign In', form=form, choices=teams, admin=admin)
 
 
-    return render_template('showTeams.html', title='Sign In', form=form, choices=teams,admin=admin)
-
-
-
+@app.route('/banned')
+def banned():
+    return render_template('BannedPage.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -376,8 +402,9 @@ def logout():
 
     if data and data.get('action') == 'logout':
 
-        GlobalVals.valid = 'true'
+        GlobalVals.valid = 'false'
         GlobalVals.admin = 'false'
+        GlobalVals.bannedStatus = 'N'
         return redirect(url_for('startPage'))
 
 
@@ -441,6 +468,8 @@ def unban():
         'password': user[2],  # Consider security implications
         'status': user[3]
     } for user in updated_users])
+
+
 
 
 @app.route('/sort', methods=['GET', 'POST'])

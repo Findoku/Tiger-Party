@@ -95,7 +95,7 @@ obj = SQLRows()
 
 
 def getUser(username, password):
-    sql = ('SELECT id,username,password FROM users WHERE username = \'' + username + '\'')
+    sql = ('SELECT * FROM users WHERE username = \'' + username + '\'')
 
     user = getRowFromSQL(sql)
     print(user)
