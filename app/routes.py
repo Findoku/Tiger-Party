@@ -1,5 +1,3 @@
-
-
 from app import app
 
 
@@ -11,6 +9,8 @@ from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm,
 from app import sqlComs
 from app import Caesar
 from app import GlobalVals
+import json
+import mysql.connector
 
 
 
@@ -283,29 +283,97 @@ def TeamStats():
         WSs = [['a','b','c','Never Won a World Series']]
     return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs,admin=admin)
 
+db_config = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'hi',
+    'database': 'baseball'
+}
 
+def get_db_connection():
+    return mysql.connector.connect(**db_config)
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
-    admin = None
-    if GlobalVals.admin == 'true':
-        admin = 1
-    form1 = TeamForm()
-    sql = 'SELECT DISTINCT teamID, team_name FROM teams'
+    db_connection = get_db_connection()
+    cursor = db_connection.cursor()
+
+    #Teams
+    cursor.execute("SELECT DISTINCT team_name FROM teams")
+    teams = [row[0] for row in cursor.fetchall()]
+
+    #Awards
+    cursor.execute("SELECT DISTINCT awardID FROM awards")
+    awards = [row[0] for row in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT position FROM fielding;")
+    positions = [row[0] for row in cursor.fetchall()]
+    positions.append("DH")
+
+    batting_stats = ['Games', 'At-Bats', 'Runs', 'Hits', 'Doubles', 'Triples', 'Home Runs', 'RBIs', 'Stolen Bases',
+                        'Caught Stealing', 'Walks', 'Strike Outs', 'Intentional Walks', 'Hit By Pitch', 'Sac Hits',
+                        'Sac Flys', 'GIDPs']
+    print(batting_stats)
+
+    pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Earned Runs',
+                        'Home Runs Allowed', 'Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
+                        'Sac Flys Allowed', 'GIDPs']
+
+    print(pitching_stats)
+
+    fielding_stats = ['Games', 'Games Started', 'Inning Outs', 'Put Outs', 'Assists', 'Errors', 'Double Plays', 
+                        'Catcher-Passed Balls', 'Catcher-Stolen Bases Allowed', 'Caught Stealing']
+
+    hallOfFame = ['Inducted']
+
+    cursor.execute("SELECT DISTINCT birthCountry FROM people;")
+    countries = [row[0] for row in cursor.fetchall()]
+
+    seriesWinner = ['World Series Winner', 'National League Winner', 'American League Winner']
+
+    db_connection.close()
+    
+    columns = ['Column 1', 'Column 2', 'Column 3']
+    rows = ['Row 1', 'Row 2', 'Row 3']
+
+    teamsJSON = json.dumps(teams)
+    awardsJSON = json.dumps(awards)
+    positionJSON = json.dumps(positions)
+    battingJSON = json.dumps(batting_stats)
+    pitchingJSON = json.dumps(pitching_stats)
+    fieldingJSON = json.dumps(fielding_stats)
+    hofJSON = json.dumps(hallOfFame)
+    countriesJSON = json.dumps(countries)
+    seriesJSON = json.dumps(seriesWinner)
+
+
+    if request.method == 'POST':
+        selections = request.form.to_dict()
+        return f"Form data submitted: {selections}"
+
+    return render_template('ImmaculateGrid.html', seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON, 
+                            hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, 
+                            teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, teamOptions=teams, columns=columns, 
+                            rows=rows)
+ #   admin = None
+  #  if GlobalVals.admin == 'true':
+  #      admin = 1
+  #  form1 = TeamForm()
+  #  sql = 'SELECT DISTINCT teamID, team_name FROM teams'
     #teams = sqlComs.getRowFromSQL(sql)
-    form1.team1.choices = teams.teams  # Assuming you're fetching from a database
-    form1.team2.choices = teams.teams  # Assuming you're fetching from a database
+  #  form1.team1.choices = teams.teams  # Assuming you're fetching from a database
+  #  form1.team2.choices = teams.teams  # Assuming you're fetching from a database
 
-    if form1.validate_on_submit():
+  #  if form1.validate_on_submit():
 
-        sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
-               '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
-               + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
-        players = sqlComs.getRowFromSQL(sql)
+   #     sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
+    #           '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
+     #          + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
+      #  players = sqlComs.getRowFromSQL(sql)
 
-        return render_template('ImmaculateGrid.html', form1=form1, players=players)
+       # return render_template('ImmaculateGrid.html', form1=form1, players=players)
 
-    return render_template('ImmaculateGrid.html', form1=form1, players=[],admin=admin)
+    #return render_template('ImmaculateGrid.html', form1=form1, players=[],admin=admin)
 
 
 @app.route('/register', methods=['GET', 'POST'])
