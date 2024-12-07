@@ -15,8 +15,8 @@ def connect():
         port=3306,
         database=maria.mysql["database"]
     )
-
     return conn
+
 def executeInsert(sql):
     conn = connect()
 

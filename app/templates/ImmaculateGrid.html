@@ -104,7 +104,7 @@
             seriesJSON="{{ seriesJSON }}">
         </div>
         <h1 style="color: white;">Immaculate Grid</h1>
-        <form action="/submit_grid" method="post">
+        <form method="post">
             <div class="grid-container">
                 <div></div>
                 {% for col in columns %}
@@ -130,7 +130,7 @@
                         <option value="" disabled selected>Select an Option</option>
                     </select>
                     <label for="input{{ loop.index  }}" style="padding-top: 10px;">Limit:</label>
-                    <input type="Text" placeholder="">
+                    <input type="Text" name="limCol{{ loop.index  }}" placeholder="">
                 </div>
                 {% endfor %}
                 {% for row in rows %}
@@ -156,18 +156,23 @@
                         <option value="" disabled selected>Select an Option</option>
                     </select>
                     <label for="input{{ loop.index  }}" style="padding-top: 10px;">Limit:</label>
-                    <input type="Text" placeholder="">
+                    <input type="Text" name="limRow{{ loop.index }}" placeholder="">
                 </div>
-                <div class="cell" id="cell-{{ loop.index}}-1"></div>
-                <div class="cell" id="cell-{{ loop.index}}-2"></div>
-                <div class="cell" id="cell-{{ loop.index}}-3"></div>
+                <div class="cell" id="cell-{{ loop.index}}-1">{{ R1[ loop.index ] }}</div>
+                <div class="cell" id="cell-{{ loop.index}}-2">{{ R2[ loop.index ] }}</div>
+                <div class="cell" id="cell-{{ loop.index}}-3">{{ R3[ loop.index ] }}</div>
                 {% endfor %}
             </div>
-            <button type="submit" style="margin-top: 20px;">Submit</button>
+            <button type="submit" onclick="generatePlayers()" style="margin-top: 20px;">Submit</button>
         </form>
     </body>
 
     <script>
+
+
+        function generatePlayers(){
+            console.log("why ehlloe ther")
+        }
         $(document).ready(function () {
             const dataContainer = document.getElementById('data-container');
 
@@ -274,6 +279,9 @@
                 allowClear: true
             });
         });
+
+
+
     </script>
 
 </html>

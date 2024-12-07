@@ -283,19 +283,10 @@ def TeamStats():
         WSs = [['a','b','c','Never Won a World Series']]
     return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs,admin=admin)
 
-db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'hi',
-    'database': 'baseball'
-}
-
-def get_db_connection():
-    return mysql.connector.connect(**db_config)
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
-    db_connection = get_db_connection()
+    db_connection = sqlComs.connect()
     cursor = db_connection.cursor()
 
     #Teams
@@ -347,14 +338,55 @@ def ImmacGrid():
     seriesJSON = json.dumps(seriesWinner)
 
 
+    R1 = ['','a','b','c']
+    R2 = ['', 'd', 'e', 'f']
+    R3 = ['', 'g', 'h', 'i']
+
     if request.method == 'POST':
+
         selections = request.form.to_dict()
-        return f"Form data submitted: {selections}"
+        limRow1 = request.form.get('limRow1')
+        limRow2 = request.form.get('limRow2')
+        limRow3 = request.form.get('limRow3')
+        limCol1 = request.form.get('limCol1')
+        limCol2 = request.form.get('limCol2')
+        limCol3 = request.form.get('limCol3')
+
+        col1 = request.form.get('col1')
+        col2 = request.form.get('col2')
+        col3 = request.form.get('col3')
+
+        subcol1 = request.form.get('subcol1')
+        subcol2 = request.form.get('subcol2')
+        subcol3 = request.form.get('subcol3')
+
+        row1 = request.form.get('row1')
+        row2 = request.form.get('row2')
+        row3 = request.form.get('row3')
+
+        subrow1 = request.form.get('subrow1')
+        subrow2 = request.form.get('subrow2')
+        subrow3 = request.form.get('subrow3')
+
+
+
+        print(subrow1)
+        print(subcol1)
+
+        print(col1)
+
+
+        print("input")
+        print("Selections:")
+
+
+        print(selections)
+
 
     return render_template('ImmaculateGrid.html', seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON, 
                             hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, 
                             teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, teamOptions=teams, columns=columns, 
-                            rows=rows)
+                            rows=rows, R1=R1,R3=R3,R2=R2)
  #   admin = None
   #  if GlobalVals.admin == 'true':
   #      admin = 1
