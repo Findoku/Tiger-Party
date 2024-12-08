@@ -304,34 +304,6 @@ def TeamStats():
     return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs,admin=admin)
 
 
-
-@app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
-def ImmacGrid():
-    admin = None
-    if GlobalVals.admin == 'true':
-        admin = 1
-    if GlobalVals.bannedStatus == 'Y':
-        return redirect(url_for('banned'))
-
-
-    form1 = TeamForm()
-    sql = 'SELECT DISTINCT teamID, team_name FROM teams'
-    #teams = sqlComs.getRowFromSQL(sql)
-    form1.team1.choices = teams.teams  # Assuming you're fetching from a database
-    form1.team2.choices = teams.teams  # Assuming you're fetching from a database
-
-    if form1.validate_on_submit():
-
-        sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
-               '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
-               + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
-        players = sqlComs.getRowFromSQL(sql)
-
-        return render_template('ImmaculateGrid.html', form1=form1, players=players)
-
-    return render_template('ImmaculateGrid.html', form1=form1, players=[],admin=admin)
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
