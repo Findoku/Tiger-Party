@@ -1,3 +1,5 @@
+from numpy.testing.print_coercion_tables import print_coercion_table
+from sqlalchemy.testing.plugin.plugin_base import start_test_class_outside_fixtures
 
 from app import sqlComs
 
@@ -11,7 +13,7 @@ def positions(pos):
 
 def teams(team, other):
     print(other)
-    if "season" in other.lower():
+    if "season" in other.lower() or "war" in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     elif 'awards' in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.yearid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(
@@ -218,6 +220,25 @@ def allStar():
     sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) as PlayerName FROM people AS p JOIN allstarfull as a ON p.playerID = a.playerID'
     return sql
 
+
+def warAVGCareer(stat):
+    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN extrastats AS es ON p.playerID = es.playerID GROUP BY p.playerID HAVING (AVG(es.war)) >= {} '.format(
+        stat)
+    return sql
+
+
+def warSeason(stat,team):
+
+
+    if ('teams' in team):
+        sql = 'SELECT distinct p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,es.teamID FROM people AS p JOIN extrastats AS es ON p.playerID = es.playerID WHERE es.war >= {} '.format(
+            stat)
+    else:
+        sql = 'SELECT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN extrastats AS es ON p.playerID = es.playerID WHERE es.war >= {} '.format(
+        stat)
+
+    return sql
+
 def battingAVGSeason(stat,team):
 
     if("teams" in team):
@@ -297,6 +318,12 @@ def getSQL(col, subcol, limCol,other,subOther):
             sql = battingAVGSeason(limCol,other)
         if subcol == 'Career Batting Avg':
             sql = battingAVGCareer(limCol)
+        if subcol == 'Career WAR Avg':
+            sql = warAVGCareer(limCol)
+    elif(col == "war"):
+        print('LIMCOL:')
+        print(limCol)
+        sql = warSeason(limCol,other)
 
 
     return sql

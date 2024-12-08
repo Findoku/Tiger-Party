@@ -138,7 +138,9 @@
             countriesJSON="{{ countriesJSON }}"
             seriesJSON="{{ seriesJSON }}"
             allJSON="{{ allJSON }}"
-            cAVGJSON="{{ cAVGJSON }}">
+            cAVGJSON="{{ cAVGJSON }}"
+            warJSON = "{{ warJSON }}">
+
         </div>
         <h1 style="color: white;">Immaculate Grid</h1>
         <form method="post">
@@ -163,6 +165,7 @@
                         <option value="seriesWinner">Series Winner</option>
                         <option value="allStar">All Star</option>
                         <option value="calculatedAvg"> Calculated Averages</option>
+                        <option value="war">Season WAR</option>
                     </select>
                     <label for="subcol{{ loop.index }}">Select:</label>
                     <select id="subcol{{ loop.index  }}" name="subcol{{ loop.index }}" class="secondary-dropdown">
@@ -191,6 +194,7 @@
                         <option value="seriesWinner">Series Winner</option>
                         <option value="allStar">All Star</option>
                         <option value="calculatedAvg"> Calculated Averages</option>
+                        <option value="war">Season WAR</option>
                     </select>
                     <label for="subrow{{ loop.index }}">Select:</label>
                     <select id="subrow{{ loop.index  }}" name="subrow{{ loop.index }}" class="secondary-dropdown">
@@ -228,6 +232,7 @@
             let series = [];
             let allstar = [];
             let cAVG = [];
+            let WAR = [];
 
             const tJSON = dataContainer.getAttribute('teamsJSON');
             const aJSON = dataContainer.getAttribute('awardsJSON');
@@ -239,7 +244,8 @@
             const cJSON = dataContainer.getAttribute('countriesJSON');
             const sJSON = dataContainer.getAttribute('seriesJSON');
             const allJSON = dataContainer.getAttribute('allJSON');
-            const cAVGJSON = dataContainer.getAttribute('cAVGJSON')
+            const cAVGJSON = dataContainer.getAttribute('cAVGJSON');
+            const warJSON = dataContainer.getAttribute('warJSON');
 
             try {
                 teams = JSON.parse(tJSON) || []; 
@@ -253,6 +259,7 @@
                 series = JSON.parse(sJSON) || [];
                 allstar = JSON.parse(allJSON) || [];
                 cAVG = JSON.parse(cAVGJSON) || [];
+                war = JSON.parse(warJSON) || [];
             } catch (e) {
                 console.error("Error parsing JSON data: ", e);
             }
@@ -324,7 +331,10 @@
                     cAVG.forEach(stats => {
                         secondaryDropdown.append(new Option(stats,stats));
                     })
-
+                }else if (selectedValue === 'war') {
+                    war.forEach(stats => {
+                        secondaryDropdown.append(new Option(stats, stats));
+                    })
                 }
 
                 secondaryDropdown.trigger('change');

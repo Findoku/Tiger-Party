@@ -348,7 +348,9 @@ def ImmacGrid():
 
     allStar = ['All Star']
 
-    calculatedStats = ['Season Batting Avg', 'Career Batting Avg']
+    calculatedStats = ['Season Batting Avg', 'Career Batting Avg', 'Career WAR Avg']
+
+    war = ['WAR']
 
     db_connection.close()
     
@@ -366,6 +368,7 @@ def ImmacGrid():
     seriesJSON = json.dumps(seriesWinner)
     allJSON = json.dumps(allStar)
     cAVGJSON = json.dumps(calculatedStats)
+    warJSON = json.dumps(war)
 
 
     R1 = ['','a','b','c']
@@ -435,7 +438,7 @@ def ImmacGrid():
 
 
     return render_template('ImmaculateGrid.html', allJSON=allJSON, seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON,
-                            hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, 
+                            hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, warJSON=warJSON,
                             teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, cAVGJSON=cAVGJSON,teamOptions=teams, columns=columns,
                             rows=rows, R1=R1,R3=R3,R2=R2)
 
