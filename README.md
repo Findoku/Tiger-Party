@@ -1,6 +1,6 @@
 # CSI3335 Project Virtual Environment
 
-This repository provides a virtual environment setup with specified dependencies for student projects in the CSI3335 course. **Please use Python 3.10 and above**
+This repository provides a virtual environment setup with specified dependencies for student projects in the CSI3335 course. **Please use Python 3.12.7 and above**
 
 ## Description
 
@@ -12,8 +12,8 @@ This virtual environment contains essential Python libraries and frameworks requ
 1. **Clone the Repository**:
 
 ```bash
-git clone https://github.com/sanjelarun/csi3335-project-venv.git
-cd csi3335-project-venv
+git clone https://github.com/Findoku/Tiger-Party.git
+cd Tiger-Party
 ```
 
 2. **Create a Virtual Environment**
@@ -74,3 +74,7 @@ PASSWORD: <PASSWORD>
 DATABASE NAME: <DB NAME>
 LOCALITY: <YES / NO>    (For optimal use store Scripts in TigerScripts and CSVs in CSV file)
 ```
+
+
+***Web Page***
+For the web page bonuc features we added WAR and 

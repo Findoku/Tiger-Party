@@ -41,22 +41,8 @@
     <div>
 
 
-        {% if OFs[0] %}
-        	<div style="position: relative;">
-                <div style="left: 37%; margin-top: 6%" class="DepthCard">
-                    <p class="DepthCardPTitle">OF</p>
-                    <cbody id="CF">
-                         {% for f in OFs %}
-                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
-                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
-                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
-                            </div>
-                         {% endfor %}
-                    </cbody>
-                </div>
-            </div>
+        {% if CFs[0] %}
 
-        {% else %}
             <div style="position: relative;">
                 <div style="left: 37%; margin-top: 6%" class="DepthCard">
                     <p class="DepthCardPTitle">CF</p>
@@ -94,6 +80,22 @@
                             </div>
                          {% endfor %}
                     </div>
+                </div>
+            </div>
+
+
+        {% elif OFs[0] %}
+            <div style="position: relative;">
+                <div style="left: 37%; margin-top: 6%" class="DepthCard">
+                    <p class="DepthCardPTitle">OF</p>
+                    <cbody id="CF">
+                         {% for f in OFs %}
+                            <div style="display: flex; margin-top: 0; padding-top: 0;justify-content: space-between; margin-bottom: 0">
+                                <p style="left: 0;margin-top: 0; padding-top: 0; font-size: 12px; margin-bottom: 3px"> {{ f[0] }} {{ f[1] }}  </p>
+                                <p  style="margin-left: auto; margin-right: 3px; margin-top: 0; padding-top: 0; margin-bottom: 3px">{{ f[2] }} </p>
+                            </div>
+                         {% endfor %}
+                    </cbody>
                 </div>
             </div>
         {% endif %}

@@ -1,5 +1,5 @@
 from app import app
-from app import DatabaseConnection
+from app import csi3335f2024
 import mariadb
 from app import GlobalVals
 from app import Caesar
@@ -7,7 +7,7 @@ from app import Caesar
 
 def connect():
     print("s")
-    maria = DatabaseConnection
+    maria = csi3335f2024
     conn = mariadb.connect(
         user=maria.mysql["user"],
         password=maria.mysql["password"],

@@ -5,7 +5,7 @@ from app import app
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from app import teams
-from app.DatabaseConnection import mysql
+from app.csi3335f2024 import mysql
 from app.GlobalVals import valid
 from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm, rosterForm, AdminForm
 from app import sqlComs
