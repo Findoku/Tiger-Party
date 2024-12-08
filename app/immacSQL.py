@@ -8,16 +8,19 @@ from app.GlobalVals import teamName
 
 
 def positions(pos):
-
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(pos)
+    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(
+        pos)
+    if pos == 'OF':
+        sql = ('SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\''
+               ' or f.position = \'CF\' or f.position = \'RF\' or f.position = \'LF\'  ').format(pos)
     return sql
 
 def teams(team,season):
     print(season)
     if "season" in season.lower():
-        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID WHERE t.team_name = \'{}\' '.format(team)
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     else:
-        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID WHERE t.team_name = \'{}\' '.format(team)
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID WHERE t.team_name = \'{}\' '.format(team)
 
     return sql
 
@@ -227,10 +230,12 @@ def battingAVGCareer(stat):
     return sql
 
 def intersect(sql1,sql2):
-    sql = 'SELECT CONCAT(po.nameFirst, \' \', po.nameLast) AS PlayerName From (({}) Intersect ({})) AS players JOIN popularity as po on players.playerid = po.playerid ORDER BY popularityValue ASC'.format(sql1,sql2)
+    sql = 'SELECT CONCAT(po.nameFirst, \' \', po.nameLast) AS PlayerName,p.debutDate From (({}) Intersect ({})) AS players JOIN popularity as po on players.playerid = po.playerid join people p on p.playerid = players.playerid WHERE NOT PlayerName = \'None\' ORDER BY popularityValue ASC'.format(sql1,sql2)
 
+    print("INTERSECTING: :: :adas FDA")
+    print(sql)
     rows = sqlComs.getRowFromSQL(sql)
-
+    print(rows)
     return rows
 
 
@@ -315,5 +320,11 @@ def spot(col, subcol, limCol, row, subrow, limRow):
     print(sql2)
     rows = intersect(sql1,sql2)
 
+    if(rows != []):
+        val = [rows[0][0], str(rows[0][1])]
+        print("theval")
+        print(val)
+    else:
+        val = ''
 
-    return rows[0][0]
+    return val
