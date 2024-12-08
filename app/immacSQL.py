@@ -22,7 +22,7 @@ def positions(pos,team):
 
 def teams(team, other):
     print(other)
-    if "season" in other.lower() or "war" in other.lower() or "position" in other.lower():
+    if "season" in other.lower() or "seasonWar" in other.lower() or "position" in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     elif 'awards' in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.yearid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(
@@ -117,6 +117,8 @@ def pitchingStat(stat):
         stat = 'p_HBP'
     elif (stat == 'Balks'):
         stat = 'p_BK'
+    elif (stat == 'Shutouts'):
+        stat = 'p_SHO'
     elif (stat == 'Sac Hits Allowed'):
         stat = 'p_SH'
     elif (stat == 'Sac Flys Allowed'):
@@ -248,6 +250,14 @@ def warSeason(stat,team):
 
     return sql
 
+
+def warCareer(stat):
+
+    sql = 'SELECT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN extrastats AS es ON p.playerID = es.playerID Group by es.playerid having sum(es.WAR) >= {} '.format(
+    stat)
+
+    return sql
+
 def battingAVGSeason(stat,team):
 
     if("teams" in team):
@@ -329,11 +339,14 @@ def getSQL(col, subcol, limCol,other,subOther):
             sql = battingAVGCareer(limCol)
         if subcol == 'Career WAR Avg':
             sql = warAVGCareer(limCol)
-    elif(col == "war"):
-        print('LIMCOL:')
+    elif (col == "seasonWar"):
+        print('SEASONLIMCOL:')
         print(limCol)
-        sql = warSeason(limCol,other)
-
+        sql = warSeason(limCol, other)
+    elif (col == "careerWar"):
+        print('CAREERLIMCOL:')
+        print(limCol)
+        sql = warCareer(limCol)
 
     return sql
 

@@ -331,7 +331,7 @@ def ImmacGrid():
     print(batting_stats)
 
     pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Strikeouts', 'Earned Runs',
-                        'Home Runs Allowed', 'Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
+                        'Home Runs Allowed', 'Shutouts','Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
                         'Sac Flys Allowed', 'GIDPs']
 
     print(pitching_stats)

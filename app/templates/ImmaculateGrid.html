@@ -165,7 +165,8 @@
                         <option value="seriesWinner">Series Winner</option>
                         <option value="allStar">All Star</option>
                         <option value="calculatedAvg"> Calculated Averages</option>
-                        <option value="war">Season WAR</option>
+                        <option value="seasonWar">Season WAR</option>
+                        <option value="careerWar">Career WAR</option>
                     </select>
                     <label for="subcol{{ loop.index }}">Select:</label>
                     <select id="subcol{{ loop.index  }}" name="subcol{{ loop.index }}" class="secondary-dropdown">
@@ -194,7 +195,8 @@
                         <option value="seriesWinner">Series Winner</option>
                         <option value="allStar">All Star</option>
                         <option value="calculatedAvg"> Calculated Averages</option>
-                        <option value="war">Season WAR</option>
+                        <option value="seasonWar">Season WAR</option>
+                        <option value="careerWar">Career WAR</option>
                     </select>
                     <label for="subrow{{ loop.index }}">Select:</label>
                     <select id="subrow{{ loop.index  }}" name="subrow{{ loop.index }}" class="secondary-dropdown">
@@ -259,7 +261,7 @@
                 series = JSON.parse(sJSON) || [];
                 allstar = JSON.parse(allJSON) || [];
                 cAVG = JSON.parse(cAVGJSON) || [];
-                war = JSON.parse(warJSON) || [];
+                WAR = JSON.parse(warJSON) || [];
             } catch (e) {
                 console.error("Error parsing JSON data: ", e);
             }
@@ -331,8 +333,13 @@
                     cAVG.forEach(stats => {
                         secondaryDropdown.append(new Option(stats,stats));
                     })
-                }else if (selectedValue === 'war') {
-                    war.forEach(stats => {
+                }else if (selectedValue === 'seasonWar') {
+                    WAR.forEach(stats => {
+                        secondaryDropdown.append(new Option(stats, stats));
+                    })
+                }
+                else if (selectedValue === 'careerWar') {
+                    WAR.forEach(stats => {
                         secondaryDropdown.append(new Option(stats, stats));
                     })
                 }
