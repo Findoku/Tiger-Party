@@ -1,5 +1,5 @@
 valid = 'false'
-teamName = 'houston astros'
+teamName = 'Detroit Tigers'
 yearID = '2018'
 admin = 'false'
 currentID = 0

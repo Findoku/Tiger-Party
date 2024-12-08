@@ -1,6 +1,3 @@
-from numpy.testing.print_coercion_tables import print_coercion_table
-from sqlalchemy.testing.plugin.plugin_base import start_test_class_outside_fixtures
-
 from app import sqlComs
 
 def positions(pos,team):
@@ -21,7 +18,7 @@ def positions(pos,team):
     return sql
 
 def teams(team, other):
-    print(other)
+
     if "season" in other.lower() or "seasonWar" in other.lower() or "position" in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     elif 'awards' in other.lower():
@@ -277,10 +274,9 @@ def battingAVGCareer(stat):
 def intersect(sql1,sql2):
     sql = 'SELECT CONCAT(po.nameFirst, \' \', po.nameLast) AS PlayerName,p.debutDate From (({}) Intersect ({})) AS players JOIN popularity as po on players.playerid = po.playerid join people p on p.playerid = players.playerid WHERE NOT PlayerName = \'None\' ORDER BY popularityValue ASC'.format(sql1,sql2)
 
-    print("INTERSECTING: :: :adas FDA")
-    print(sql)
+
     rows = sqlComs.getRowFromSQL(sql)
-    print(rows)
+
     return rows
 
 
@@ -289,8 +285,7 @@ def getSQL(col, subcol, limCol,other,subOther):
 
     if(other == 'calculatedAvg'):
         other = subOther
-    print('Debug TIEM:')
-    print(col)
+
     if (col == "teams"):
 
         sql = teams(subcol,other)
@@ -340,12 +335,10 @@ def getSQL(col, subcol, limCol,other,subOther):
         if subcol == 'Career WAR Avg':
             sql = warAVGCareer(limCol)
     elif (col == "seasonWar"):
-        print('SEASONLIMCOL:')
-        print(limCol)
+
         sql = warSeason(limCol, other)
     elif (col == "careerWar"):
-        print('CAREERLIMCOL:')
-        print(limCol)
+
         sql = warCareer(limCol)
 
     return sql
@@ -367,29 +360,26 @@ def spot(col, subcol, limCol, row, subrow, limRow,players):
     sql2 = getSQL(row, subrow, limRow, col,subcol)
     if sql2 == 'error':
         return ''
-    print('Debug TIEM:')
-    print('Debug TIEM sql1:')
-    print(sql1)
-    print('Debug TIEM sqlp2:')
-    print(sql2)
+
 
     rows = intersect(sql1,sql2)
 
+    #check for duplicate answers
     playerNum = 0
     dupe = 1
     while dupe == 1:
         dupe = 0
         for player in players:
 
-            if player == rows[playerNum][0]:
+            if rows[playerNum][0] and player == rows[playerNum][0]:
                 dupe = 1
         if dupe == 1:
             playerNum += 1
 
+
+    #if it doesn't return anything, it will just return a blank screen
     if(rows != []):
         val = [rows[playerNum][0], str(rows[playerNum][1])]
-        print("theval")
-        print(val)
     else:
         val = ''
 

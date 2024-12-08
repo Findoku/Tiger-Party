@@ -84,6 +84,11 @@ An example of a big feat would be most strikeouts in a career.
 In the biggest feats page, you can click on the players names and it takes you to a page where it talks about their career stats.
 In the player page where it talks about the career stats, it also mentions if they are a manager and if they are inducted in the Hall of Fame, a photo will show indicating that. 
 We also added a team stats page where it talks about the team as a whole and states if the team has ever won a world series.
+We also made it simple to find the teams when trying to select a team because you can just search it.
+We made the page stubborn when you are not logged in or banned. 
+If you are banned, you cant go anywhere except for the banned page to where you have to logout.
+If you are not logged in, you cant access any other page.
+Only logged in admins can access the admin page. 
 
 
 
@@ -92,9 +97,10 @@ We also added a team stats page where it talks about the team as a whole and sta
 For the Immaculate Grid Guesser we added a popularity table in the dump where it gives each player a popularity value.
 The more feats and contributions the player does to their team, the higher the value. 
 We gave a multiplier for each part of the statistic for the baseball game.
-An example would be giving 35 times multiplier for very homerun a person did. If one person did 1 homer it would be 35 points and 70 if 2 home runs.
+An example would be giving 35 times multiplier for very home run a person did. If one person did 1 home run it would be 35 points and 70 if 2 home runs.
 We designed the immaculate grid to where you can enter the data simply by adding what it says on the actual game.
 After that you click the Generate players button and wait.
+We also made it simple to find the teams when trying to select a team because you can just search it.
 
 
 ***Admin Page***
@@ -111,3 +117,53 @@ There will be a button specifically for the admin to navigate back to the admin 
 
 ***NOTE***
 You might need to use python 3.12.7 or higher for the instructions to run smoothly.
+
+
+
+***Popularity Caluculator:***
+
+
+Batting values:</br>
+
+At bat: 1</br>
+Runs: 10</br>
+Hits: 3</br>
+Double	: 6</br>
+Triple: 9</br>
+HR: 35</br>
+RBI: 0</br>
+SB: 4</br>
+IBB: 4</br>
+HBP: 3</br>
+SH: 1</br>
+SF: 1</br>
+
+Pitching values:
+	</br>
+
+Wins: 30</br>
+Games played: 3</br>
+Games started: 3</br>
+Completed Games: 5</br>
+Shutouts: 35</br>
+Saves: 20</br>
+Strikeouts: 10</br>
+Hitbypitch: 2</br>
+Games finished: 1</br>
+
+
+Fielding values no popularity:</br>
+Games: 3</br>
+Games started : 1</br>
+
+
+
+
+Fielding:</br>
+	Games started: 1</br>
+	Putouts: 5</br>
+	Assists: 3</br>
+	Errors: 1</br>
+	Double plays: 4</br>
+
+

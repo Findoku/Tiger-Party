@@ -17,13 +17,20 @@ import json
 
 @app.route('/', methods=['GET', 'POST'])
 def startPage():
-    print("hi")
+
+    if GlobalVals.admin == 'true':
+        return redirect(url_for('adminPage'))
+    if (GlobalVals.valid == 'true'):
+        return redirect(url_for('showTeams'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
+        return redirect(url_for('banned'))
 
     form = LoginForm()
 
     if form.validate_on_submit():
         user = sqlComs.getUser(form.username.data,form.password.data)
-        print(user)
+
 
         if (user != []):
             GlobalVals.valid = 'true'
@@ -37,6 +44,13 @@ def startPage():
 
 @app.route('/adminLogin', methods=['GET', 'POST'])
 def adminLogin():
+    if GlobalVals.admin == 'true':
+        return redirect(url_for('adminPage'))
+    if (GlobalVals.valid == 'true'):
+        return redirect(url_for('showTeams'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
+        return redirect(url_for('banned'))
 
     form = AdminForm()
 
@@ -71,8 +85,13 @@ def player():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
     player_id = request.args.get('player', 'No')
 
     sql = 'Select * FROM people WHERE playerid = \'' + player_id + '\''
@@ -134,8 +153,14 @@ def index():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
+
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     type = 'All'
@@ -144,7 +169,7 @@ def index():
     if(form.validate_on_submit()):
         type = form.rosterOptions.data
 
-    print("roster")
+
     rows = sqlComs.getRoster(team_name, year_id,type)
 
     return render_template('webPage/mainPage.html', rows=rows,form=form,admin=admin)
@@ -154,8 +179,13 @@ def feats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
     form = rosterForm()
 
     if(form.validate_on_submit()):
@@ -180,8 +210,14 @@ def battingStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
+
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
@@ -199,8 +235,13 @@ def pitchingStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, p_GS,p_CG,p_SHO,p_IPOuts,p_H,p_Er,p_HR,p_BB,p_SO,p_BAOpp,p_ERA,p_IBB,p_HBP,p_GF,round(WAR,3)' +
@@ -216,8 +257,13 @@ def Fielding():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
 
@@ -234,12 +280,14 @@ def Fielding():
 @app.route('/team/Depth-Chart', methods=['GET', 'POST'])
 def DepthChart():
     admin = None
-
     if GlobalVals.admin == 'true':
         admin = 1
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
 
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
     form = DepthForm()
     if request.method == 'POST':
 
@@ -270,9 +318,13 @@ def TeamStats():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
 
-    if GlobalVals.bannedStatus == 'Y':
+    if (GlobalVals.bannedStatus == 'Y'):
         return redirect(url_for('banned'))
+
+
     team_name = GlobalVals.teamName
     year_id = GlobalVals.yearID
     sql = ('SELECT nameFirst, nameLast, sum(p_SHO),sum(p_IPOuts),sum(p_H),sum(p_SO),ROUND(sum(p_BAOpp)/count(playerid),3),ROUND(sum(p_ERA)/count(playerid),3),sum(p_IBB),sum(p_HBP)'
@@ -307,6 +359,15 @@ def TeamStats():
 
 @app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
 def ImmacGrid():
+    admin = None
+    if GlobalVals.admin == 'true':
+        admin = 1
+    if (GlobalVals.valid == 'false'):
+        return redirect(url_for('startPage'))
+
+    if (GlobalVals.bannedStatus == 'Y'):
+        return redirect(url_for('banned'))
+
     db_connection = sqlComs.connect()
     cursor = db_connection.cursor()
 
@@ -325,13 +386,13 @@ def ImmacGrid():
     batting_stats = ['Games', 'At-Bats', 'Runs', 'Hits', 'Doubles', 'Triples', 'Home Runs', 'RBIs', 'Stolen Bases',
                         'Caught Stealing', 'Walks', 'Strike Outs', 'Intentional Walks', 'Hit By Pitch', 'Sac Hits',
                         'Sac Flys', 'GIDPs']
-    print(batting_stats)
+
 
     pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Strikeouts', 'Earned Runs',
                         'Home Runs Allowed', 'Shutouts','Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
                         'Sac Flys Allowed', 'GIDPs']
 
-    print(pitching_stats)
+
 
     fielding_stats = ['Games', 'Games Started', 'Inning Outs', 'Put Outs', 'Assists', 'Errors', 'Double Plays', 
                         'Catcher-Passed Balls', 'Catcher-Stolen Bases Allowed', 'Caught Stealing']
@@ -398,10 +459,6 @@ def ImmacGrid():
         subrow2 = request.form.get('subrow2')
         subrow3 = request.form.get('subrow3')
 
-        print(col1)
-        print(subcol1)
-        print(row1)
-        print(subrow1)
 
         players = []
 
@@ -436,21 +493,21 @@ def ImmacGrid():
         print(R3[3])
 
 
-        print("input")
-        print("Selections:")
-
-
-        print(selections)
-
 
     return render_template('ImmaculateGrid.html', allJSON=allJSON, seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON,
                             hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, warJSON=warJSON,
                             teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, cAVGJSON=cAVGJSON,teamOptions=teams, columns=columns,
-                            rows=rows, R1=R1,R3=R3,R2=R2)
+                            rows=rows, R1=R1,R3=R3,R2=R2,admin=admin)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if GlobalVals.admin == 'true':
+        return redirect(url_for('adminPage'))
+    if (GlobalVals.valid == 'true'):
+        return redirect(url_for('showTeams'))
 
+    if (GlobalVals.bannedStatus == 'Y'):
+        return redirect(url_for('banned'))
     form = RegisterForm()
     val = None
     if form.validate_on_submit():
@@ -466,8 +523,7 @@ def showTeams():
     admin = None
     if GlobalVals.admin == 'true':
         admin = 1
-
-    if (GlobalVals.valid == 'none'):
+    if (GlobalVals.valid == 'false'):
         return redirect(url_for('startPage'))
 
     if (GlobalVals.bannedStatus == 'Y'):

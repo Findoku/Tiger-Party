@@ -98,7 +98,6 @@ def getUser(username, password):
     sql = ('SELECT * FROM users WHERE username = \'' + username + '\'')
 
     user = getRowFromSQL(sql)
-    print(user)
     if user:
         id = user[0][0]
         psswd = user[0][2]
