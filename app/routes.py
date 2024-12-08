@@ -304,6 +304,138 @@ def TeamStats():
     return render_template('webPage/TeamStats.html',pitchingRows=pitchingRows,battingRows=battingRows,fieldingRows=fieldingRows, WSs=WSs,admin=admin)
 
 
+
+@app.route('/ImmaculateGridGuesser', methods=['GET', 'POST'])
+def ImmacGrid():
+    db_connection = sqlComs.connect()
+    cursor = db_connection.cursor()
+
+    #Teams
+    cursor.execute("SELECT DISTINCT team_name FROM teams")
+    teams = [row[0] for row in cursor.fetchall()]
+
+    #Awards
+    cursor.execute("SELECT DISTINCT awardID FROM awards")
+    awards = [row[0] for row in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT position FROM fielding;")
+    positions = [row[0] for row in cursor.fetchall()]
+    positions.append("DH")
+
+    batting_stats = ['Games', 'At-Bats', 'Runs', 'Hits', 'Doubles', 'Triples', 'Home Runs', 'RBIs', 'Stolen Bases',
+                        'Caught Stealing', 'Walks', 'Strike Outs', 'Intentional Walks', 'Hit By Pitch', 'Sac Hits',
+                        'Sac Flys', 'GIDPs']
+    print(batting_stats)
+
+    pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Strikeouts', 'Earned Runs',
+                        'Home Runs Allowed', 'Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
+                        'Sac Flys Allowed', 'GIDPs']
+
+    print(pitching_stats)
+
+    fielding_stats = ['Games', 'Games Started', 'Inning Outs', 'Put Outs', 'Assists', 'Errors', 'Double Plays', 
+                        'Catcher-Passed Balls', 'Catcher-Stolen Bases Allowed', 'Caught Stealing']
+
+    hallOfFame = ['Inducted']
+
+    cursor.execute("SELECT DISTINCT birthCountry FROM people;")
+    countries = [row[0] for row in cursor.fetchall()]
+
+    seriesWinner = ['World Series Winner', 'National League Winner', 'American League Winner']
+
+    allStar = ['All Star']
+
+    calculatedStats = ['Season Batting Avg', 'Career Batting Avg']
+
+    db_connection.close()
+    
+    columns = ['Column 1', 'Column 2', 'Column 3']
+    rows = ['Row 1', 'Row 2', 'Row 3']
+
+    teamsJSON = json.dumps(teams)
+    awardsJSON = json.dumps(awards)
+    positionJSON = json.dumps(positions)
+    battingJSON = json.dumps(batting_stats)
+    pitchingJSON = json.dumps(pitching_stats)
+    fieldingJSON = json.dumps(fielding_stats)
+    hofJSON = json.dumps(hallOfFame)
+    countriesJSON = json.dumps(countries)
+    seriesJSON = json.dumps(seriesWinner)
+    allJSON = json.dumps(allStar)
+    cAVGJSON = json.dumps(calculatedStats)
+
+
+    R1 = ['','a','b','c']
+    R2 = ['', 'd', 'e', 'f']
+    R3 = ['', 'g', 'h', 'i']
+
+    if request.method == 'POST':
+
+        selections = request.form.to_dict()
+        limRow1 = request.form.get('limRow1')
+        limRow2 = request.form.get('limRow2')
+        limRow3 = request.form.get('limRow3')
+        limCol1 = request.form.get('limCol1')
+        limCol2 = request.form.get('limCol2')
+        limCol3 = request.form.get('limCol3')
+
+        col1 = request.form.get('col1')
+        col2 = request.form.get('col2')
+        col3 = request.form.get('col3')
+
+        subcol1 = request.form.get('subcol1')
+        subcol2 = request.form.get('subcol2')
+        subcol3 = request.form.get('subcol3')
+
+        row1 = request.form.get('row1')
+        row2 = request.form.get('row2')
+        row3 = request.form.get('row3')
+
+        subrow1 = request.form.get('subrow1')
+        subrow2 = request.form.get('subrow2')
+        subrow3 = request.form.get('subrow3')
+
+        print(col1)
+        print(subcol1)
+        print(row1)
+        print(subrow1)
+
+
+
+        R1[1] = immacSQL.spot(col1, subcol1, limCol1, row1, subrow1, limRow1)
+        print(R1[1])
+
+        R2[1] = immacSQL.spot(col2, subcol2, limCol2, row1, subrow1, limRow1)
+        print(R2[1])
+        R3[1] = immacSQL.spot(col3, subcol3, limCol3, row1, subrow1, limRow1)
+        print(R3[1])
+
+        R1[2] = immacSQL.spot(col1, subcol1, limCol1, row2, subrow2, limRow2)
+        print(R1[2])
+        R2[2] = immacSQL.spot(col2, subcol2, limCol2, row2, subrow2, limRow2)
+        print(R2[2])
+        R3[2] = immacSQL.spot(col3, subcol3, limCol3, row2, subrow2, limRow2)
+        print(R3[2])
+
+        R1[3] = immacSQL.spot(col1, subcol1, limCol1, row3, subrow3, limRow3)
+        print(R1[3])
+        R2[3] = immacSQL.spot(col2, subcol2, limCol2, row3, subrow3, limRow3)
+        print(R2[3])
+        R3[3] = immacSQL.spot(col3, subcol3, limCol3, row3, subrow3, limRow3)
+        print(R3[3])
+
+        print("input")
+        print("Selections:")
+
+
+        print(selections)
+
+
+    return render_template('ImmaculateGrid.html', allJSON=allJSON, seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON,
+                            hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, 
+                            teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, cAVGJSON=cAVGJSON,teamOptions=teams, columns=columns,
+                            rows=rows, R1=R1,R3=R3,R2=R2)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
