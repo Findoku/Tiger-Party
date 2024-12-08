@@ -5,69 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerParty.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_People.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_allstarfull.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_appearances.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_awards.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_awardsShare.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_batting.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_battingpost.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_collegeplaying.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_divisions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_fielding.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_fieldingpost.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_franchises.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_halloffame.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_homegames.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_leagues.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_managers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_parks.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_pitching.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_pitchingpost.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_salaries.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_schools.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_seriespost.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/TigerScripts/update_teams.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/AllstarFull.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Appearances.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/AwardsManagers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/AwardsPlayers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/AwardsShareManagers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/AwardsSharePlayers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Batting.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/BattingPost.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/CollegePlaying.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Fielding.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/FieldingOF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/FieldingOFsplit.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/FieldingPost.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/HallOfFame.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/HomeGames.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Leagues.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Managers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/ManagersHalf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Parks.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/People.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Pitching.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/PitchingPost.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Salaries.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Schools.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/SeriesPost.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/Teams.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/TeamsFranchises.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/TeamsHalf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/UpdatedSalaries.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/divisions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/lahman_1871-2023_csv.7z" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/UpdateCSVs/readme2023.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dump/update_csv.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/DatabaseConnection.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/csi3335f2024.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/sqlComs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/AdminLogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/AdminLogin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,7 +209,7 @@
       <workItem from="1733006520186" duration="21283000" />
       <workItem from="1733439689818" duration="3268000" />
       <workItem from="1733443137467" duration="2184000" />
-      <workItem from="1733696016048" duration="687000" />
+      <workItem from="1733696016048" duration="2350000" />
     </task>
     <servers />
   </component>
