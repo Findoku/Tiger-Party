@@ -12,8 +12,13 @@ def positions(pos):
     sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(pos)
     return sql
 
-def teams(team):
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID WHERE t.team_name = \'{}\' '.format(team)
+def teams(team,season):
+    print(season)
+    if "season" in season.lower():
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID WHERE t.team_name = \'{}\' '.format(team)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID WHERE t.team_name = \'{}\' '.format(team)
+
     return sql
 
 
@@ -51,10 +56,16 @@ def battingStat(stat):
     return stat
 
 
-def battingSeason(stat,limit):
+def battingSeason(stat,limit,team):
     stat = battingStat(stat)
 
-    sql = 'SELECT DISTINCT p.playerid as playerid, CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID GROUP BY p.playerID, b.yearID HAVING SUM( {} ) >= {} '.format(stat,limit)
+    if ("teams" in team):
+        sql = 'SELECT DISTINCT p.playerid as playerid, CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,b.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID GROUP BY p.playerID, b.yearID HAVING SUM( {} ) >= {} '.format(
+            stat, limit)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid, CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID GROUP BY p.playerID, b.yearID HAVING SUM( {} ) >= {} '.format(
+        stat, limit)
+
     return sql
 
 def battingCareer(stat,limit):
@@ -112,10 +123,15 @@ def pitchingCareer(stat,limit):
     return sql
 
 
-def pitchingSeason(stat,limit):
+def pitchingSeason(stat,limit,team):
     stat = pitchingStat(stat)
+    if ("teams" in team):
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,pi.teamID FROM people AS p JOIN pitching AS pi ON p.playerID = pi.playerID GROUP BY p.playerID, pi.yearID HAVING SUM( {} ) >= {} '.format(
+            stat, limit)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN pitching AS pi ON p.playerID = pi.playerID GROUP BY p.playerID, pi.yearID HAVING SUM( {} ) >= {} '.format(
+        stat, limit)
 
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN pitching AS pi ON p.playerID = pi.playerID GROUP BY p.playerID, pi.yearID HAVING SUM( {} ) >= {} '.format(stat,limit )
     return sql
 
 
@@ -149,10 +165,15 @@ def fieldingCaeer(stat,limit):
     sql = 'SELECT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) as PlayerName FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID HAVING SUM( {} ) >= {} '.format(stat,limit)
     return sql
 
-def fieldingSeason(stat,limit):
+def fieldingSeason(stat,limit,team):
     stat = fieldingStat(stat)
+    if ("teams" in team):
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,f.yearid FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(
+            stat, limit)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(
+            stat, limit)
 
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(stat,limit)
     return sql
 
 
@@ -189,13 +210,20 @@ def allStar():
     sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) as PlayerName FROM people AS p JOIN allstarfull as a ON p.playerID = a.playerID'
     return sql
 
-def battingAVGSeason(stat):
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID WHERE b.b_AB > 502 GROUP BY p.playerID, b.yearID HAVING (SUM(b.b_H) * 1.0 / SUM(b.b_AB)) > {} '.format(stat)
+def battingAVGSeason(stat,team):
+
+    if("teams" in team):
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,b.teamID FROM people AS p JOIN batting AS b ON p.playerID = b.playerID WHERE b.b_AB > 100 GROUP BY p.playerID, b.yearID HAVING (SUM(b.b_H) * 1.0 / SUM(b.b_AB)) > {} '.format(
+            stat)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID WHERE b.b_AB > 100 GROUP BY p.playerID, b.yearID HAVING (SUM(b.b_H) * 1.0 / SUM(b.b_AB)) > {} '.format(
+        stat)
+
     return sql
 
 
 def battingAVGCareer(stat):
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID WHERE b.b_AB > 502 GROUP BY p.playerID HAVING (SUM(b.b_H) * 1.0 / SUM(b.b_AB)) > {} '.format(stat)
+    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID WHERE b.b_AB > 100 GROUP BY p.playerID HAVING ((SUM(b.b_H) * 1.0) / (SUM(b.b_AB)*1.0)) > {} '.format(stat)
     return sql
 
 def intersect(sql1,sql2):
@@ -206,12 +234,16 @@ def intersect(sql1,sql2):
     return rows
 
 
-def getSQL(col, subcol, limCol):
+def getSQL(col, subcol, limCol,other,subOther):
     sql = col
+
+    if(other == 'calculatedAvg'):
+        other = subOther
     print('Debug TIEM:')
     print(col)
     if (col == "teams"):
-        sql = teams(subcol)
+
+        sql = teams(subcol,other)
     elif (col == "awards"):
         sql = awards(subcol)
     elif (col == "positions"):
@@ -219,7 +251,7 @@ def getSQL(col, subcol, limCol):
     elif (col == "seasonBatting"):
         if limCol == '':
             return 'error'
-        sql = battingSeason(subcol, limCol)
+        sql = battingSeason(subcol, limCol,other)
     elif (col == "careerBatting"):
         if limCol == '':
             return 'error'
@@ -227,7 +259,7 @@ def getSQL(col, subcol, limCol):
     elif (col == "seasonPitching"):
         if limCol == '':
             return 'error'
-        sql = pitchingSeason(subcol, limCol)
+        sql = pitchingSeason(subcol, limCol,other)
     elif (col == "careerPitching"):
         if limCol == '':
             return 'error'
@@ -235,7 +267,7 @@ def getSQL(col, subcol, limCol):
     elif (col == "seasonFielding"):
         if limCol == '':
             return 'error'
-        sql = fieldingSeason(subcol, limCol)
+        sql = fieldingSeason(subcol, limCol,other)
     elif (col == "careerFielding"):
         if limCol == '':
             return 'error'
@@ -250,10 +282,9 @@ def getSQL(col, subcol, limCol):
         sql = allStar()
     elif (col == "calculatedAvg"):
         if limCol == '':
-
             return 'error'
         if subcol == 'Season Batting Avg':
-            sql = battingAVGSeason(limCol)
+            sql = battingAVGSeason(limCol,other)
         if subcol == 'Career Batting Avg':
             sql = battingAVGCareer(limCol)
 
@@ -271,10 +302,10 @@ def spot(col, subcol, limCol, row, subrow, limRow):
     elif subrow == None:
         return ''
 
-    sql1 = getSQL(col, subcol, limCol)
+    sql1 = getSQL(col, subcol, limCol, row,subrow)
     if sql1 == 'error':
         return ''
-    sql2 = getSQL(row, subrow, limRow)
+    sql2 = getSQL(row, subrow, limRow, col,subcol)
     if sql2 == 'error':
         return ''
     print('Debug TIEM:')
