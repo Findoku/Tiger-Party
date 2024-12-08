@@ -250,6 +250,7 @@ def getSQL(col, subcol, limCol):
         sql = allStar()
     elif (col == "calculatedAvg"):
         if limCol == '':
+
             return 'error'
         if subcol == 'Season Batting Avg':
             sql = battingAVGSeason(limCol)

@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/immacSQL.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csi3335-project-venv.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/sqlComs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/sqlComs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +224,7 @@
       <workItem from="1733006520186" duration="21283000" />
       <workItem from="1733193284221" duration="86000" />
       <workItem from="1733194038315" duration="71000" />
-      <workItem from="1733625529863" duration="6450000" />
+      <workItem from="1733625529863" duration="7418000" />
     </task>
     <servers />
   </component>
