@@ -350,7 +350,7 @@ def getSQL(col, subcol, limCol,other,subOther):
 
     return sql
 
-def spot(col, subcol, limCol, row, subrow, limRow):
+def spot(col, subcol, limCol, row, subrow, limRow,players):
 
     if col == None:
         return ''
@@ -372,10 +372,22 @@ def spot(col, subcol, limCol, row, subrow, limRow):
     print(sql1)
     print('Debug TIEM sqlp2:')
     print(sql2)
+
     rows = intersect(sql1,sql2)
 
+    playerNum = 0
+    dupe = 1
+    while dupe == 1:
+        dupe = 0
+        for player in players:
+
+            if player == rows[playerNum][0]:
+                dupe = 1
+        if dupe == 1:
+            playerNum += 1
+
     if(rows != []):
-        val = [rows[0][0], str(rows[0][1])]
+        val = [rows[playerNum][0], str(rows[playerNum][1])]
         print("theval")
         print(val)
     else:

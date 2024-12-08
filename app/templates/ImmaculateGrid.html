@@ -205,9 +205,25 @@
                     <label for="input{{ loop.index  }}" style="padding-top: 10px;">Limit:</label>
                     <input type="Text" name="limRow{{ loop.index }}" placeholder="">
                 </div>
-                <div class="cell" id="cell-{{ loop.index}}-1">{{ R1[ loop.index ][0] }} <br> Debut:{{ R1[ loop.index ][1] }}</div>
-                <div class="cell" id="cell-{{ loop.index}}-2">{{ R2[ loop.index ][0] }} <br> Debut:{{ R2[ loop.index ][1] }}</div>
-                <div class="cell" id="cell-{{ loop.index}}-3">{{ R3[ loop.index ][0] }} <br> Debut:{{ R3[ loop.index ][1] }}</div>
+
+                <div class="cell" id="cell-{{ loop.index}}-1">{{ R1[ loop.index ][0] }}
+
+                    {% if R1[ loop.index][1] %}
+                    	<br> Debut:{{ R1[ loop.index ][1] }}
+                    {% endif %}
+                </div>
+                <div class="cell" id="cell-{{ loop.index}}-2">
+                    {{ R2[ loop.index ][0] }}
+                    {% if R2[ loop.index][1] %}
+                    	<br> Debut:{{ R2[ loop.index ][1] }}
+                    {% endif %}
+                </div>
+                <div class="cell" id="cell-{{ loop.index}}-3">
+                    {{ R3[ loop.index ][0] }}
+                    {% if R3[ loop.index][1] %}
+                    	<br> Debut:{{ R3[ loop.index ][1] }}
+                    {% endif %}
+                </div>
                 {% endfor %}
             </div>
             <button type="submit" onclick="generatePlayers()" class="generate">Generate Players</button>

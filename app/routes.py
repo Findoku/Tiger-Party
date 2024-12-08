@@ -371,9 +371,9 @@ def ImmacGrid():
     warJSON = json.dumps(war)
 
 
-    R1 = ['','a','b','c']
-    R2 = ['', 'd', 'e', 'f']
-    R3 = ['', 'g', 'h', 'i']
+    R1 = ['','','','']
+    R2 = ['', '', '', '']
+    R3 = ['', '', '', '']
 
     if request.method == 'POST':
 
@@ -406,29 +406,38 @@ def ImmacGrid():
         print(row1)
         print(subrow1)
 
+        players = []
 
-
-        R1[1] = immacSQL.spot(col1, subcol1, limCol1, row1, subrow1, limRow1)
+        R1[1] = immacSQL.spot(col1, subcol1, limCol1, row1, subrow1, limRow1,players)
         print(R1[1])
+        players.append(R1[1][0])
 
-        R2[1] = immacSQL.spot(col2, subcol2, limCol2, row1, subrow1, limRow1)
+        R2[1] = immacSQL.spot(col2, subcol2, limCol2, row1, subrow1, limRow1,players)
         print(R2[1])
-        R3[1] = immacSQL.spot(col3, subcol3, limCol3, row1, subrow1, limRow1)
+        players.append(R2[1][0])
+        R3[1] = immacSQL.spot(col3, subcol3, limCol3, row1, subrow1, limRow1,players)
         print(R3[1])
+        players.append(R3[1][0])
 
-        R1[2] = immacSQL.spot(col1, subcol1, limCol1, row2, subrow2, limRow2)
+        R1[2] = immacSQL.spot(col1, subcol1, limCol1, row2, subrow2, limRow2,players)
         print(R1[2])
-        R2[2] = immacSQL.spot(col2, subcol2, limCol2, row2, subrow2, limRow2)
+        players.append(R1[2][0])
+        R2[2] = immacSQL.spot(col2, subcol2, limCol2, row2, subrow2, limRow2,players)
         print(R2[2])
-        R3[2] = immacSQL.spot(col3, subcol3, limCol3, row2, subrow2, limRow2)
+        players.append(R2[2][0])
+        R3[2] = immacSQL.spot(col3, subcol3, limCol3, row2, subrow2, limRow2,players)
         print(R3[2])
+        players.append(R3[2][0])
 
-        R1[3] = immacSQL.spot(col1, subcol1, limCol1, row3, subrow3, limRow3)
+        R1[3] = immacSQL.spot(col1, subcol1, limCol1, row3, subrow3, limRow3,players)
         print(R1[3])
-        R2[3] = immacSQL.spot(col2, subcol2, limCol2, row3, subrow3, limRow3)
+        players.append(R1[3][0])
+        R2[3] = immacSQL.spot(col2, subcol2, limCol2, row3, subrow3, limRow3,players)
         print(R2[3])
-        R3[3] = immacSQL.spot(col3, subcol3, limCol3, row3, subrow3, limRow3)
+        players.append(R2[3][0])
+        R3[3] = immacSQL.spot(col3, subcol3, limCol3, row3, subrow3, limRow3,players)
         print(R3[3])
+
 
         print("input")
         print("Selections:")
