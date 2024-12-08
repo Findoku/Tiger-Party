@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Tiger Party</title>
+        <link rel="stylesheet" href="../static/style.css">
+        <!-- Include Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- Include Select2 JavaScript, after including jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+        <style>
+            body {
+                font-family: "Lucida Console", "Courier New", monospace;
+                text-align: center;
+                background-color: #dfe3e6;
+                margin: 0;
+                padding: 0;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            form {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            select {
+                display: block;
+                margin: 10px auto;
+                padding: 10px;
+                width: 200px;
+            }
+            .generate {
+                margin-top: 20px;
+                position: absolute;
+                left: 10px;
+                top: 170px;
+                width: 290px;
+                height: 180px; /* Adjusted height for a sleeker look */
+                background: linear-gradient(45deg, #4CAF50, #81C784); /* Smooth gradient effect */
+                border: none; /* Remove default border */
+                border-radius: 12px; /* Rounded corners */
+                color: white; /* Text color */
+                font-size: 18px; /* Larger, modern font size */
+                font-family: 'Arial', sans-serif; /* Clean font */
+                font-weight: bold; /* Bold text */
+                text-align: center; /* Center text */
+                line-height: 60px; /* Align text vertically */
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+                cursor: pointer; /* Pointer cursor for interaction */
+                transition: all 0.3s ease; /* Smooth transition for hover effects */
+            }
+
+            .generate:hover {
+                background: linear-gradient(45deg, #81C784, #4CAF50); /* Reverse gradient on hover */
+                transform: translateY(-5px); /* Subtle lift effect */
+                box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1); /* Enhance shadow */
+            }
+
+            .generate:active {
+                transform: translateY(0); /* Remove lift effect on click */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow on click */
+            }
+
+
+            .grid-container{
+                display: grid;
+                grid-template-columns: 300px repeat(3, 1fr);
+                grid-template-rows: 200px repeat(3, 1fr);
+                gap: 5px;
+                width: 100%;
+
+
+                border: 2px solid #4f4d4d;
+                background-color: #fff;
+            }
+
+            .header, .prompt, .row{
+                display: block;
+                font-size: 18px;
+                font-weight: bold;
+                width: 300px;
+                height: 200px;
+                background-color: #ececec;
+                border: 1px solid #ccc;
+            }
+
+            .cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                font-weight: bold;
+                border: 2px solid #ccc;
+                height: 200px;
+                width: 300px;
+                background-color: #fff;
+                cursor: pointer;
+            }
+
+            .cell:hover {
+                background-color: #f0f0f0;
+            }
+
+            .dropdown {
+                margin: 10px 0;
+                width: 80%;
+            }
+        </style>
+    </head>
+    <div class="nav"  >
+        {% if admin %}
+        	<h2  onclick="location.href='/admin'" style="left: 7%;background-color: red" >AdminPage</h2>
+        {% endif %}
+        <h2  onclick="location.href='/showTeams'" style="margin-right: 1100px">Back</h2>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+        <h1 onclick="location.href='/showTeams'">Tiger Party</h1>
+        <img  src="{{url_for('static', filename='Tiger.jpg')}}" style="cursor: pointer; margin-bottom: 0;" width="100" height="100" onclick="location.href='/showTeams'" />
+
+    </div>
+
+    <body>
+        <div id="data-container"
+            data-teams="{{ teamOptions }}"
+            data-awards="{{ awardOptions }}"
+            teamsJSON="{{ teamJSON }}"
+            awardsJSON="{{ awardJSON }}"
+            positionsJSON="{{ positionsJSON }}"
+            battingJSON="{{ battingJSON }}"
+            pitchingJSON="{{ pitchingJSON }}"
+            fieldingJSON="{{ fieldingJSON }}"
+            hofJSON="{{ hofJSON }}"
+            countriesJSON="{{ countriesJSON }}"
+            seriesJSON="{{ seriesJSON }}"
+            allJSON="{{ allJSON }}"
+            cAVGJSON="{{ cAVGJSON }}">
+        </div>
+        <h1 style="color: white;">Immaculate Grid</h1>
+        <form method="post">
+            <div class="grid-container">
+                <div></div>
+                {% for col in columns %}
+                <div class="header">
+                    <label for="col{{ loop.index }}">Choose Table:</label>
+                    <select id="col{{ loop.index }}" name="col{{ loop.index }}" class="primary-dropdown">
+                        <option value="" disabled selected>Select Column {{ loop.index }}</option>
+                        <option value="teams">Teams</option>
+                        <option value="awards">Awards</option>
+                        <option value="positions">Position</option>
+                        <option value="seasonBatting">Season Batting Statistics</option>
+                        <option value="careerBatting">Career Batting Statistics</option>
+                        <option value="seasonPitching">Season Pitching Statistics</option>
+                        <option value="careerPitching">Career Pitching Statistics</option>
+                        <option value="seasonFielding">Season Fielding Statistics</option>
+                        <option value="careerFielding">Career Fielding Statistics</option>
+                        <option value="hallOfFame">Hall of Fame</option>
+                        <option value="country">Nationality/Place of Birth</option>
+                        <option value="seriesWinner">Series Winner</option>
+                        <option value="allStar">All Star</option>
+                        <option value="calculatedAvg"> Calculated Averages</option>
+                    </select>
+                    <label for="subcol{{ loop.index }}">Select:</label>
+                    <select id="subcol{{ loop.index  }}" name="subcol{{ loop.index }}" class="secondary-dropdown">
+                        <option value="" disabled selected>Select an Option</option>
+                    </select>
+                    <label for="input{{ loop.index  }}" style="padding-top: 10px;">Limit:</label>
+                    <input type="Text" name="limCol{{ loop.index  }}" placeholder="">
+                </div>
+                {% endfor %}
+                {% for row in rows %}
+                <div class="row">
+                    <label for="row{{ loop.index }}">Choose Table:</label>
+                    <select id="row{{ loop.index }}" name="row{{ loop.index }}" class="primary-dropdown">
+                        <option value="" disabled selected>Select Row {{ loop.index }}</option>
+                        <option value="teams">Teams</option>
+                        <option value="awards">Awards</option>
+                        <option value="positions">Position</option>
+                        <option value="seasonBatting">Season Batting Statistics</option>
+                        <option value="careerBatting">Career Batting Statistics</option>
+                        <option value="seasonPitching">Season Pitching Statistics</option>
+                        <option value="careerPitching">Career Pitching Statistics</option>
+                        <option value="seasonFielding">Season Fielding Statistics</option>
+                        <option value="careerFielding">Career Fielding Statistics</option>
+                        <option value="hallOfFame">Hall of Fame</option>
+                        <option value="country">Nationality/Place of Birth</option>
+                        <option value="seriesWinner">Series Winner</option>
+                        <option value="allStar">All Star</option>
+                        <option value="calculatedAvg"> Calculated Averages</option>
+                    </select>
+                    <label for="subrow{{ loop.index }}">Select:</label>
+                    <select id="subrow{{ loop.index  }}" name="subrow{{ loop.index }}" class="secondary-dropdown">
+                        <option value="" disabled selected>Select an Option</option>
+                    </select>
+                    <label for="input{{ loop.index  }}" style="padding-top: 10px;">Limit:</label>
+                    <input type="Text" name="limRow{{ loop.index }}" placeholder="">
+                </div>
+                <div class="cell" id="cell-{{ loop.index}}-1">{{ R1[ loop.index ][0] }} <br> Debut:{{ R1[ loop.index ][1] }}</div>
+                <div class="cell" id="cell-{{ loop.index}}-2">{{ R2[ loop.index ][0] }} <br> Debut:{{ R2[ loop.index ][1] }}</div>
+                <div class="cell" id="cell-{{ loop.index}}-3">{{ R3[ loop.index ][0] }} <br> Debut:{{ R3[ loop.index ][1] }}</div>
+                {% endfor %}
+            </div>
+            <button type="submit" onclick="generatePlayers()" class="generate">Generate Players</button>
+        </form>
+    </body>
+
+    <script>
+
+
+        function generatePlayers(){
+            console.log("why ehlloe ther")
+        }
+        $(document).ready(function () {
+            const dataContainer = document.getElementById('data-container');
+
+            let teams = [];
+            let awards = [];
+            let positions = [];
+            let batting = [];
+            let pitching = [];
+            let fielding = [];
+            let HOF = [];
+            let countries = [];
+            let series = [];
+            let allstar = [];
+            let cAVG = [];
+
+            const tJSON = dataContainer.getAttribute('teamsJSON');
+            const aJSON = dataContainer.getAttribute('awardsJSON');
+            const pJSON = dataContainer.getAttribute('positionsJSON');
+            const bJSON = dataContainer.getAttribute('battingJSON');
+            const piJSON = dataContainer.getAttribute('pitchingJSON');
+            const fJSON = dataContainer.getAttribute('fieldingJSON');
+            const hJSON = dataContainer.getAttribute('hofJSON');
+            const cJSON = dataContainer.getAttribute('countriesJSON');
+            const sJSON = dataContainer.getAttribute('seriesJSON');
+            const allJSON = dataContainer.getAttribute('allJSON');
+            const cAVGJSON = dataContainer.getAttribute('cAVGJSON')
+
+            try {
+                teams = JSON.parse(tJSON) || []; 
+                awards = JSON.parse(aJSON) || []; 
+                positions = JSON.parse(pJSON) || [];
+                batting = JSON.parse(bJSON) || [];
+                pitching = JSON.parse(piJSON) || [];
+                fielding = JSON.parse(fJSON) || [];
+                HOF = JSON.parse(hJSON) || [];
+                countries = JSON.parse(cJSON) || [];
+                series = JSON.parse(sJSON) || [];
+                allstar = JSON.parse(allJSON) || [];
+                cAVG = JSON.parse(cAVGJSON) || [];
+            } catch (e) {
+                console.error("Error parsing JSON data: ", e);
+            }
+
+            console.log("Teams data: ", teams);
+            console.log("Awards data: ", awards);
+            console.log("Positions data: ", positions);
+            console.log("Batting data: ", batting);
+            console.log("Pitching data: ", pitching);
+
+            $('.primary-dropdown').on('change', function () {
+                const selectedValue = $(this).val();
+                const secondaryDropdown = $(this).siblings('.secondary-dropdown');
+                secondaryDropdown.empty();
+
+                if (selectedValue === 'teams') {
+                    teams.forEach(team => {
+                        secondaryDropdown.append(new Option(team, team));
+                    });
+                } else if (selectedValue === 'awards') {
+                    awards.forEach(award => {
+                        secondaryDropdown.append(new Option(award, award));
+                    });
+                } else if (selectedValue === 'positions') {
+                    positions.forEach(position => {
+                        secondaryDropdown.append(new Option(position, position));
+                    })
+                } else if (selectedValue === 'seasonBatting') {
+                    batting.forEach(battingStat => {
+                        secondaryDropdown.append(new Option(battingStat, battingStat));
+                    })
+                } else if (selectedValue === 'careerBatting') {
+                    batting.forEach(battingStat => {
+                        secondaryDropdown.append(new Option(battingStat, battingStat));
+                    })
+                } else if (selectedValue === 'seasonPitching') {
+                    pitching.forEach(pitchingStat => {
+                        secondaryDropdown.append(new Option(pitchingStat, pitchingStat));
+                    })
+                } else if (selectedValue === 'careerPitching') {
+                    pitching.forEach(pitchingStat => {
+                        secondaryDropdown.append(new Option(pitchingStat, pitchingStat));
+                    })
+                } else if (selectedValue === 'seasonFielding') {
+                    fielding.forEach(fieldingStat => {
+                        secondaryDropdown.append(new Option(fieldingStat, fieldingStat));
+                    })
+                } else if (selectedValue === 'careerFielding') {
+                    fielding.forEach(fieldingStat => {
+                        secondaryDropdown.append(new Option(fieldingStat, fieldingStat));
+                    })
+                } else if (selectedValue === 'hallOfFame') {
+                    HOF.forEach(inducted => {
+                        secondaryDropdown.append(new Option(inducted, inducted));
+                    })
+                } else if (selectedValue === 'country') {
+                    countries.forEach(country => {
+                        secondaryDropdown.append(new Option(country, country));
+                    })
+                } else if (selectedValue === 'seriesWinner') {
+                    series.forEach(chip => {
+                        secondaryDropdown.append(new Option(chip, chip));
+                    })
+                } else if (selectedValue === 'allStar') {
+                    allstar.forEach(player => {
+                        secondaryDropdown.append(new Option(player, player));
+                    })
+                } else if (selectedValue === 'calculatedAvg'){
+                    cAVG.forEach(stats => {
+                        secondaryDropdown.append(new Option(stats,stats));
+                    })
+
+                }
+
+                secondaryDropdown.trigger('change');
+            });
+
+            $(".secondary-dropdown").select2({
+                placeholder: "Select an Option",
+                allowClear: true
+            });
+        });
+
+
+
+    </script>
+
+</html>
