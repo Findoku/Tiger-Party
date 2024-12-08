@@ -9,14 +9,14 @@ def positions(pos):
                ' or f.position = \'CF\' or f.position = \'RF\' or f.position = \'LF\'  ').format(pos)
     return sql
 
-def teams(team,season):
-    print(season)
-    if "season" in season.lower():
+def teams(team, other):
+    print(other)
+    if "season" in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
-    elif 'awards' in season.lower():
+    elif 'awards' in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.yearid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(
             team)
-    elif 'teams' in season.lower():
+    elif 'teams' in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(
             team)
     else:
