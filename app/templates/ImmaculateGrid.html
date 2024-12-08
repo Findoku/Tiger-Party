@@ -38,10 +38,11 @@
 
             .grid-container{
                 display: grid;
-                grid-template-columns: 200px repeat(3, 1fr);
+                grid-template-columns: 300px repeat(3, 1fr);
                 grid-template-rows: 200px repeat(3, 1fr);
                 gap: 5px;
                 width: 100%;
+
 
                 border: 2px solid #4f4d4d;
                 background-color: #fff;
@@ -51,6 +52,8 @@
                 display: block;
                 font-size: 18px;
                 font-weight: bold;
+                width: 300px;
+                height: 200px;
                 background-color: #ececec;
                 border: 1px solid #ccc;
             }
@@ -63,7 +66,7 @@
                 font-weight: bold;
                 border: 2px solid #ccc;
                 height: 200px;
-                width: 260px;
+                width: 300px;
                 background-color: #fff;
                 cursor: pointer;
             }
@@ -93,7 +96,7 @@
         <div id="data-container"
             data-teams="{{ teamOptions }}"
             data-awards="{{ awardOptions }}"
-            teamsJSON="{{ teamJSON}}"
+            teamsJSON="{{ teamJSON }}"
             awardsJSON="{{ awardJSON }}"
             positionsJSON="{{ positionsJSON }}"
             battingJSON="{{ battingJSON }}"
@@ -101,7 +104,9 @@
             fieldingJSON="{{ fieldingJSON }}"
             hofJSON="{{ hofJSON }}"
             countriesJSON="{{ countriesJSON }}"
-            seriesJSON="{{ seriesJSON }}">
+            seriesJSON="{{ seriesJSON }}"
+            allJSON="{{ allJSON }}"
+            cAVGJSON="{{ cAVGJSON }}">
         </div>
         <h1 style="color: white;">Immaculate Grid</h1>
         <form method="post">
@@ -124,6 +129,8 @@
                         <option value="hallOfFame">Hall of Fame</option>
                         <option value="country">Nationality/Place of Birth</option>
                         <option value="seriesWinner">Series Winner</option>
+                        <option value="allStar">All Star</option>
+                        <option value="calculatedAvg"> Calculated Averages</option>
                     </select>
                     <label for="subcol{{ loop.index }}">Select:</label>
                     <select id="subcol{{ loop.index  }}" name="subcol{{ loop.index }}" class="secondary-dropdown">
@@ -150,6 +157,8 @@
                         <option value="hallOfFame">Hall of Fame</option>
                         <option value="country">Nationality/Place of Birth</option>
                         <option value="seriesWinner">Series Winner</option>
+                        <option value="allStar">All Star</option>
+                        <option value="calculatedAvg"> Calculated Averages</option>
                     </select>
                     <label for="subrow{{ loop.index }}">Select:</label>
                     <select id="subrow{{ loop.index  }}" name="subrow{{ loop.index }}" class="secondary-dropdown">
@@ -185,6 +194,8 @@
             let HOF = [];
             let countries = [];
             let series = [];
+            let allstar = [];
+            let cAVG = [];
 
             const tJSON = dataContainer.getAttribute('teamsJSON');
             const aJSON = dataContainer.getAttribute('awardsJSON');
@@ -195,6 +206,8 @@
             const hJSON = dataContainer.getAttribute('hofJSON');
             const cJSON = dataContainer.getAttribute('countriesJSON');
             const sJSON = dataContainer.getAttribute('seriesJSON');
+            const allJSON = dataContainer.getAttribute('allJSON');
+            const cAVGJSON = dataContainer.getAttribute('cAVGJSON')
 
             try {
                 teams = JSON.parse(tJSON) || []; 
@@ -206,6 +219,8 @@
                 HOF = JSON.parse(hJSON) || [];
                 countries = JSON.parse(cJSON) || [];
                 series = JSON.parse(sJSON) || [];
+                allstar = JSON.parse(allJSON) || [];
+                cAVG = JSON.parse(cAVGJSON) || [];
             } catch (e) {
                 console.error("Error parsing JSON data: ", e);
             }
@@ -269,7 +284,16 @@
                     series.forEach(chip => {
                         secondaryDropdown.append(new Option(chip, chip));
                     })
-                } 
+                } else if (selectedValue === 'allStar') {
+                    allstar.forEach(player => {
+                        secondaryDropdown.append(new Option(player, player));
+                    })
+                } else if (selectedValue === 'calculatedAvg'){
+                    cAVG.forEach(stats => {
+                        secondaryDropdown.append(new Option(stats,stats));
+                    })
+
+                }
 
                 secondaryDropdown.trigger('change');
             });

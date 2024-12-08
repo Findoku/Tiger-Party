@@ -9,11 +9,9 @@ from app.forms import LoginForm, DisplayForm, TeamForm, RegisterForm, DepthForm,
 from app import sqlComs
 from app import Caesar
 from app import GlobalVals
+from app import immacSQL
 import json
 import mysql.connector
-
-
-
 
 @app.route('/', methods=['GET', 'POST'])
 def startPage():
@@ -306,7 +304,7 @@ def ImmacGrid():
                         'Sac Flys', 'GIDPs']
     print(batting_stats)
 
-    pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Earned Runs',
+    pitching_stats = ['Wins', 'Losses', 'Games', 'Games Started', 'Saves', 'Innings Pitched Outs', 'Hits Allowed', 'Strikeouts', 'Earned Runs',
                         'Home Runs Allowed', 'Walks', 'ERA', 'Intentional Walks', 'Hitters Hit', 'Balks', 'Sac Hits Allowed',
                         'Sac Flys Allowed', 'GIDPs']
 
@@ -322,6 +320,10 @@ def ImmacGrid():
 
     seriesWinner = ['World Series Winner', 'National League Winner', 'American League Winner']
 
+    allStar = ['All Star']
+
+    calculatedStats = ['Season Batting Avg', 'Career Batting Avg']
+
     db_connection.close()
     
     columns = ['Column 1', 'Column 2', 'Column 3']
@@ -336,6 +338,8 @@ def ImmacGrid():
     hofJSON = json.dumps(hallOfFame)
     countriesJSON = json.dumps(countries)
     seriesJSON = json.dumps(seriesWinner)
+    allJSON = json.dumps(allStar)
+    cAVGJSON = json.dumps(calculatedStats)
 
 
     R1 = ['','a','b','c']
@@ -368,13 +372,34 @@ def ImmacGrid():
         subrow2 = request.form.get('subrow2')
         subrow3 = request.form.get('subrow3')
 
-
-
-        print(subrow1)
-        print(subcol1)
-
         print(col1)
+        print(subcol1)
+        print(row1)
+        print(subrow1)
 
+
+
+        R1[1] = immacSQL.spot(col1, subcol1, limCol1, row1, subrow1, limRow1)
+        print(R1[1])
+
+        R2[1] = immacSQL.spot(col2, subcol2, limCol2, row1, subrow1, limRow1)
+        print(R1[2])
+        R3[1] = immacSQL.spot(col3, subcol3, limCol3, row1, subrow1, limRow1)
+        print(R1[3])
+
+        R1[2] = immacSQL.spot(col1, subcol1, limCol1, row2, subrow2, limRow2)
+        print(R2[1])
+        R2[2] = immacSQL.spot(col2, subcol2, limCol2, row2, subrow2, limRow2)
+        print(R2[2])
+        R3[2] = immacSQL.spot(col3, subcol3, limCol3, row2, subrow2, limRow2)
+        print(R2[3])
+
+        R1[3] = immacSQL.spot(col1, subcol1, limCol1, row3, subrow3, limRow3)
+        print(R3[1])
+        R2[3] = immacSQL.spot(col2, subcol2, limCol2, row3, subrow3, limRow3)
+        print(R3[2])
+        R3[3] = immacSQL.spot(col3, subcol3, limCol3, row3, subrow3, limRow3)
+        print(R3[3])
 
         print("input")
         print("Selections:")
@@ -383,9 +408,9 @@ def ImmacGrid():
         print(selections)
 
 
-    return render_template('ImmaculateGrid.html', seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON, 
+    return render_template('ImmaculateGrid.html', allJSON=allJSON, seriesJSON=seriesJSON, fieldingJSON=fieldingJSON, countriesJSON=countriesJSON,
                             hofJSON=hofJSON, pitchingJSON=pitchingJSON, battingJSON=battingJSON, positionsJSON=positionJSON, 
-                            teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, teamOptions=teams, columns=columns, 
+                            teamJSON=teamsJSON, awardJSON=awardsJSON, awardOptions=awards, cAVGJSON=cAVGJSON,teamOptions=teams, columns=columns,
                             rows=rows, R1=R1,R3=R3,R2=R2)
  #   admin = None
   #  if GlobalVals.admin == 'true':
@@ -398,9 +423,9 @@ def ImmacGrid():
 
   #  if form1.validate_on_submit():
 
-   #     sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
-    #           '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
-     #          + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
+#     sql = ('Select DISTINCT nameFirst,nameLast FROM people where playerID IN ' +
+#           '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team1.data + '\')'
+#          + 'AND playerID IN ' + '(SELECT playerID From batting NATURAL JOIN teams WHERE team_name = \'' + form1.team2.data + '\')')
       #  players = sqlComs.getRowFromSQL(sql)
 
        # return render_template('ImmaculateGrid.html', form1=form1, players=players)

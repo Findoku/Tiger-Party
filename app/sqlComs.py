@@ -3,6 +3,7 @@ from app import DatabaseConnection
 import mariadb
 from app import GlobalVals
 from app import Caesar
+from app import immacSQL
 
 
 def connect():
