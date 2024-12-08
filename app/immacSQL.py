@@ -19,6 +19,8 @@ def teams(team,season):
     print(season)
     if "season" in season.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
+    elif 'awards' in season.lower():
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.yearid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     else:
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID WHERE t.team_name = \'{}\' '.format(team)
 
@@ -171,7 +173,7 @@ def fieldingCaeer(stat,limit):
 def fieldingSeason(stat,limit,team):
     stat = fieldingStat(stat)
     if ("teams" in team):
-        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,f.yearid FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,f.teamid FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(
             stat, limit)
     else:
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON p.playerID = f.playerID GROUP BY p.playerID, f.yearID HAVING SUM( {} ) >= {} '.format(
@@ -180,9 +182,14 @@ def fieldingSeason(stat,limit,team):
     return sql
 
 
-def awards(award):
+def awards(award,team):
+    if "teams" in team:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast),a.yearid AS PlayerName FROM people AS p JOIN awards AS a ON p.playerID = a.playerID WHERE awardID = \'{}\' '.format(
+            award)
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN awards AS a ON p.playerID = a.playerID WHERE awardID = \'{}\' '.format(
+            award)
 
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN awards AS a ON p.playerID = a.playerID WHERE awardID = \'{}\' '.format(award)
     return sql
 
 def HallofFame():
@@ -250,7 +257,7 @@ def getSQL(col, subcol, limCol,other,subOther):
 
         sql = teams(subcol,other)
     elif (col == "awards"):
-        sql = awards(subcol)
+        sql = awards(subcol,other)
     elif (col == "positions"):
         sql = positions(subcol)
     elif (col == "seasonBatting"):
