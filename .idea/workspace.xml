@@ -7,8 +7,6 @@
     <list default="true" id="80750a78-f4b7-445c-ba6d-1b19137943d4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/immacSQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/immacSQL.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/ImmaculateGrid.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

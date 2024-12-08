@@ -3,17 +3,26 @@ from sqlalchemy.testing.plugin.plugin_base import start_test_class_outside_fixtu
 
 from app import sqlComs
 
-def positions(pos):
-    sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(
-        pos)
-    if pos == 'OF':
-        sql = ('SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\''
-               ' or f.position = \'CF\' or f.position = \'RF\' or f.position = \'LF\'  ').format(pos)
+def positions(pos,team):
+    if "teams" in team:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,f.teamid FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(
+            pos)
+        if pos == 'OF':
+            sql = (
+                'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,f.teamid  FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\''
+                ' or f.position = \'CF\' or f.position = \'RF\' or f.position = \'LF\'  ').format(pos)
+
+    else:
+        sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\' '.format(
+            pos)
+        if pos == 'OF':
+            sql = ('SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName FROM people AS p JOIN fielding AS f ON  p.playerID = f.playerID WHERE f.position = \'{}\''
+                   ' or f.position = \'CF\' or f.position = \'RF\' or f.position = \'LF\'  ').format(pos)
     return sql
 
 def teams(team, other):
     print(other)
-    if "season" in other.lower() or "war" in other.lower():
+    if "season" in other.lower() or "war" in other.lower() or "position" in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.teamid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(team)
     elif 'awards' in other.lower():
         sql = 'SELECT DISTINCT p.playerid as playerid,CONCAT(p.nameFirst, \' \', p.nameLast) AS PlayerName,t.yearid FROM people AS p JOIN batting AS b ON p.playerID = b.playerID JOIN teams AS t ON b.teamID = t.teamID AND t.yearID = b.yearID  WHERE t.team_name = \'{}\' '.format(
@@ -278,7 +287,7 @@ def getSQL(col, subcol, limCol,other,subOther):
     elif (col == "awards"):
         sql = awards(subcol,other)
     elif (col == "positions"):
-        sql = positions(subcol)
+        sql = positions(subcol,other)
     elif (col == "seasonBatting"):
         if limCol == '':
             return 'error'
