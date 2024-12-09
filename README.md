@@ -116,7 +116,11 @@ There will be a button specifically for the admin to navigate back to the admin 
 
 
 ***NOTE***
+</br>
 You might need to use python 3.12.7 or higher for the instructions to run smoothly.
+</br>
+Also the SQLSetup sets the password to 'a'
+
 
 
 
